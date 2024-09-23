@@ -20,7 +20,7 @@ const config = {
     },
     extend: {
       backgroundImage: {
-        "hero-pattern": "url('/gifs/standard.gif')",
+        "hero-pattern": "url('/images/bg.jpg')",
       },
       colors: {
         border: "hsl(var(--border))",

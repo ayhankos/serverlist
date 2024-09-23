@@ -36,7 +36,7 @@ const ServerCard = ({
 
 export default function Page() {
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-800">
+    <div className="flex justify-center items-center h-screen bg-no-repeat bg-cover bg-[url('/gifs/standard.gif')]">
       <div className="flex w-full max-w-4xl space-x-10">
         <ServerCard
           title="Metin2 Pvp Server Reklam"

@@ -56,6 +56,16 @@ interface Server {
 
 const columns: ColumnDef<Server>[] = [
   {
+    accessorKey: "image",
+    cell: ({ row }) => (
+      <img
+        src={row.getValue("image")}
+        alt={row.getValue("name")}
+        className="h-16 w-16 rounded-full"
+      />
+    ),
+  },
+  {
     accessorKey: "name",
     header: "Sunucu Adı",
     cell: ({ row }) => (
@@ -276,7 +286,7 @@ export function VipServerTable() {
                 </TableRow>
               ))}
             </TableHeader>
-            <TableBody>
+            <TableBody className="text-xl">
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row, index) => (
                   <TableRow
