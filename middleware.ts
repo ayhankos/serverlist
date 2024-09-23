@@ -1,0 +1,29 @@
+import { NextRequest, NextResponse } from "next/server";
+import { auth } from "./lib/auth";
+
+export async function middleware(req: NextRequest) {
+  const session = await auth();
+
+  if (req.nextUrl.pathname.startsWith("/admin")) {
+    if (
+      req.nextUrl.pathname === "/admin/login" ||
+      req.nextUrl.pathname === "/admin/register"
+    ) {
+      return NextResponse.next();
+    }
+
+    if (!session) {
+      return NextResponse.redirect(new URL("/admin/login", req.url));
+    }
+
+    if (session.user.role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ["/admin/:path*"],
+};
