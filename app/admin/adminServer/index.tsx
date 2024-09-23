@@ -15,15 +15,23 @@ import {
 } from "@/components/ui/form";
 import { PiSpinnerBall } from "react-icons/pi";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   name: z.string().min(2).max(100),
-  slug: z.string().min(2).max(100),
   description: z.string(),
   playerCount: z.string(),
-  feature: z.string(),
+  price: z.string(),
+  vip: z.enum(["vip", "normal"]),
   launchDate: z.date(),
   image: z.string(),
+  serverType: z.string(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -36,12 +44,13 @@ export const AdminServerForm: React.FC = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      slug: "",
       description: "",
       playerCount: "",
-      feature: "",
+      price: "",
+      vip: "normal",
       launchDate: new Date(),
       image: "",
+      serverType: "1-99",
     },
   });
 
@@ -82,12 +91,17 @@ export const AdminServerForm: React.FC = () => {
   });
 
   const handleFormSubmit = async (data: FormValues) => {
+    console.log(data);
     setLoading(true);
+
     try {
       const response = await fetch("/api/serverEkle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          playercount: data.playerCount,
+        }),
       });
 
       if (!response.ok) {
@@ -109,7 +123,7 @@ export const AdminServerForm: React.FC = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleFormSubmit)}
-        className="space-y-6 p-10 pb-16 block text-white"
+        className="space-y-6 p-10 pb-16 block"
       >
         <div className="md:grid md:grid-cols-2 gap-8">
           <FormField
@@ -123,7 +137,7 @@ export const AdminServerForm: React.FC = () => {
                     {...field}
                     disabled={loading}
                     placeholder="Name"
-                    className="text-black"
+                    className="bg-zinc-100"
                   />
                 </FormControl>
                 <FormMessage />
@@ -132,16 +146,16 @@ export const AdminServerForm: React.FC = () => {
           />
           <FormField
             control={form.control}
-            name="slug"
+            name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="slug">Slug</FormLabel>
+                <FormLabel htmlFor="price">Price</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     disabled={loading}
-                    placeholder="Slug"
-                    className="text-black"
+                    placeholder="Price"
+                    className="bg-zinc-100"
                   />
                 </FormControl>
                 <FormMessage />
@@ -159,7 +173,6 @@ export const AdminServerForm: React.FC = () => {
                     {...field}
                     disabled={loading}
                     placeholder="Description"
-                    className="text-black"
                   />
                 </FormControl>
                 <FormMessage />
@@ -177,27 +190,81 @@ export const AdminServerForm: React.FC = () => {
                     {...field}
                     disabled={loading}
                     placeholder="Player Count"
-                    className="text-black"
+                    className="bg-zinc-100"
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
-            name="feature"
+            name="vip"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="feature">Server Tipi</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    disabled={loading}
-                    placeholder="55-120 ? 1-99 ? 55-250 "
-                    className="text-black"
-                  />
-                </FormControl>
+                <FormLabel htmlFor="vip">VIP</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select VIP type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="bg-zinc-100 text-black">
+                    <SelectItem value="vip">VIP</SelectItem>
+                    <SelectItem value="normal">Normal</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="serverType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="serverType">Server Tipi</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select server type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="bg-zinc-100 text-black">
+                    <SelectItem
+                      value="1-99"
+                      className="bg-zinc-100 cursor-pointer hover:bg-hero-pattern"
+                    >
+                      1-99
+                    </SelectItem>
+                    <SelectItem
+                      value="1-105"
+                      className="bg-zinc-100 cursor-pointer hover:bg-hero-pattern"
+                    >
+                      1-105
+                    </SelectItem>
+                    <SelectItem
+                      value="1-120"
+                      className="bg-zinc-100 cursor-pointer hover:bg-hero-pattern"
+                    >
+                      1-120
+                    </SelectItem>
+                    <SelectItem
+                      value="55-120"
+                      className="bg-zinc-100 cursor-pointer hover:bg-hero-pattern"
+                    >
+                      55-120
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
@@ -208,20 +275,25 @@ export const AdminServerForm: React.FC = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel htmlFor="launchDate">Launch Date</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="date"
-                    disabled={loading}
-                    className="text-black"
-                    value={
-                      field.value instanceof Date
-                        ? field.value.toISOString().split("T")[0]
-                        : field.value
-                    }
-                    onChange={(e) => field.onChange(new Date(e.target.value))}
-                  />
-                </FormControl>
+                <div className="relative">
+                  <FormControl>
+                    <Input
+                      className="bg-zinc-700 appearance-none pl-10 text-white"
+                      {...field}
+                      type="date"
+                      disabled={loading}
+                      value={
+                        field.value instanceof Date
+                          ? field.value.toISOString().split("T")[0]
+                          : field.value
+                      }
+                      onChange={(e) => field.onChange(new Date(e.target.value))}
+                    />
+                  </FormControl>
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
+                    📅
+                  </span>
+                </div>
                 <FormMessage />
               </FormItem>
             )}

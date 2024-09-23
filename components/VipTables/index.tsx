@@ -151,14 +151,14 @@ export function VipServerTable() {
 
   return (
     <div className="container w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 ">
         <Input
           placeholder="Sunucu adına göre filtrele..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm bg-zinc-100"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

@@ -3,27 +3,30 @@ import prisma from "@/prisma/database";
 
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: { id: string } }
 ) {
-  const slug = params.slug;
+  const id = params.id;
 
   try {
-    const server = await prisma.vipServer.findUnique({
+    const server = await prisma.server.findUnique({
       where: {
-        slug: slug,
+        id: id,
       },
     });
 
     if (!server) {
       return NextResponse.json({ error: "Sunucu bulunamadı" }, { status: 404 });
     }
+
     return NextResponse.json({
+      id: server.id,
       name: server.name,
       description: server.description,
       feature: server.feature,
       playerCount: server.playercount,
       launchDate: server.launchDate,
       image: server.image,
+      vip: server.vip,
     });
   } catch (error) {
     console.error("Sunucu bilgileri alınamadı:", error);

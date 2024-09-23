@@ -7,12 +7,13 @@ export async function POST(request: NextRequest) {
 
     const serverData = {
       name: body.name,
-      slug: body.slug,
       description: body.description,
       playercount: body.playerCount,
-      feature: body.feature,
+      price: body.price,
+      vip: body.vip,
       launchDate: new Date(body.launchDate),
       image: body.image,
+      serverType: body.serverType,
     };
 
     const newServer = await prisma.server.create({

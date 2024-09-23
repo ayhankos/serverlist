@@ -1,38 +1,43 @@
 "use client";
-
-import React from "react";
-import { notFound } from "next/navigation";
 import { motion } from "framer-motion";
-
-async function getServerData(slug: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/server/${slug}`
-  );
-  if (!res.ok) return undefined;
-  return res.json();
-}
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 interface ServerData {
+  id: string;
   name: string;
   description: string;
   feature: string;
   playerCount: number;
   launchDate: string;
   image: string;
+  serverType: "vip" | "normal";
 }
 
-export default async function ServerPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const server: ServerData | undefined = await getServerData(params.slug);
+async function getServerData(id: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/server/${id}`
+  );
+  if (!res.ok) return undefined;
+  return res.json();
+}
+
+export default function ServerPage() {
+  const router = useRouter();
+  const { id } = router.query;
+  const [server, setServer] = useState<ServerData | undefined>(undefined);
+
+  useEffect(() => {
+    if (id) {
+      getServerData(id as string).then(setServer);
+    }
+  }, [id]);
 
   if (!server) {
-    notFound();
+    return <div>Loading...</div>;
   }
 
-  const features = server?.feature ? server.feature.split(",") : [];
+  const features = server.feature ? server.feature.split(",") : [];
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-800 to-black relative overflow-hidden">

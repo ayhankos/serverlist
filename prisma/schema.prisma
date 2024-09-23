@@ -21,14 +21,14 @@ model Server {
     id          String   @id @default(cuid())
     name        String
     image       String
-    slug        String   @unique
+    price       String
     description String
     playercount String
     launchDate  DateTime @default(now())
-    feature     String
-    vip         Boolean  @default(false)
+    vip         String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
+    serverType  String
 }
 
 enum Role {

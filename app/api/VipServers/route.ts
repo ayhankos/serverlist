@@ -7,14 +7,14 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = Number(searchParams.get("page")) || 1;
   const pageSize = Number(searchParams.get("pageSize")) || 10;
-  const vip = searchParams.get("vip") === "true";
+  const vip = searchParams.get("vip");
 
   const offset = (page - 1) * pageSize;
 
   try {
     const servers = await prisma.server.findMany({
       where: {
-        vip: vip,
+        vip: "vip",
       },
       skip: offset,
       take: pageSize,
