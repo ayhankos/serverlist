@@ -21,6 +21,8 @@ import {
   Users,
   Star,
   Calendar,
+  Sword,
+  Swords,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -58,11 +60,18 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "image",
     cell: ({ row }) => (
-      <img
-        src={row.getValue("image")}
-        alt={row.getValue("name")}
-        className="h-16 w-16 rounded-full"
-      />
+      <div className="relative h-20 w-20 flex items-center justify-center">
+        <img
+          src="/gifs/mavicerceve.gif"
+          alt="flame-border"
+          className="absolute inset-0 h-20 w-20 object-cover rounded-full"
+        />
+        <img
+          src={row.getValue("image")}
+          alt={row.getValue("name")}
+          className="absolute h-14 w-14 rounded-full object-cover"
+        />
+      </div>
     ),
   },
   {
@@ -70,7 +79,6 @@ const columns: ColumnDef<Server>[] = [
     header: "Sunucu Adı",
     cell: ({ row }) => (
       <div className="flex items-center space-x-2">
-        <ServerIcon className="h-5 w-5 text-indigo-500" />
         <span className="font-medium text-indigo-700">
           {row.getValue("name")}
         </span>
@@ -145,7 +153,7 @@ const columns: ColumnDef<Server>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(server.id)}
             >
-              Sunucu ID'sini Kopyala
+              Sunucu ID&lsquo;sini Kopyala
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Sunucu Detayları</DropdownMenuItem>
@@ -286,7 +294,7 @@ export function VipServerTable() {
                 </TableRow>
               ))}
             </TableHeader>
-            <TableBody className="text-xl">
+            <TableBody className="text-lg font-medium">
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row, index) => (
                   <TableRow

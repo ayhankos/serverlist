@@ -30,7 +30,7 @@ export default function RootLayout({
           <TawkToChat />
           <DiscordWidget
             inviteLink="https://discord.com/invite/pvpserverlar"
-            serverId="1174334931929927721"
+            serverId="1131696011396522007"
           />
           <div className="h-screen w-full overflow-hidden bg-zinc-100">
             <main

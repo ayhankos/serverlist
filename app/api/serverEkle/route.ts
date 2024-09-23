@@ -9,7 +9,6 @@ export async function POST(request: NextRequest) {
       name: body.name,
       description: body.description,
       playercount: body.playerCount,
-      price: body.price,
       vip: body.vip,
       launchDate: new Date(body.launchDate),
       image: body.image,

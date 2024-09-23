@@ -22,7 +22,6 @@ export async function GET(
       id: server.id,
       name: server.name,
       description: server.description,
-      feature: server.feature,
       playerCount: server.playercount,
       launchDate: server.launchDate,
       image: server.image,

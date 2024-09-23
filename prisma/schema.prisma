@@ -21,7 +21,6 @@ model Server {
     id          String   @id @default(cuid())
     name        String
     image       String
-    price       String
     description String
     playercount String
     launchDate  DateTime @default(now())

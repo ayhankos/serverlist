@@ -135,7 +135,7 @@ const columns: ColumnDef<Server>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(server.id)}
             >
-              Sunucu ID'sini Kopyala
+              Sunucu ID&apos;sini Kopyala
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Sunucu Detayları</DropdownMenuItem>

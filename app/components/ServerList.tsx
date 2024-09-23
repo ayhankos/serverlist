@@ -1,12 +1,21 @@
 import React from "react";
 import { RegularServerTable } from "@/components/RegularTables";
 import { VipServerTable } from "@/components/VipTables";
+import Image from "next/image";
 
-const AdBanner = ({ width, height }: { width: string; height: string }) => (
-  <div
-    className={`bg-gray-200 flex items-center justify-center text-gray-500 border border-gray-300 rounded w-full h-full`}
-  >
-    Reklam Alanı
+const AdBanner = ({
+  src,
+  alt,
+  width,
+  height,
+}: {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}) => (
+  <div className="relative w-full" style={{ height: `${height}px` }}>
+    <Image src={src} alt={alt} layout="fill" objectFit="cover" />
   </div>
 );
 
@@ -14,11 +23,13 @@ export default function Metin2PvpPage() {
   return (
     <div className="bg-gray-100 min-h-screen text-black flex flex-col">
       <div className="flex-1 overflow-y-auto">
-        <header className="bg-blue-600 text-white p-4">
-          <h1 className="text-2xl font-bold">Metin2 PVP Sunucuları</h1>
+        <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4">
+          <h1 className="text-2xl font-bold text-center">
+            Metin2 PVP Sunucuları
+          </h1>
         </header>
 
-        <main className=" mx-10 p-4 lg:px-0">
+        <main className="mx-2 sm:mx-6 lg:mx-20 xl:mx-32 p-4 lg:px-0">
           <div className="fixed left-0 top-0 w-[300px] h-screen hidden lg:block">
             <video
               src="/adds/reklam.webm"
@@ -29,29 +40,36 @@ export default function Metin2PvpPage() {
             />
           </div>
           <div className="lg:ml-[300px] lg:mr-[300px]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <AdBanner width="100%" height="100px" />
-              <AdBanner width="100%" height="100px" />
-            </div>
-            <section className="mb-8">
+            <AdBanner
+              src="/gifs/banner.gif"
+              alt="Top Banner Ad"
+              width={700}
+              height={130}
+            />
+
+            <section className="my-2">
               <h2 className="text-xl font-semibold mb-4">VIP Sunucular</h2>
               <VipServerTable />
             </section>
 
-            <div className="mb-8">
-              <AdBanner width="100%" height="90px" />
-            </div>
+            <AdBanner
+              src="/gifs/banner.gif"
+              alt="Middle Banner Ad"
+              width={700}
+              height={130}
+            />
 
-            <section className="mb-8">
+            <section className="my-8">
               <h2 className="text-xl font-semibold mb-4">Normal Sunucular</h2>
               <RegularServerTable />
             </section>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-              <AdBanner width="100%" height="250px" />
-              <AdBanner width="100%" height="250px" />
-              <AdBanner width="100%" height="250px" />
-            </div>
+            <AdBanner
+              src="/gifs/banner.gif"
+              alt="Bottom Banner Ad"
+              width={700}
+              height={130}
+            />
           </div>
           <div className="fixed right-0 top-0 w-[300px] h-screen hidden lg:block">
             <video

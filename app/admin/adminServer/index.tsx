@@ -27,7 +27,6 @@ const formSchema = z.object({
   name: z.string().min(2).max(100),
   description: z.string(),
   playerCount: z.string(),
-  price: z.string(),
   vip: z.enum(["vip", "normal"]),
   launchDate: z.date(),
   image: z.string(),
@@ -46,7 +45,6 @@ export const AdminServerForm: React.FC = () => {
       name: "",
       description: "",
       playerCount: "",
-      price: "",
       vip: "normal",
       launchDate: new Date(),
       image: "",
@@ -144,24 +142,7 @@ export const AdminServerForm: React.FC = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel htmlFor="price">Price</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    disabled={loading}
-                    placeholder="Price"
-                    className="bg-zinc-100"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
           <FormField
             control={form.control}
             name="description"
