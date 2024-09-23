@@ -26,18 +26,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("font-sans antialiased", fontSans.variable)}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="light">
           <TawkToChat />
           <DiscordWidget
-            inviteLink="https://discord.com/invite/korpeler"
+            inviteLink="https://discord.com/invite/pvpserverlar"
             serverId="1174334931929927721"
           />
-          <div className="h-screen w-full overflow-hidden bg-gradient-to-b from-gray-800 to-gray-900">
+          <div className="h-screen w-full overflow-hidden bg-zinc-100">
             <main
               className="flex h-full w-full overflow-y-auto scroll-smooth bg-opacity-70 backdrop-blur-lg"
               style={{

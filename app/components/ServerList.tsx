@@ -1,107 +1,53 @@
-import React, { useState } from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import useSWR from "swr";
+import React from "react";
+import { RegularServerTable } from "@/components/RegularTables";
+import { VipServerTable } from "@/components/VipTables";
 
-interface Server {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  image: string;
-  feature: string;
-}
+const AdBanner = ({ width, height }: { width: string; height: string }) => (
+  <div
+    className={`bg-gray-200 flex items-center justify-center text-gray-500 border border-gray-300 rounded`}
+    style={{ width, height }}
+  >
+    Reklam Alanı
+  </div>
+);
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-const ServerList: React.FC = () => {
-  const { data: servers, error } = useSWR<Server[]>("/api/servers", fetcher);
-  const [filter, setFilter] = useState<string>("all");
-
-  if (error)
-    return (
-      <div className="text-red-500">
-        Sunucu listesi yüklenirken bir hata oluştu.
-      </div>
-    );
-  if (!servers) return <div className="text-blue-400">Yükleniyor...</div>;
-
-  const filteredServers = servers.filter((server) => {
-    if (filter === "all") return true;
-    return server.feature === filter;
-  });
-
+export default function Metin2PvpPage() {
   return (
-    <div className="container mt-12">
-      <div className="mb-6">
-        <button
-          onClick={() => setFilter("55-120")}
-          className={`mr-2 px-4 py-2 rounded ${
-            filter === "55-120" ? "bg-blue-500 text-white" : "bg-gray-700"
-          }`}
-        >
-          55-120
-        </button>
-        <button
-          onClick={() => setFilter("1-99")}
-          className={`mr-2 px-4 py-2 rounded ${
-            filter === "1-99" ? "bg-blue-500 text-white" : "bg-gray-700"
-          }`}
-        >
-          1-99
-        </button>
-        <button
-          onClick={() => setFilter("55-250")}
-          className={`mr-2 px-4 py-2 rounded ${
-            filter === "55-250" ? "bg-blue-500 text-white" : "bg-gray-700"
-          }`}
-        >
-          55-250
-        </button>
-        <button
-          onClick={() => setFilter("all")}
-          className={`mr-2 px-4 py-2 rounded ${
-            filter === "all" ? "bg-blue-500 text-white" : "bg-gray-700"
-          }`}
-        >
-          All
-        </button>
-      </div>
+    <div className="bg-gray-100 min-h-screen text-black">
+      <header className="bg-blue-600 text-white p-4">
+        <h1 className="text-2xl font-bold">Metin2 PVP Sunucuları</h1>
+      </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {filteredServers.map((server) => (
-          <motion.div
-            key={server.id}
-            whileHover={{ scale: 1.05, rotate: 1 }}
-            whileTap={{ scale: 0.95 }}
-            className="relative overflow-hidden rounded-lg shadow-xl group"
-          >
-            <Link
-              className="block relative h-full w-full"
-              href={`/server/${server.slug}`}
-              target="_blank"
-              passHref
-            >
-              <div className="relative h-full group">
-                <img
-                  src={server.image}
-                  alt={server.name}
-                  className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
-                  style={{ maxHeight: "300px" }}
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out flex flex-col items-center justify-center">
-                  <h3 className="text-white text-2xl font-semibold mb-2">
-                    {server.name}
-                  </h3>
-                  <p className="text-gray-200 text-sm">{server.feature}</p>
-                </div>
-              </div>
-            </Link>
-          </motion.div>
-        ))}
-      </div>
+      <main className="container mx-auto p-4">
+        <div className="flex justify-between mb-4">
+          <AdBanner width="300px" height="100px" />
+          <AdBanner width="300px" height="100px" />
+        </div>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">VIP Sunucular</h2>
+          <VipServerTable />
+        </section>
+
+        <div className="flex justify-center mb-8">
+          <AdBanner width="728px" height="90px" />
+        </div>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">Normal Sunucular</h2>
+          <RegularServerTable />
+        </section>
+
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <AdBanner width="300px" height="250px" />
+          <AdBanner width="300px" height="250px" />
+          <AdBanner width="300px" height="250px" />
+        </div>
+      </main>
+
+      <footer className="bg-gray-800 text-white p-4 text-center">
+        <p>&copy; 2024 Metin2 PVP Sunucu Listesi. Tüm hakları saklıdır.</p>
+      </footer>
     </div>
   );
-};
-
-export default ServerList;
+}

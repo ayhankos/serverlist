@@ -8,7 +8,7 @@ export async function GET(
   const slug = params.slug;
 
   try {
-    const server = await prisma.server.findUnique({
+    const server = await prisma.vipServer.findUnique({
       where: {
         slug: slug,
       },
