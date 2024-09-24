@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 import { motion } from "framer-motion";
 
@@ -8,7 +8,16 @@ async function getServerData(slug: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/server/${slug}`
   );
-  if (!res.ok) return undefined;
+
+  if (res.status === 404) {
+    return null;
+  }
+
+  if (!res.ok) {
+    console.error("API Hatası:", res.status);
+    return null;
+  }
+
   return res.json();
 }
 
@@ -21,18 +30,27 @@ interface ServerData {
   image: string;
 }
 
-export default async function ServerPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const server: ServerData | undefined = await getServerData(params.slug);
+export default function ServerPage({ params }: { params: { slug: string } }) {
+  const [server, setServer] = useState<ServerData | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getServerData(params.slug);
+      if (!data) {
+        notFound();
+      } else {
+        setServer(data);
+      }
+    };
+
+    fetchData();
+  }, [params.slug]);
 
   if (!server) {
-    notFound();
+    return null;
   }
 
-  const features = server?.feature ? server.feature.split(",") : [];
+  const features = server.feature ? server.feature.split(",") : [];
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-800 to-black relative overflow-hidden">
@@ -48,7 +66,7 @@ export default async function ServerPage({
           transition={{ delay: 0.2, duration: 0.5 }}
           className="text-5xl font-bold mb-6 text-white text-center"
         >
-          {server?.name}
+          {server.name}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
@@ -56,7 +74,12 @@ export default async function ServerPage({
           transition={{ delay: 0.4, duration: 0.5 }}
           className="text-xl mb-8 text-gray-300 text-center px-20"
         >
-          {server?.description}
+          {server.description.split(".").map((line, index) => (
+            <span key={index}>
+              {line.trim()}
+              {line.trim() ? "." : ""} <br />
+            </span>
+          ))}
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -94,11 +117,11 @@ export default async function ServerPage({
               İstatistikler
             </h2>
             <p className="mb-4 text-gray-300 text-lg">
-              <strong>Oyuncu Sayısı:</strong> {server?.playerCount}
+              <strong>Oyuncu Sayısı:</strong> {server.playerCount}
             </p>
             <p className="text-gray-300 text-lg">
               <strong>Açılış Tarihi:</strong>{" "}
-              {new Date(server?.launchDate).toLocaleDateString()}
+              {new Date(server.launchDate).toLocaleDateString()}
             </p>
           </motion.div>
         </div>

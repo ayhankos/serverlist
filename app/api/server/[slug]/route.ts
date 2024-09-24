@@ -17,6 +17,7 @@ export async function GET(
     if (!server) {
       return NextResponse.json({ error: "Sunucu bulunamadı" }, { status: 404 });
     }
+
     return NextResponse.json({
       name: server.name,
       description: server.description,
