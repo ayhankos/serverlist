@@ -30,7 +30,7 @@ export default function Metin2PvpPage() {
         </header>
 
         <main className="mx-2 sm:mx-6 lg:mx-20 xl:mx-32 p-4 lg:px-0">
-          <div className="fixed left-0 top-0 w-[300px] h-screen hidden lg:block">
+          <div className="fixed left-0 top-0 w-[18.75rem] h-screen hidden lg:block">
             <video
               src="/adds/reklam.webm"
               className="w-full h-full object-cover"
@@ -71,7 +71,7 @@ export default function Metin2PvpPage() {
               height={130}
             />
           </div>
-          <div className="fixed right-0 top-0 w-[300px] h-screen hidden lg:block">
+          <div className="fixed right-0 top-0 w-[18.75rem] h-screen hidden lg:block">
             <video
               src="/adds/reklam.webm"
               className="w-full h-full object-cover"

@@ -28,6 +28,8 @@ model Server {
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
     serverType  String
+    Rank        String   @default("0")
+    slug        String   @unique @default(cuid())
 }
 
 enum Role {

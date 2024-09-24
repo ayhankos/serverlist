@@ -31,6 +31,7 @@ const formSchema = z.object({
   launchDate: z.date(),
   image: z.string(),
   serverType: z.string(),
+  rank: z.string(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -49,6 +50,7 @@ export const AdminServerForm: React.FC = () => {
       launchDate: new Date(),
       image: "",
       serverType: "1-99",
+      rank: "0",
     },
   });
 
@@ -99,6 +101,7 @@ export const AdminServerForm: React.FC = () => {
         body: JSON.stringify({
           ...data,
           playercount: data.playerCount,
+          Rank: data.rank,
         }),
       });
 
@@ -171,6 +174,25 @@ export const AdminServerForm: React.FC = () => {
                     {...field}
                     disabled={loading}
                     placeholder="Player Count"
+                    className="bg-zinc-100"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="rank"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="rank">Rank</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    disabled={loading}
+                    placeholder="Rank"
                     className="bg-zinc-100"
                   />
                 </FormControl>

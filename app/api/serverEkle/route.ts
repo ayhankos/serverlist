@@ -13,12 +13,14 @@ export async function POST(request: NextRequest) {
       launchDate: new Date(body.launchDate),
       image: body.image,
       serverType: body.serverType,
+      Rank: body.Rank,
     };
 
     const newServer = await prisma.server.create({
       data: serverData,
     });
 
+    console.log("Server successfully created:", newServer);
     return NextResponse.json(
       { message: "Server successfully created", serverData: newServer },
       { status: 201 }

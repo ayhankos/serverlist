@@ -308,10 +308,6 @@ export function RegularServerTable() {
           </Table>
         </div>
         <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-indigo-600">
-            {table.getFilteredSelectedRowModel().rows.length} /{" "}
-            {table.getFilteredRowModel().rows.length} satır seçildi.
-          </div>
           <div className="space-x-2">
             <Button
               variant="outline"

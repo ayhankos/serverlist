@@ -45,16 +45,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-interface Server {
-  id: string;
-  name: string;
-  image: string;
-  slug: string;
-  description: string;
-  playercount: string;
-  feature: string;
-}
+import ServerActionsMenu from "@/app/components/ServerActionsMenu";
+import { Server } from "@prisma/client";
 
 const columns: ColumnDef<Server>[] = [
   {
@@ -98,6 +90,15 @@ const columns: ColumnDef<Server>[] = [
     ),
   },
   {
+    accessorKey: "Rank",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-1">
+        <span className="text-red-700">{row.getValue("Rank")}</span>
+      </div>
+    ),
+    enableHiding: false,
+  },
+  {
     accessorKey: "serverType",
     header: ({ column }) => (
       <Button
@@ -139,34 +140,15 @@ const columns: ColumnDef<Server>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const server = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Menüyü aç</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-white text-black">
-            <DropdownMenuLabel>İşlemler</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(server.id)}
-            >
-              Sunucu ID&lsquo;sini Kopyala
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Sunucu Detayları</DropdownMenuItem>
-            <DropdownMenuItem>Sunucuya Katıl</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <ServerActionsMenu server={server} />;
     },
   },
 ];
 
 export function VipServerTable() {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: "Rank", desc: false },
+  ]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
@@ -326,10 +308,6 @@ export function VipServerTable() {
           </Table>
         </div>
         <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-indigo-600">
-            {table.getFilteredSelectedRowModel().rows.length} /{" "}
-            {table.getFilteredRowModel().rows.length} satır seçildi.
-          </div>
           <div className="space-x-2">
             <Button
               variant="outline"

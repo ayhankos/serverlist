@@ -15,7 +15,6 @@ export default function Header() {
   const { theme } = useTheme();
 
   const [searching, setSearching] = React.useState(false);
-  // console.log("🚀 ~ Header ~ searching:", searching)
 
   const handleSearch = () => {
     setSearching(!searching);
