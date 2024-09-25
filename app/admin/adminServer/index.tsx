@@ -32,6 +32,7 @@ const formSchema = z.object({
   image: z.string(),
   serverType: z.string(),
   rank: z.string(),
+  link: z.string(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -51,6 +52,7 @@ export const AdminServerForm: React.FC = () => {
       image: "",
       serverType: "1-99",
       rank: "0",
+      link: "www.pvpserverler.tr",
     },
   });
 
@@ -193,6 +195,24 @@ export const AdminServerForm: React.FC = () => {
                     {...field}
                     disabled={loading}
                     placeholder="Rank"
+                    className="bg-zinc-100"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="link"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="link">Server Link</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    disabled={loading}
+                    placeholder="Server Link"
                     className="bg-zinc-100"
                   />
                 </FormControl>

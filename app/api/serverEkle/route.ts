@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
       image: body.image,
       serverType: body.serverType,
       Rank: body.Rank,
+      link: body.link,
     };
 
     const newServer = await prisma.server.create({

@@ -30,6 +30,7 @@ model Server {
     serverType  String
     Rank        String   @default("0")
     slug        String   @unique @default(cuid())
+    link        String
 }
 
 enum Role {

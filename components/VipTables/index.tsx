@@ -51,6 +51,7 @@ import { Server } from "@prisma/client";
 const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "image",
+    header: "",
     cell: ({ row }) => (
       <div className="relative h-20 w-20 flex items-center justify-center">
         <img
@@ -100,9 +101,7 @@ const columns: ColumnDef<Server>[] = [
   },
   {
     accessorKey: "serverType",
-    header: ({ column }) => (
-      <div className="hover:bg-transparent">Server Tipi</div>
-    ),
+    header: "Sunucu Tipi",
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
         <Star className="h-4 w-4 text-amber-500" />
@@ -143,7 +142,15 @@ export function VipServerTable() {
     { id: "Rank", desc: false },
   ]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    Rank: false,
+    image: true,
+    name: true,
+    playercount: true,
+    serverType: true,
+    launchDate: true,
+    actions: true,
+  });
   const [rowSelection, setRowSelection] = useState({});
   const [data, setData] = useState<Server[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -250,7 +257,10 @@ export function VipServerTable() {
           <Table>
             <TableHeader className="bg-gradient-to-r from-indigo-500 to-purple-500">
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id} className="border-none">
+                <TableRow
+                  key={headerGroup.id}
+                  className="border-none hover-none"
+                >
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead
