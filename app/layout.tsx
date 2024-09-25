@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import TawkToChat from "@/components/TawkToChat";
 import dynamic from "next/dynamic";
 import DiscordWidget from "@/components/DiscordWidget";
+import Navbar from "@/components/navbar";
 
 const fontSans = FontSans({
   subsets: ["latin"],

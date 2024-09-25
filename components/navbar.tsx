@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "react-feather";
@@ -19,7 +20,7 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 transition-transform duration-300 backdrop-blur-xl bg-opacity-70 $">
+    <nav className=" top-0 left-0 w-full z-50 transition-transform duration-300 backdrop-blur-xl bg-opacity-70 $">
       <div className="container mx-auto flex justify-between items-center px-4 py-8">
         <div className="flex items-center space-x-4">
           <motion.img

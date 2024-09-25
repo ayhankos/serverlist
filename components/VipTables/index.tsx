@@ -101,14 +101,7 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "serverType",
     header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        className="hover:bg-transparent"
-      >
-        Server Tipi
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
+      <div className="hover:bg-transparent">Server Tipi</div>
     ),
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
