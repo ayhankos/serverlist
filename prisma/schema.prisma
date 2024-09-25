@@ -33,6 +33,18 @@ model Server {
     link        String
 }
 
+model Streamer {
+    id          String   @id @default(cuid())
+    name        String
+    image       String
+    description String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    dcLink      String
+    ytLink      String
+    vip         String
+}
+
 enum Role {
     ADMIN
     USER

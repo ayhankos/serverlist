@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { RegularServerTable } from "@/components/RegularTables";
 import { VipServerTable } from "@/components/VipTables";
+import VipStreamers from "@/components/VipStreamers";
 import Image from "next/image";
 import { HeaderMain } from "@/components/layout/home/header";
 import { Menu } from "lucide-react";
@@ -135,6 +136,14 @@ export default function Metin2PvpPage() {
                 Normal Sunucular
               </h2>
               <RegularServerTable />
+            </section>
+
+            {/* Streamers */}
+            <section className="my-8">
+              <h2 className="text-xl font-semibold mb-4 text-gray-900">
+                Yayıncılar
+              </h2>
+              <VipStreamers />
             </section>
 
             {/* Bottom Banner */}
