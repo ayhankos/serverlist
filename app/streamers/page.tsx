@@ -17,7 +17,7 @@ export default async function StreamersPage() {
   const streamers = await getStreamers();
 
   return (
-    <div className="hidden md:block">
+    <div className="hidden md:block ">
       <div className="h-full px-4 py-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
@@ -29,10 +29,9 @@ export default async function StreamersPage() {
             </p>
           </div>
         </div>
-        <Separator className="my-4" />
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
           {streamers?.map((streamer) => (
-            <Card key={streamer.id} className="bg-white border-none">
+            <Card key={streamer.id} className="bg-white">
               <CardContent className="p-4">
                 <div className="aspect-square relative mb-2">
                   <img

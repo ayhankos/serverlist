@@ -53,12 +53,12 @@ const columns: ColumnDef<Server>[] = [
     accessorKey: "image",
     header: "",
     cell: ({ row }) => (
-      <div className="relative h-20 w-20 flex items-center justify-center">
-        <img
+      <div className="relative h-14 w-14 flex items-center justify-center">
+        {/*   <img
           src="/gifs/mavicerceve.gif"
           alt="flame-border"
           className="absolute inset-0 h-20 w-20 object-cover rounded-full"
-        />
+        /> */}
         <img
           src={row.getValue("image")}
           alt={row.getValue("name")}
@@ -72,24 +72,13 @@ const columns: ColumnDef<Server>[] = [
     header: "Sunucu Adı",
     cell: ({ row }) => (
       <div className="flex items-center space-x-2">
-        <span className="font-medium text-blue-700">
+        <span className="font-medium text-gray-800">
           {row.getValue("name")}
         </span>
       </div>
     ),
   },
-  {
-    accessorKey: "playercount",
-    header: "Oyuncu Sayısı",
-    cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
-        <Users className="h-4 w-4 text-emerald-500" />
-        <span className="font-semibold text-emerald-700">
-          {row.getValue("playercount")}
-        </span>
-      </div>
-    ),
-  },
+
   {
     accessorKey: "Rank",
     cell: ({ row }) => (
@@ -100,18 +89,8 @@ const columns: ColumnDef<Server>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "serverType",
-    header: "Sunucu Tipi",
-    cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
-        <Star className="h-4 w-4 text-amber-500" />
-        <span className="text-amber-700">{row.getValue("serverType")}</span>
-      </div>
-    ),
-  },
-  {
     accessorKey: "launchDate",
-    header: "Lansman Tarihi",
+    header: "Açılış Tarihi",
     cell: ({ row }) => {
       const launchDate = new Date(row.getValue("launchDate"));
       const formattedDate = launchDate.toLocaleDateString("tr-TR", {
@@ -126,6 +105,29 @@ const columns: ColumnDef<Server>[] = [
         </div>
       );
     },
+  },
+  {
+    accessorKey: "serverType",
+    header: "Sunucu Tipi",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-1">
+        <Star className="h-4 w-4 text-amber-500" />
+        <span className="text-amber-700">{row.getValue("serverType")}</span>
+      </div>
+    ),
+  },
+
+  {
+    accessorKey: "playercount",
+    header: "Oyuncu Sayısı",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-1">
+        <Users className="h-4 w-4 text-red-500" />
+        <span className="font-semibold text-red-700">
+          {row.getValue("playercount")}
+        </span>
+      </div>
+    ),
   },
   {
     id: "actions",
@@ -211,7 +213,7 @@ export function VipServerTable() {
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
-                className="border-none hover-none "
+                className="border-none hover-none uppercase"
               >
                 {headerGroup.headers.map((header) => {
                   return (
@@ -240,7 +242,10 @@ export function VipServerTable() {
                   className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="py-3">
+                    <TableCell
+                      key={cell.id}
+                      className="p-0 text-center ml-2 pl-2"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

@@ -51,7 +51,7 @@ const columns: ColumnDef<Server>[] = [
     accessorKey: "image",
     header: "",
     cell: ({ row }) => (
-      <div className="relative h-20 w-20 flex items-center justify-center">
+      <div className="relative h-14 w-14 flex items-center justify-center">
         <img
           src={row.getValue("image")}
           alt={row.getValue("name")}
@@ -72,16 +72,23 @@ const columns: ColumnDef<Server>[] = [
     ),
   },
   {
-    accessorKey: "playercount",
-    header: "Oyuncu Sayısı",
-    cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
-        <span className="font-semibold text-emerald-700">
-          {row.getValue("playercount")}
-        </span>
-      </div>
-    ),
+    accessorKey: "launchDate",
+    header: "Lansman Tarihi",
+    cell: ({ row }) => {
+      const launchDate = new Date(row.getValue("launchDate"));
+      const formattedDate = launchDate.toLocaleDateString("tr-TR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      return (
+        <div className="flex items-center space-x-1">
+          <span className="text-blue-700">{formattedDate}</span>
+        </div>
+      );
+    },
   },
+
   {
     accessorKey: "serverType",
     header: ({ column }) => (
@@ -101,21 +108,15 @@ const columns: ColumnDef<Server>[] = [
     ),
   },
   {
-    accessorKey: "launchDate",
-    header: "Lansman Tarihi",
-    cell: ({ row }) => {
-      const launchDate = new Date(row.getValue("launchDate"));
-      const formattedDate = launchDate.toLocaleDateString("tr-TR", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-      return (
-        <div className="flex items-center space-x-1">
-          <span className="text-blue-700">{formattedDate}</span>
-        </div>
-      );
-    },
+    accessorKey: "playercount",
+    header: "Oyuncu Sayısı",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-1">
+        <span className="font-semibold text-emerald-700">
+          {row.getValue("playercount")}
+        </span>
+      </div>
+    ),
   },
   {
     id: "actions",
@@ -184,7 +185,7 @@ export function RegularServerTable() {
   }
 
   return (
-    <Card className="w-full bg-white rounded-xl border-none ">
+    <Card className="w-full rounded-xl border-none bg-zinc-100 shadow-none">
       <CardContent>
         <div className="m-5 flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="relative mb-4 sm:mb-0 w-1/3 mt-6">
@@ -233,13 +234,13 @@ export function RegularServerTable() {
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow
                   key={headerGroup.id}
-                  className="border-none hover:bg-transparent"
+                  className="border-none hover-none uppercase"
                 >
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead
                         key={header.id}
-                        className="text-white font-semibold text-center"
+                        className="text-white font-semibold"
                       >
                         {header.isPlaceholder
                           ? null
@@ -262,7 +263,10 @@ export function RegularServerTable() {
                     className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="py-3 text-center">
+                      <TableCell
+                        key={cell.id}
+                        className="p-0 text-center ml-2 pl-2"
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
