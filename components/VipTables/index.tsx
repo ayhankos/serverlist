@@ -204,24 +204,24 @@ export function VipServerTable() {
   }
 
   return (
-    <Card className="w-full bg-gradient-to-br from-blue-50 to-sky-50 rounded-xl border-none shadow-xl">
-      <CardHeader className="rounded-t-xl bg-gradient-to-r from-blue-600 to-sky-600 text-white">
+    <Card className="w-full bg-zinc-200 rounded-xl border-none shadow-xl">
+      <CardHeader className="rounded-t-xl bg-gradient-to-b from-muted/20 to-muted/30 text-gray-600">
         <CardTitle className="text-2xl font-bold">Sunucu Listesi</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="rounded-lg overflow-hidden shadow-lg mt-8">
+        <div className="rounded-lg overflow-hidden shadow-lg mt-8 ">
           <Table>
-            <TableHeader className="bg-gradient-to-r from-blue-500 to-sky-500">
+            <TableHeader className="bg-gradient-to-b from-muted/20 to-muted/30">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow
                   key={headerGroup.id}
-                  className="border-none hover-none"
+                  className="border-none hover-none "
                 >
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead
                         key={header.id}
-                        className="text-white font-semibold"
+                        className="text-gray-600 font-semibold"
                       >
                         {header.isPlaceholder
                           ? null

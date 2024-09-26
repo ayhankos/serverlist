@@ -185,7 +185,7 @@ export function RegularServerTable() {
 
   return (
     <Card className="w-full bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border-none shadow-xl">
-      <CardHeader className="rounded-t-xl bg-gradient-to-r from-blue-600 to-sky-600 text-white">
+      <CardHeader className="rounded-t-xl bg-gradient-to-b from-muted/20 to-muted/30 text-gray-600">
         <CardTitle className="text-2xl font-bold">Sunucu Listesi</CardTitle>
       </CardHeader>
       <CardContent>
@@ -235,14 +235,14 @@ export function RegularServerTable() {
         </div>
         <div className="rounded-lg overflow-hidden shadow-lg">
           <Table>
-            <TableHeader className="bg-gradient-to-r from-blue-500 to-sky-500">
+            <TableHeader className="bg-gradient-to-b from-muted/20 to-muted/30">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id} className="border-none">
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead
                         key={header.id}
-                        className="text-white font-semibold"
+                        className="text-gray-600 font-semibold"
                       >
                         {header.isPlaceholder
                           ? null

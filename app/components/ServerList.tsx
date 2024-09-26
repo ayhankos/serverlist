@@ -70,7 +70,7 @@ export default function Metin2PvpPage() {
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       {/* Header */}
-      <header className=" text-white p-4 shadow-md top-0 z-50">
+      <header className="bg-gradient-to-b from-muted/20 to-muted/30 text-white p-4 shadow-md top-0 z-50">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center">
             <Image
@@ -91,7 +91,7 @@ export default function Metin2PvpPage() {
             className="flex items-center space-x-4"
             style={{ minWidth: "200px" }}
           >
-            <Button className="bg-zinc-400 text-gray-900 px-4 py-2 rounded-md">
+            <Button className="bg-zinc-300 text-gray-900 px-4 py-2 rounded-md">
               Sunucunu Ekle
             </Button>
           </div>
