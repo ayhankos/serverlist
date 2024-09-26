@@ -184,14 +184,11 @@ export function RegularServerTable() {
   }
 
   return (
-    <Card className="w-full bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border-none shadow-xl">
-      <CardHeader className="rounded-t-xl bg-gradient-to-b from-muted/20 to-muted/30 text-gray-600">
-        <CardTitle className="text-2xl font-bold">Sunucu Listesi</CardTitle>
-      </CardHeader>
+    <Card className="w-full bg-white rounded-xl border-none ">
       <CardContent>
         <div className="m-5 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <div className="relative mb-4 sm:mb-0 w-1/3">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-indigo-500" />
+          <div className="relative mb-4 sm:mb-0 w-1/3 mt-6">
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-600" />
             <Input
               placeholder="Sunucu adına göre filtrele..."
               value={
@@ -200,15 +197,12 @@ export function RegularServerTable() {
               onChange={(event) =>
                 table.getColumn("name")?.setFilterValue(event.target.value)
               }
-              className="pl-8 bg-white text-black border-indigo-200 focus:border-indigo-500 focus:ring-indigo-500"
+              className="pl-8 bg-white text-black"
             />
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="ml-auto bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-400"
-              >
+              <Button variant="outline" className="ml-auto bg-white text-black">
                 Sütunlar <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -235,14 +229,17 @@ export function RegularServerTable() {
         </div>
         <div className="rounded-lg overflow-hidden shadow-lg">
           <Table>
-            <TableHeader className="bg-gradient-to-b from-muted/20 to-muted/30">
+            <TableHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id} className="border-none">
+                <TableRow
+                  key={headerGroup.id}
+                  className="border-none hover:bg-transparent"
+                >
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead
                         key={header.id}
-                        className="text-gray-600 font-semibold"
+                        className="text-white font-semibold text-center"
                       >
                         {header.isPlaceholder
                           ? null
@@ -256,16 +253,16 @@ export function RegularServerTable() {
                 </TableRow>
               ))}
             </TableHeader>
-            <TableBody>
+            <TableBody className="text-lg font-medium">
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row, index) => (
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
-                    className={index % 2 === 0 ? "bg-white" : "bg-indigo-50"}
+                    className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="py-3">
+                      <TableCell key={cell.id} className="py-3 text-center">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

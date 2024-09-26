@@ -205,9 +205,9 @@ export function VipServerTable() {
 
   return (
     <Card className="w-full bg-zinc-200 rounded-xl border-none shadow-xl">
-      <div className="rounded-lg overflow-hidden shadow-lg my-8">
+      <div className="rounded-lg overflow-hidden shadow-lg">
         <Table>
-          <TableHeader className="bg-[url('/images/bar.png')]">
+          <TableHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
