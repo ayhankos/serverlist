@@ -58,22 +58,27 @@ export function HeaderMain() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-white text-black">
-            Getting started
+          <NavigationMenuTrigger className="bg-zinc-300 text-black">
+            Sunucular
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className="bg-zinc-100">
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
                   <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/20 to-muted/30 p-6 no-underline outline-none focus:shadow-md"
                     href="/"
                   >
-                    <Icons.logo className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">
+                    <img
+                      src="/gifs/preview.gif"
+                      alt=""
+                      className="w-16 h-16 rounded-full"
+                    />
+
+                    <div className="mb-2 mt-4 text-lg text-gray-700 font-medium">
                       shadcn/ui
                     </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
+                    <p className="text-sm leading-tight text-gray-600">
                       Beautifully designed components that you can copy and
                       paste into your apps. Accessible. Customizable. Open
                       Source.
@@ -81,24 +86,39 @@ export function HeaderMain() {
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/docs" title="Introduction">
+              <ListItem
+                className="text-gray-800"
+                href="/docs"
+                title="Introduction"
+              >
                 Re-usable components built using Radix UI and Tailwind CSS.
               </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
+              <ListItem
+                className="text-gray-800"
+                href="/docs/installation"
+                title="Installation"
+              >
                 How to install dependencies and structure your app.
               </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
+              <ListItem
+                className="text-gray-800"
+                href="/docs/primitives/typography"
+                title="Typography"
+              >
                 Styles for headings, paragraphs, lists...etc
               </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuTrigger className="bg-zinc-300 text-black">
+            Components
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className="bg-zinc-100">
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {components.map((component) => (
                 <ListItem
+                  className="text-gray-800"
                   key={component.title}
                   title={component.title}
                   href={component.href}
@@ -108,13 +128,6 @@ export function HeaderMain() {
               ))}
             </ul>
           </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Documentation
-            </NavigationMenuLink>
-          </Link>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

@@ -43,24 +43,28 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-interface Server {
-  id: string;
-  name: string;
-  image: string;
-  slug: string;
-  description: string;
-  playercount: string;
-  feature: string;
-}
+import ServerActionsMenu from "@/app/components/ServerActionsMenu";
+import { Server } from "@prisma/client";
 
 const columns: ColumnDef<Server>[] = [
+  {
+    accessorKey: "image",
+    header: "",
+    cell: ({ row }) => (
+      <div className="relative h-20 w-20 flex items-center justify-center">
+        <img
+          src={row.getValue("image")}
+          alt={row.getValue("name")}
+          className="absolute h-14 w-14 rounded-full object-cover"
+        />
+      </div>
+    ),
+  },
   {
     accessorKey: "name",
     header: "Sunucu Adı",
     cell: ({ row }) => (
       <div className="flex items-center space-x-2">
-        <ServerIcon className="h-5 w-5 text-indigo-500" />
         <span className="font-medium text-indigo-700">
           {row.getValue("name")}
         </span>
@@ -72,7 +76,6 @@ const columns: ColumnDef<Server>[] = [
     header: "Oyuncu Sayısı",
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
-        <Users className="h-4 w-4 text-emerald-500" />
         <span className="font-semibold text-emerald-700">
           {row.getValue("playercount")}
         </span>
@@ -93,7 +96,6 @@ const columns: ColumnDef<Server>[] = [
     ),
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
-        <Star className="h-4 w-4 text-amber-500" />
         <span className="text-amber-700">{row.getValue("serverType")}</span>
       </div>
     ),
@@ -110,7 +112,6 @@ const columns: ColumnDef<Server>[] = [
       });
       return (
         <div className="flex items-center space-x-1">
-          <Calendar className="h-4 w-4 text-blue-500" />
           <span className="text-blue-700">{formattedDate}</span>
         </div>
       );
@@ -121,28 +122,7 @@ const columns: ColumnDef<Server>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const server = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Menüyü aç</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-white text-black">
-            <DropdownMenuLabel>İşlemler</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(server.id)}
-            >
-              Sunucu ID&apos;sini Kopyala
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Sunucu Detayları</DropdownMenuItem>
-            <DropdownMenuItem>Sunucuya Katıl</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <ServerActionsMenu server={server} />;
     },
   },
 ];
@@ -205,7 +185,7 @@ export function RegularServerTable() {
 
   return (
     <Card className="w-full bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border-none shadow-xl">
-      <CardHeader className="rounded-t-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+      <CardHeader className="rounded-t-xl bg-gradient-to-r from-blue-600 to-sky-600 text-white">
         <CardTitle className="text-2xl font-bold">Sunucu Listesi</CardTitle>
       </CardHeader>
       <CardContent>
@@ -255,7 +235,7 @@ export function RegularServerTable() {
         </div>
         <div className="rounded-lg overflow-hidden shadow-lg">
           <Table>
-            <TableHeader className="bg-gradient-to-r from-indigo-500 to-purple-500">
+            <TableHeader className="bg-gradient-to-r from-blue-500 to-sky-500">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id} className="border-none">
                   {headerGroup.headers.map((header) => {

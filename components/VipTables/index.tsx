@@ -72,7 +72,7 @@ const columns: ColumnDef<Server>[] = [
     header: "Sunucu Adı",
     cell: ({ row }) => (
       <div className="flex items-center space-x-2">
-        <span className="font-medium text-indigo-700">
+        <span className="font-medium text-blue-700">
           {row.getValue("name")}
         </span>
       </div>
@@ -204,58 +204,14 @@ export function VipServerTable() {
   }
 
   return (
-    <Card className="w-full bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border-none shadow-xl">
-      <CardHeader className="rounded-t-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+    <Card className="w-full bg-gradient-to-br from-blue-50 to-sky-50 rounded-xl border-none shadow-xl">
+      <CardHeader className="rounded-t-xl bg-gradient-to-r from-blue-600 to-sky-600 text-white">
         <CardTitle className="text-2xl font-bold">Sunucu Listesi</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="m-5 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <div className="relative mb-4 sm:mb-0 w-1/3">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-indigo-500" />
-            <Input
-              placeholder="Sunucu adına göre filtrele..."
-              value={
-                (table.getColumn("name")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table.getColumn("name")?.setFilterValue(event.target.value)
-              }
-              className="pl-8 bg-white text-black border-indigo-200 focus:border-indigo-500 focus:ring-indigo-500"
-            />
-          </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="ml-auto bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-400"
-              >
-                Sütunlar <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-white text-black">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        <div className="rounded-lg overflow-hidden shadow-lg">
+        <div className="rounded-lg overflow-hidden shadow-lg mt-8">
           <Table>
-            <TableHeader className="bg-gradient-to-r from-indigo-500 to-purple-500">
+            <TableHeader className="bg-gradient-to-r from-blue-500 to-sky-500">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow
                   key={headerGroup.id}
@@ -285,7 +241,7 @@ export function VipServerTable() {
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
-                    className={index % 2 === 0 ? "bg-white" : "bg-indigo-50"}
+                    className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="py-3">
@@ -317,7 +273,7 @@ export function VipServerTable() {
               size="sm"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-50"
+              className="bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
             >
               Önceki
             </Button>
@@ -326,7 +282,7 @@ export function VipServerTable() {
               size="sm"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-50"
+              className="bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
             >
               Sonraki
             </Button>

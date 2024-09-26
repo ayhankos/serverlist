@@ -6,6 +6,7 @@ import VipStreamers from "@/components/VipStreamers";
 import Image from "next/image";
 import { HeaderMain } from "@/components/layout/home/header";
 import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const AdBanner = ({
   src,
@@ -69,14 +70,14 @@ export default function Metin2PvpPage() {
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-gradient-to-r from-yellow-400 via-orange-500 to-amber-700 text-white p-4 shadow-md sticky top-0 z-50">
+      <header className=" text-white p-4 shadow-md top-0 z-50">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center">
             <Image
               src="/gifs/preview.gif"
               alt="Logo"
-              width={50}
-              height={50}
+              width={80}
+              height={80}
               className="rounded-lg"
             />
           </div>
@@ -90,9 +91,9 @@ export default function Metin2PvpPage() {
             className="flex items-center space-x-4"
             style={{ minWidth: "200px" }}
           >
-            <button className="bg-white text-black px-4 py-2 rounded-md">
+            <Button className="bg-zinc-400 text-gray-900 px-4 py-2 rounded-md">
               Sunucunu Ekle
-            </button>
+            </Button>
           </div>
         </div>
       </header>
@@ -113,7 +114,7 @@ export default function Metin2PvpPage() {
         <main className="flex-1 overflow-y-auto p-4">
           <div className="max-w-4xl mx-auto">
             {/* Top Banner */}
-            <AdBanner src="/gifs/banner.gif" alt="Top Banner Ad" height={130} />
+            <AdBanner src="/gifs/reklam2.gif" alt="Top Banner Ad" height={80} />
 
             {/* VIP Servers */}
             <section className="my-2">
@@ -125,9 +126,9 @@ export default function Metin2PvpPage() {
 
             {/* Middle Banner */}
             <AdBanner
-              src="/gifs/banner.gif"
+              src="/gifs/reklam2.gif"
               alt="Middle Banner Ad"
-              height={130}
+              height={80}
             />
 
             {/* Regular Servers */}
@@ -148,9 +149,9 @@ export default function Metin2PvpPage() {
 
             {/* Bottom Banner */}
             <AdBanner
-              src="/gifs/banner.gif"
+              src="/gifs/reklam2.gif"
               alt="Bottom Banner Ad"
-              height={130}
+              height={80}
             />
           </div>
         </main>
