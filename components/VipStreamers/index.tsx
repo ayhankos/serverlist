@@ -85,7 +85,7 @@ export default function Streamers() {
                 key={item.id}
                 className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-2"
               >
-                <Card className="cursor-pointer transition-all duration-300 bg-white border-none">
+                <Card className="transition-all duration-300 bg-white border-none">
                   <CardContent className="flex h-1/2 items-center justify-center p-0">
                     <img
                       src={item.image}

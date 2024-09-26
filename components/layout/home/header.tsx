@@ -41,13 +41,13 @@ const components: { title: string; href: string; description: string }[] = [
   },
   {
     title: "Tabs",
-    href: "/docs/primitives/tabs",
+    href: "#tabs-section", // Yönlendirme yapılacak section id'si
     description:
       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
   },
   {
     title: "Tooltip",
-    href: "/docs/primitives/tooltip",
+    href: "#tooltip-section", // Yönlendirme yapılacak section id'si
     description:
       "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
   },
@@ -58,10 +58,8 @@ export function HeaderMain() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-zinc-300 text-black">
-            Sunucular
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className="bg-zinc-100">
+          <NavigationMenuTrigger>Sunucular</NavigationMenuTrigger>
+          <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
@@ -75,50 +73,34 @@ export function HeaderMain() {
                       className="w-16 h-16 rounded-full"
                     />
 
-                    <div className="mb-2 mt-4 text-lg text-gray-700 font-medium">
-                      shadcn/ui
+                    <div className="mb-2 mt-4 text-lg  font-medium">
+                      PvpServerlar
                     </div>
-                    <p className="text-sm leading-tight text-gray-600">
-                      Beautifully designed components that you can copy and
-                      paste into your apps. Accessible. Customizable. Open
-                      Source.
+                    <p className="text-sm leading-tight ">
+                      Vip sunucular, emek sunucular, orta emek sunucular ve daha
+                      fazlası.
                     </p>
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem
-                className="text-gray-800"
-                href="/docs"
-                title="Introduction"
-              >
-                Re-usable components built using Radix UI and Tailwind CSS.
+              <ListItem href="#vip-section" title="VIP">
+                Vip sunuculara gitmek için tıklayın.
               </ListItem>
-              <ListItem
-                className="text-gray-800"
-                href="/docs/installation"
-                title="Installation"
-              >
-                How to install dependencies and structure your app.
+              <ListItem href="#regular-section" title="Normal Sunucular">
+                Normal sunuculara gitmek için tıklayın.
               </ListItem>
-              <ListItem
-                className="text-gray-800"
-                href="/docs/primitives/typography"
-                title="Typography"
-              >
-                Styles for headings, paragraphs, lists...etc
+              <ListItem href="#streamers-section" title="Yayıncılar">
+                Yayıncılara gitmek için tıklayın.
               </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-zinc-300 text-black">
-            Components
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className="bg-zinc-100">
+          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+          <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {components.map((component) => (
                 <ListItem
-                  className="text-gray-800"
                   key={component.title}
                   title={component.title}
                   href={component.href}

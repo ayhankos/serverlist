@@ -39,28 +39,22 @@ const MobileDropdown = () => {
       {isOpen && (
         <div className="absolute top-full right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-50">
           <a
-            href="#"
+            href="#vip-section"
             className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
           >
-            Home
+            VIP Sunucular
           </a>
           <a
-            href="#"
+            href="#regular-section"
             className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
           >
-            Servers
+            Normal Sunucular
           </a>
           <a
-            href="#"
+            href="#streamers-section"
             className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
           >
-            About
-          </a>
-          <a
-            href="#"
-            className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
-          >
-            Contact
+            VIP Yayıncılar
           </a>
         </div>
       )}
@@ -86,6 +80,7 @@ const DiscordButton = () => (
     </Button>
   </Link>
 );
+
 export default function Metin2PvpPage() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -112,75 +107,53 @@ export default function Metin2PvpPage() {
                   Metin2 PvP
                 </h1>
               </div>
-              <div className="hidden lg:block">
+              <div className="flex items-center space-x-4">
                 <HeaderMain />
-              </div>
-              <div className="flex items-center space-x-2 sm:space-x-4 ">
-                <Button className="hidden lg:block bg-green-600 hover:bg-green-700 text-white rounded-md text-xs sm:text-sm">
-                  Sunucunu Ekle
-                </Button>
-
                 <DiscordButton />
-                <div className="lg:hidden">
-                  <MobileDropdown />
-                </div>
+                <MobileDropdown />
               </div>
             </div>
           </header>
 
-          <main className="flex-1 overflow-y-auto p-4">
-            <div className="max-w-4xl mx-auto">
-              {/* Top Banner */}
-              <AdBanner
-                src="/gifs/reklam2.gif"
-                alt="Top Banner Ad"
-                height={80}
-              />
+          {/* Main Content */}
+          <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
+            <AdBanner src="/gifs/reklam.gif" alt="Top Banner" height={60} />
 
-              {/* VIP Servers */}
-              <section className="my-8">
-                <h2 className="text-xl font-extrabold mb-4 text-gray-900 px-4">
-                  VIP Sunucular
+            {/* VIP Section */}
+            <section id="vip-section" className="my-10">
+              <h2 className="text-3xl font-bold mb-4 text-gray-800">
+                VIP Sunucular
+              </h2>
+              <VipServerTable />
+            </section>
+
+            {/* Middle Ads */}
+            <AdBanner src="/gifs/reklam.gif" alt="Bottom Banner" height={60} />
+
+            {/* Regular Section */}
+            <section id="regular-section" className="my-10">
+              <h2 className="text-3xl font-bold mb-4 text-gray-800">
+                Normal Sunucular
+              </h2>
+              <RegularServerTable />
+            </section>
+
+            {/* Streamers Section */}
+            <section id="streamers-section" className="my-10">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-3xl font-bold text-gray-800">
+                  VIP Yayıncılar
                 </h2>
-                <VipServerTable />
-              </section>
+                <Link href="/streamers" target="_blank">
+                  <Button>Tüm Yayıncılar</Button>
+                </Link>
+              </div>
+              <VipStreamers />
+            </section>
 
-              {/* Middle Banner */}
-              <AdBanner
-                src="/gifs/reklam2.gif"
-                alt="Middle Banner Ad"
-                height={80}
-              />
-
-              {/* Regular Servers */}
-              <section className="my-8">
-                <h2 className="text-xl font-extrabold mb-4 text-gray-900 px-4">
-                  Normal Sunucular
-                </h2>
-                <RegularServerTable />
-              </section>
-
-              {/* Streamers */}
-              <section className="my-8">
-                <h2 className="text-xl font-semibold mb-4 text-gray-900">
-                  Yayıncılar
-                </h2>
-                <VipStreamers />
-              </section>
-
-              {/* Bottom Banner */}
-              <AdBanner
-                src="/gifs/reklam2.gif"
-                alt="Bottom Banner Ad"
-                height={80}
-              />
-            </div>
+            {/* Bottom Ads */}
+            <AdBanner src="/gifs/reklam.gif" alt="Bottom Banner" height={60} />
           </main>
-
-          {/* Footer */}
-          <footer className="bg-gray-900 text-white p-4 text-center">
-            <p>&copy; 2024 Metin2 PVP Sunucu Listesi. Tüm hakları saklıdır.</p>
-          </footer>
         </div>
 
         {/* Right Adds - Hidden on smaller screens */}
