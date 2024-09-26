@@ -1,41 +1,36 @@
-import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
+import { NextResponse } from "next/server";
 import path from "path";
+import { writeFile } from "fs/promises";
 
-export async function POST(request: NextRequest) {
-  try {
-    const formData = await request.formData();
-    const file = formData.get("image") as File | null;
+export const POST = async (req: any, res: any) => {
+  const formData = await req.formData();
 
-    if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
-    }
-
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const filename =
-      file.name.replace(/\.[^/.]+$/, "") +
-      "-" +
-      uniqueSuffix +
-      path.extname(file.name);
-
-    const uploadUrl = "https://pvpserverlar.tr/upload.php";
-
-    const uploadFormData = new FormData();
-    uploadFormData.append("image", new Blob([buffer]), filename);
-
-    const response = await axios.post(uploadUrl, uploadFormData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    const imagePath = response.data.imagePath;
-    return NextResponse.json({ imagePath }, { status: 200 });
-  } catch (error) {
-    console.error("Image upload failed:", error);
-    return NextResponse.json({ error: "Image upload failed" }, { status: 500 });
+  const files = formData.getAll("files");
+  if (files.length === 0) {
+    return NextResponse.json({ error: "No files received." }, { status: 400 });
   }
-}
+
+  const responses = [];
+  for (const file of files) {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const filename = `${new Date().getTime()}${Math.random()
+      .toString(36)
+      .substring(7)}.${file.type.split("/")[1]}`;
+    console.log(filename);
+    try {
+      await writeFile(
+        path.join(process.cwd(), "public/uploads/" + filename),
+        buffer
+      );
+      responses.push({ file: filename, status: "Success" });
+    } catch (error) {
+      console.log("Error occurred ", error);
+      responses.push({ file: filename, status: "Failed" });
+    }
+  }
+
+  return NextResponse.json(
+    { Message: "Processed", responses },
+    { status: 201 }
+  );
+};
