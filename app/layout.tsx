@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
+import { Inter as FontSans, Montserrat } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import "./globals.css";
@@ -9,7 +9,7 @@ import dynamic from "next/dynamic";
 import DiscordWidget from "@/components/DiscordWidget";
 import Navbar from "@/components/navbar";
 
-const fontSans = FontSans({
+const fontSans = Montserrat({
   subsets: ["latin"],
   variable: "--font-sans",
 });

@@ -68,9 +68,9 @@ const MobileDropdown = () => {
 
 export default function Metin2PvpPage() {
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col">
+    <div className=" min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-gradient-to-b from-muted/20 to-muted/30 text-white p-4 shadow-md top-0 z-50">
+      <header className="bg-[url('/images/bar.png')] text-white p-4 shadow-md top-0 z-50">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center">
             <Image
@@ -101,13 +101,7 @@ export default function Metin2PvpPage() {
       <div className="flex-1 flex">
         {/* Left Ad Video */}
         <div className="hidden lg:block w-[18.75rem] h-screen sticky top-0">
-          <video
-            src="/adds/reklam.webm"
-            className="w-full h-full object-cover"
-            autoPlay
-            loop
-            muted
-          />
+          <img src="/adds/sagsol.gif" className="w-full h-full object-cover" />
         </div>
 
         {/* Main Content */}
@@ -158,13 +152,7 @@ export default function Metin2PvpPage() {
 
         {/* Right Ad Video */}
         <div className="hidden lg:block w-[18.75rem] h-screen sticky top-0">
-          <video
-            src="/adds/reklam.webm"
-            className="w-full h-full object-cover"
-            autoPlay
-            loop
-            muted
-          />
+          <img src="/adds/sagsol.gif" className="w-full h-full object-cover" />
         </div>
       </div>
 

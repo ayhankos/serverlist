@@ -205,90 +205,63 @@ export function VipServerTable() {
 
   return (
     <Card className="w-full bg-zinc-200 rounded-xl border-none shadow-xl">
-      <CardHeader className="rounded-t-xl bg-gradient-to-b from-muted/20 to-muted/30 text-gray-600">
-        <CardTitle className="text-2xl font-bold">Sunucu Listesi</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="rounded-lg overflow-hidden shadow-lg mt-8 ">
-          <Table>
-            <TableHeader className="bg-gradient-to-b from-muted/20 to-muted/30">
-              {table.getHeaderGroups().map((headerGroup) => (
+      <div className="rounded-lg overflow-hidden shadow-lg my-8">
+        <Table>
+          <TableHeader className="bg-[url('/images/bar.png')]">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow
+                key={headerGroup.id}
+                className="border-none hover-none "
+              >
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead
+                      key={header.id}
+                      className="text-white font-semibold"
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody className="text-lg font-medium">
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row, index) => (
                 <TableRow
-                  key={headerGroup.id}
-                  className="border-none hover-none "
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
                 >
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead
-                        key={header.id}
-                        className="text-gray-600 font-semibold"
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="py-3">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody className="text-lg font-medium">
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row, index) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                    className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="py-3">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    Sonuç bulunamadı.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        <div className="mt-4 flex items-center justify-between">
-          <div className="space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-              className="bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
-            >
-              Önceki
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-              className="bg-white text-blue-600 border-blue-300 hover:bg-blue-50"
-            >
-              Sonraki
-            </Button>
-          </div>
-        </div>
-      </CardContent>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  Sonuç bulunamadı.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </Card>
   );
 }
