@@ -15,8 +15,8 @@ const fontSans = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Yang",
-  description: "Hizli al sat",
+  title: "PvpServerlar",
+  description: "Her hafta güncellenen pvp serverlar listesine ulaşın.",
 };
 
 export default function RootLayout({
