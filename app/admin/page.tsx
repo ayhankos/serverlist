@@ -1,11 +1,14 @@
-import { Server } from "@prisma/client";
+import { Server, Streamer } from "@prisma/client";
 import { AdminServerForm } from "./adminServer";
 import { StreamerForm } from "./adminStreamer";
 import AdminServerSilme from "./serverSilme";
 import { getServers } from "@/utils/servers/get";
+import StreamerDelete from "./streamerSil";
+import { getStreamers } from "@/utils/streamers/get";
 
 export default async function AdminDashboard() {
   let data: Server[] = await getServers();
+  const streamers = await getStreamers();
   return (
     <div className="container text-black h-screen">
       <h1 className="text-2xl font-bold mx-auto text-center pt-20">
@@ -20,6 +23,10 @@ export default async function AdminDashboard() {
         Yayinci Ekleme
       </h1>
       <StreamerForm />
+      <h1 className="text-2xl font-bold mx-auto text-center pt-20">
+        Yayinci Silme
+      </h1>
+      <StreamerDelete initialStreamers={streamers} />
     </div>
   );
 }
