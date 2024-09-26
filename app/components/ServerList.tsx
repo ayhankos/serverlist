@@ -115,10 +115,11 @@ export default function Metin2PvpPage() {
               <div className="hidden lg:block">
                 <HeaderMain />
               </div>
-              <div className="flex items-center space-x-2 sm:space-x-4">
-                <Button className="bg-green-600 hover:bg-green-700 text-white rounded-md text-xs sm:text-sm">
+              <div className="flex items-center space-x-2 sm:space-x-4 ">
+                <Button className="hidden lg:block bg-green-600 hover:bg-green-700 text-white rounded-md text-xs sm:text-sm">
                   Sunucunu Ekle
                 </Button>
+
                 <DiscordButton />
                 <div className="lg:hidden">
                   <MobileDropdown />
