@@ -1,31 +1,41 @@
-import { NextResponse } from "next/server";
-import path from "path";
-import { writeFile } from "fs/promises";
+import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (req: any, res: any) => {
+const CWP_UPLOAD_URL = process.env.NEXT_PUBLIC_UPLOAD_URL as string;
+
+export const POST = async (req: NextRequest) => {
   const formData = await req.formData();
 
-  const files = formData.getAll("files");
+  const files = formData.getAll("files") as File[];
+
   if (files.length === 0) {
     return NextResponse.json({ error: "No files received." }, { status: 400 });
   }
 
   const responses = [];
+
   for (const file of files) {
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const filename = `${new Date().getTime()}${Math.random()
-      .toString(36)
-      .substring(7)}.${file.type.split("/")[1]}`;
-    console.log(filename);
+    const newFormData = new FormData();
+    newFormData.append("file", file);
+
     try {
-      await writeFile(
-        path.join(process.cwd(), "public/uploads/" + filename),
-        buffer
-      );
-      responses.push({ file: filename, status: "Success" });
+      const response = await fetch(CWP_UPLOAD_URL, {
+        method: "POST",
+        body: newFormData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      responses.push(result);
     } catch (error) {
-      console.log("Error occurred ", error);
-      responses.push({ file: filename, status: "Failed" });
+      console.error("Error uploading file:", error);
+      responses.push({
+        status: "error",
+        message: "Failed to upload file",
+        file: file.name,
+      });
     }
   }
 
@@ -33,4 +43,10 @@ export const POST = async (req: any, res: any) => {
     { Message: "Processed", responses },
     { status: 201 }
   );
+};
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
 };
