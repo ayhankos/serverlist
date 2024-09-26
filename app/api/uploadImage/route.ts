@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
-import path, { join } from "path";
+import axios from "axios";
+import path from "path";
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,11 +21,18 @@ export async function POST(request: NextRequest) {
       uniqueSuffix +
       path.extname(file.name);
 
-    const uploadDir = join(process.cwd(), "public", "uploads");
-    const filePath = join(uploadDir, filename);
-    await writeFile(filePath, buffer);
+    const uploadUrl = "https://pvpserverlar.tr/upload.php";
 
-    const imagePath = `/uploads/${filename}`;
+    const uploadFormData = new FormData();
+    uploadFormData.append("image", new Blob([buffer]), filename);
+
+    const response = await axios.post(uploadUrl, uploadFormData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    const imagePath = response.data.imagePath;
     return NextResponse.json({ imagePath }, { status: 200 });
   } catch (error) {
     console.error("Image upload failed:", error);
