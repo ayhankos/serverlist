@@ -17,7 +17,7 @@ export default async function StreamersPage() {
   const streamers = await getStreamers();
 
   return (
-    <div className="hidden md:block ">
+    <div className="hidden md:block container ">
       <div className="h-full px-4 py-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
