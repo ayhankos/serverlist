@@ -242,10 +242,7 @@ export function VipServerTable() {
                   className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      className="p-0 text-center ml-2 pl-2"
-                    >
+                    <TableCell key={cell.id} className="text-center ml-2 p-1">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
