@@ -24,7 +24,7 @@ export const ServerSil: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
 
   const onConfirm = async () => {
-    setLoading(true); // Set loading to true before the fetch
+    setLoading(true);
     const serverId = data.id;
     try {
       const res = await fetch("/api/serverSil", {
@@ -36,16 +36,15 @@ export const ServerSil: React.FC<CellActionProps> = ({ data }) => {
       });
 
       if (res.ok) {
-        router.push("/admin"); // Redirect on success
+        window.location.reload();
       } else {
-        // Handle error (optional)
         console.error("Failed to delete server.");
       }
     } catch (error) {
       console.error("An error occurred while deleting the server:", error);
     } finally {
-      setLoading(false); // Reset loading state
-      setOpen(false); // Close the modal after the operation
+      setLoading(false);
+      setOpen(false);
     }
   };
 
