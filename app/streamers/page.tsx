@@ -50,8 +50,15 @@ export default async function StreamersPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Button size="sm" variant="outline">
-                        <FaYoutube className="h-4 w-4" />
+                      <Button
+                        size="sm"
+                        className="bg-white hover:bg-zinc-200"
+                        variant="outline"
+                      >
+                        <FaYoutube
+                          className="h-8 w-8"
+                          style={{ color: "#FF0000" }}
+                        />
                       </Button>
                     </Link>
                   )}
@@ -61,8 +68,15 @@ export default async function StreamersPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Button size="sm" variant="outline">
-                        <FaDiscord className="h-4 w-4" />
+                      <Button
+                        size="sm"
+                        className="bg-white hover:bg-zinc-200"
+                        variant="outline"
+                      >
+                        <FaDiscord
+                          className="h-8 w-8"
+                          style={{ color: "#7289DA" }}
+                        />
                       </Button>
                     </Link>
                   )}
