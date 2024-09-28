@@ -32,7 +32,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const user = await prisma.user.findUnique({
           where: { email: email },
         });
-        prisma.$disconnect();
         if (!user) {
           throw new Error("User not found.");
         }
