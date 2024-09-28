@@ -43,20 +43,19 @@ export default function UserAuthForm() {
     setLoading(true);
     try {
       const csrfToken = await getCsrfToken();
+      console.log("CSRF Token:", csrfToken);
 
       const result = await signIn("credentials", {
         email: data.email,
         password: data.password,
         redirect: false,
-        headers: {
-          "X-CSRF-Token": csrfToken,
-        },
+        csrfToken: csrfToken,
       });
 
       console.log("result", result);
 
       if (result?.error) {
-        console.error(result.error, "giris yapilamadi");
+        console.error(result.error, "Login failed");
         toast({
           title: "Error",
           description: result.error,
@@ -69,7 +68,7 @@ export default function UserAuthForm() {
         });
       }
     } catch (error) {
-      console.error(error, "giris yapilamadi");
+      console.error(error, "Login failed");
     } finally {
       setLoading(false);
     }
