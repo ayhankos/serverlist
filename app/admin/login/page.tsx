@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { getCsrfToken, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,16 +42,25 @@ export default function UserAuthForm() {
   const onSubmit = async (data: SignInFormValues) => {
     setLoading(true);
     try {
+      const csrfToken = await getCsrfToken();
+
       const result = await signIn("credentials", {
         email: data.email,
         password: data.password,
         redirect: false,
+        headers: {
+          "X-CSRF-Token": csrfToken,
+        },
       });
 
       console.log("result", result);
 
       if (result?.error) {
         console.error(result.error, "giris yapilamadi");
+        toast({
+          title: "Error",
+          description: result.error,
+        });
       } else {
         router.push("/admin");
         toast({
