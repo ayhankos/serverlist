@@ -1,40 +1,31 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const runtime = "edge";
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const page = Number(searchParams.get("page")) || 1;
+  const pageSize = Number(searchParams.get("pageSize")) || 10;
+  const vip = searchParams.get("vip");
 
-export default async function handler(req: NextRequest) {
-  const headers = new Headers();
-  headers.set("Access-Control-Allow-Origin", "*");
-  headers.set(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  headers.set("Cache-Control", "no-store, max-age=0");
-
-  if (req.method === "OPTIONS") {
-    return new NextResponse(null, { status: 204, headers });
-  }
+  const offset = (page - 1) * pageSize;
 
   try {
-    const servers = await prisma.server.findMany();
-
-    return NextResponse.json(servers, {
-      status: 200,
-      headers,
+    const servers = await prisma.server.findMany({
+      where: {
+        vip: "vip",
+      },
+      skip: offset,
+      take: pageSize,
     });
-  } catch (error) {
-    console.error("API error:", error);
 
+    return NextResponse.json(servers);
+  } catch (error) {
+    console.error("Error fetching servers:", error);
     return NextResponse.json(
-      { error: "An error occurred while fetching servers" },
-      {
-        status: 500,
-        headers,
-      }
+      { error: "Failed to fetch servers" },
+      { status: 500 }
     );
   }
 }

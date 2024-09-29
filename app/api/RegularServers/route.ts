@@ -3,8 +3,6 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const runtime = "edge";
-
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = Number(searchParams.get("page")) || 1;
@@ -13,37 +11,21 @@ export async function GET(request: Request) {
 
   const offset = (page - 1) * pageSize;
 
-  const headers = new Headers();
-  headers.set("Access-Control-Allow-Origin", "*");
-  headers.set(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  headers.set("Cache-Control", "no-store, max-age=0");
-
-  if (request.method === "OPTIONS") {
-    return new NextResponse(null, { status: 204, headers });
-  }
-
   try {
-    const streamers = await prisma.streamer.findMany({
+    const servers = await prisma.server.findMany({
       where: {
-        vip: vip || undefined,
+        vip: "normal",
       },
       skip: offset,
       take: pageSize,
     });
 
-    return NextResponse.json(streamers, {
-      status: 200,
-      headers,
-    });
+    return NextResponse.json(servers);
   } catch (error) {
-    console.error("Error fetching streamers:", error);
+    console.error("Error fetching servers:", error);
     return NextResponse.json(
-      { error: "Failed to fetch streamers" },
-      { status: 500, headers }
+      { error: "Failed to fetch servers" },
+      { status: 500 }
     );
   }
 }
