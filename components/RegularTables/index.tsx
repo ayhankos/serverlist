@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import useSWR from "swr";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -45,6 +46,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ServerActionsMenu from "@/app/components/ServerActionsMenu";
 import { Server } from "@prisma/client";
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const columns: ColumnDef<Server>[] = [
   {
@@ -134,29 +136,37 @@ export function RegularServerTable() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [data, setData] = useState<Server[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/RegularServers");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const servers = await response.json();
-        setData(servers);
-      } catch (e) {
-        console.error("Fetching servers failed:", e);
-        setError(
-          "Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
-        );
-      }
-    };
-    fetchData();
-  }, []);
+  const { data: servers, error } = useSWR<Server[]>(
+    "/api/RegularServers",
+    fetcher
+  );
+
+  if (!servers && !error) {
+    return (
+      <Card className="w-full bg-blue-50">
+        <CardContent className="pt-6">
+          <p className="text-center text-blue-500">Sunucular yükleniyor...</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Card className="w-full bg-red-50">
+        <CardContent className="pt-6">
+          <p className="text-center text-red-500">
+            Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar
+            deneyin.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   const table = useReactTable({
-    data,
+    data: servers || [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

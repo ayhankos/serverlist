@@ -13,20 +13,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
-
+import { Server } from "@prisma/client";
+import { ServerSil } from "@/app/components/ServerSil";
+import useSWR from "swr";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -35,9 +25,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Server } from "@prisma/client";
-import { ServerSil } from "@/app/components/ServerSil";
-import { useEffect, useState } from "react";
+
+// Fetcher function for SWR
+const fetcher = (url: string) =>
+  fetch(url).then((res) => {
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return res.json();
+  });
 
 export const columns: ColumnDef<Server>[] = [
   {
@@ -95,30 +91,11 @@ export function ServerTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [data, setData] = useState<Server[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/adminServers");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const servers = await response.json();
-        setData(servers);
-      } catch (e) {
-        console.error("Fetching servers failed:", e);
-        setError(
-          "Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
-        );
-      }
-    };
-    fetchData();
-  }, []);
+  const { data, error } = useSWR<Server[]>("/api/adminServers", fetcher);
 
   const table = useReactTable({
-    data,
+    data: data || [], // SWR ile gelen verileri kullan
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -135,6 +112,18 @@ export function ServerTable() {
       rowSelection,
     },
   });
+
+  if (error) {
+    return (
+      <div className="text-red-500">
+        Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.
+      </div>
+    );
+  }
+
+  if (!data) {
+    return <div className="text-black">Yükleniyor...</div>; // Yüklenme durumu
+  }
 
   return (
     <div className="w-full">

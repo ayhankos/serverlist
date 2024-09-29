@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useSWR, { mutate } from "swr";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,35 +14,20 @@ import {
 } from "@/components/ui/dialog";
 import { Streamer } from "@prisma/client";
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 export default function StreamerTable() {
   const [selectedStreamer, setSelectedStreamer] = useState<Streamer | null>(
     null
   );
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<Streamer[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/adminStreamers");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const streamers = await response.json();
-        setData(streamers);
-      } catch (e) {
-        console.error("Fetching streamers failed:", e);
-        setError(
-          "Yayıncılar yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  const {
+    data,
+    error: fetchError,
+    isValidating,
+  } = useSWR("/api/adminStreamers", fetcher);
 
   const handleDeleteClick = (streamer: Streamer) => {
     setSelectedStreamer(streamer);
@@ -63,7 +49,7 @@ export default function StreamerTable() {
         });
 
         if (res.ok) {
-          setData((prevData) => prevData.filter((s) => s.id !== streamerId));
+          mutate("/api/adminStreamers");
           setIsDeleteDialogOpen(false);
         } else {
           throw new Error("Failed to delete streamer");
@@ -77,8 +63,12 @@ export default function StreamerTable() {
     }
   };
 
-  if (isLoading) {
+  if (isValidating) {
     return <div>Yükleniyor...</div>;
+  }
+
+  if (fetchError) {
+    return <div className="text-red-500">{fetchError.message}</div>;
   }
 
   if (error) {
@@ -96,29 +86,41 @@ export default function StreamerTable() {
           </div>
         </div>
         <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
-          {data.map((streamer) => (
-            <Card key={streamer.id} className="bg-white">
-              <CardContent className="p-4">
-                <div className="aspect-square relative mb-2">
-                  <img
-                    src={streamer.image}
-                    alt={streamer.name}
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                </div>
-                <h3 className="font-semibold text-center text-black">
-                  {streamer.name}
-                </h3>
-                <Button
-                  variant="destructive"
-                  className="mt-2 w-full"
-                  onClick={() => handleDeleteClick(streamer)}
-                >
-                  Sil
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+          {data?.map(
+            (streamer: {
+              id: string;
+              name: string;
+              image: string;
+              description: string;
+              createdAt: Date;
+              updatedAt: Date;
+              dcLink: string;
+              ytLink: string;
+              vip: string;
+            }) => (
+              <Card key={streamer.id} className="bg-white">
+                <CardContent className="p-4">
+                  <div className="aspect-square relative mb-2">
+                    <img
+                      src={streamer.image}
+                      alt={streamer.name}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  </div>
+                  <h3 className="font-semibold text-center text-black">
+                    {streamer.name}
+                  </h3>
+                  <Button
+                    variant="destructive"
+                    className="mt-2 w-full"
+                    onClick={() => handleDeleteClick(streamer)}
+                  >
+                    Sil
+                  </Button>
+                </CardContent>
+              </Card>
+            )
+          )}
         </div>
       </div>
 

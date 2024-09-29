@@ -2,28 +2,19 @@
 
 import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import useSWR from "swr";
+import { useCallback, useEffect, useState } from "react";
 
-async function getVipStreamerData() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/vipStreamers`
-  );
-
-  if (res.status === 404) {
-    return null;
-  }
-
-  if (!res.ok) {
-    console.error("API Error:", res.status);
-    return null;
-  }
-
-  return res.json();
-}
+const fetcher = (url: string) =>
+  fetch(url).then((res) => {
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    return res.json();
+  });
 
 interface StreamerData {
-  map(arg0: (item: any) => React.JSX.Element): React.ReactNode;
   id: number;
   name: string;
   image: string;
@@ -32,6 +23,10 @@ interface StreamerData {
 }
 
 export default function Streamers() {
+  const { data: streamers, error } = useSWR<StreamerData[]>(
+    "/api/vipStreamers",
+    fetcher
+  );
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     slidesToScroll: 1,
@@ -44,27 +39,6 @@ export default function Streamers() {
   });
   const [prevEnabled, setPrevEnabled] = useState(false);
   const [nextEnabled, setNextEnabled] = useState(false);
-  const [streamer, setStreamer] = useState<StreamerData | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/vipStreamers");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const streamers = await response.json();
-        setStreamer(streamers);
-      } catch (e) {
-        console.error("Fetching servers failed:", e);
-        setError(
-          "Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
-        );
-      }
-    };
-    fetchData();
-  }, []);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -87,8 +61,16 @@ export default function Streamers() {
     };
   }, [emblaApi, onSelect]);
 
-  if (!streamer) {
-    return <p className="text-black">No streamers to display</p>;
+  if (error) {
+    return (
+      <p className="text-red-500">
+        Hata: Sunucular yüklenirken bir hata oluştu.
+      </p>
+    );
+  }
+
+  if (!streamers) {
+    return <p className="text-black">Yükleniyor...</p>;
   }
 
   return (
@@ -96,7 +78,7 @@ export default function Streamers() {
       <CardContent className="p-2 sm:p-4 border-none shadow-none">
         <div className="relative w-full overflow-hidden" ref={emblaRef}>
           <div className="flex">
-            {streamer?.map((item: any) => (
+            {streamers.map((item) => (
               <div
                 key={item.id}
                 className="flex-none w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 sm:p-2"

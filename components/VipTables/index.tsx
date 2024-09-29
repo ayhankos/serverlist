@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import useSWR from "swr";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,30 +13,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  ChevronDown,
-  MoreHorizontal,
-  Search,
-  Server as ServerIcon,
-  Users,
-  Star,
-  Calendar,
-  Sword,
-  Swords,
-} from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+import { Calendar, Star, Users } from "lucide-react";
+import { Server } from "@prisma/client";
+import { Card, CardContent } from "@/components/ui/card";
+import ServerActionsMenu from "@/app/components/ServerActionsMenu";
 import {
   Table,
   TableBody,
@@ -44,9 +25,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import ServerActionsMenu from "@/app/components/ServerActionsMenu";
-import { Server } from "@prisma/client";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const columns: ColumnDef<Server>[] = [
   {
@@ -54,11 +34,6 @@ const columns: ColumnDef<Server>[] = [
     header: "",
     cell: ({ row }) => (
       <div className="relative h-14 w-14 flex items-center justify-center">
-        {/*   <img
-          src="/gifs/mavicerceve.gif"
-          alt="flame-border"
-          className="absolute inset-0 h-20 w-20 object-cover rounded-full"
-        /> */}
         <img
           src={row.getValue("image")}
           alt={row.getValue("name")}
@@ -78,15 +53,14 @@ const columns: ColumnDef<Server>[] = [
       </div>
     ),
   },
-
   {
     accessorKey: "Rank",
+    header: "Rank",
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
         <span className="text-red-700">{row.getValue("Rank")}</span>
       </div>
     ),
-    enableHiding: false,
   },
   {
     accessorKey: "launchDate",
@@ -116,7 +90,6 @@ const columns: ColumnDef<Server>[] = [
       </div>
     ),
   },
-
   {
     accessorKey: "playercount",
     header: "Oyuncu Sayısı",
@@ -154,27 +127,25 @@ export function VipServerTable() {
     actions: true,
   });
   const [rowSelection, setRowSelection] = useState({});
-  const [data, setData] = useState<Server[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/VipServers");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const servers = await response.json();
-        setData(servers);
-      } catch (e) {
-        console.error("Fetching servers failed:", e);
-        setError(
-          "Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
-        );
-      }
-    };
-    fetchData();
-  }, []);
+  const { data, error, mutate } = useSWR<Server[]>("/api/VipServers", fetcher);
+
+  if (error) {
+    return (
+      <Card className="w-full bg-red-50">
+        <CardContent className="pt-6">
+          <p className="text-center text-red-500">
+            Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar
+            deneyin.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (!data) {
+    return <p>Yükleniyor...</p>;
+  }
 
   const table = useReactTable({
     data,
@@ -194,16 +165,6 @@ export function VipServerTable() {
       rowSelection,
     },
   });
-
-  if (error) {
-    return (
-      <Card className="w-full bg-red-50">
-        <CardContent className="pt-6">
-          <p className="text-center text-red-500">{error}</p>
-        </CardContent>
-      </Card>
-    );
-  }
 
   return (
     <Card className="w-full bg-zinc-200 rounded-xl border-none shadow-xl">
