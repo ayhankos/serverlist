@@ -45,15 +45,24 @@ export default function Streamers() {
   const [prevEnabled, setPrevEnabled] = useState(false);
   const [nextEnabled, setNextEnabled] = useState(false);
   const [streamer, setStreamer] = useState<StreamerData | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getVipStreamerData();
-      if (data) {
-        setStreamer(data);
+      try {
+        const response = await fetch("/api/vipStreamers");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const streamers = await response.json();
+        setStreamer(streamers);
+      } catch (e) {
+        console.error("Fetching servers failed:", e);
+        setError(
+          "Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+        );
       }
     };
-
     fetchData();
   }, []);
 
