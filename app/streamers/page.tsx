@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import useSWR from "swr"; // Import SWR
-import { FaYoutube, FaDiscord } from "react-icons/fa";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import useSWR from "swr";
+import { FaTwitch, FaYoutube, FaDiscord } from "react-icons/fa";
 import {
   Key,
   ReactElement,
@@ -18,20 +18,14 @@ export const metadata: Metadata = {
   description: "Dashboard showcasing popular streamers.",
 };
 
-const fetcher = (url: string) =>
-  fetch(url).then((res) => {
-    if (!res.ok) {
-      throw new Error(`Error fetching data: ${res.status}`);
-    }
-    return res.json();
-  });
+const fetcher = (url: string | URL | Request) =>
+  fetch(url).then((res) => res.json());
 
 export default function StreamersPage() {
-  const { data: streamers, error } = useSWR("/api/adminStreamers", fetcher);
+  const { data: streamers, error } = useSWR("/api/streamers", fetcher);
 
-  if (error)
-    return <div className="text-red-500">Veri yüklenirken hata oluştu.</div>;
-  if (!streamers) return <div>Yükleniyor...</div>;
+  if (error) return <div>Error loading streamers.</div>;
+  if (!streamers) return <div>Loading...</div>;
 
   return (
     <div className="hidden md:block container">
