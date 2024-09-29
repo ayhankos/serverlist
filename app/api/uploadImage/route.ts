@@ -1,52 +1,35 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { writeFile } from "fs/promises";
+import path, { join } from "path";
 
-export const POST = async (req: any) => {
-  const formData = await req.formData();
-  const files = formData.getAll("files");
-
-  if (files.length === 0) {
-    return NextResponse.json({ error: "No files received." }, { status: 400 });
-  }
-
-  const formDataToSend = new FormData();
-
-  for (const file of files) {
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const filename = `${new Date().getTime()}${Math.random()
-      .toString(36)
-      .substring(7)}.${file.type.split("/")[1]}`;
-
-    formDataToSend.append("file", new Blob([buffer]), filename);
-  }
-
+export async function POST(request: NextRequest) {
   try {
-    const response = await fetch("https://pvpserverlar.tr/upload.php", {
-      method: "POST",
-      body: formDataToSend,
-      headers: {
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+    const formData = await request.formData();
+    const file = formData.get("image") as File | null;
 
-    const result = await response.json();
-
-    if (response.ok) {
-      return NextResponse.json(
-        { message: "Files uploaded successfully", result },
-        { status: 201 }
-      );
-    } else {
-      return NextResponse.json(
-        { error: result.message || "Upload failed" },
-        { status: response.status }
-      );
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const filename =
+      file.name.replace(/\.[^/.]+$/, "") +
+      "-" +
+      uniqueSuffix +
+      path.extname(file.name);
+
+    const uploadDir = join(process.cwd(), "public", "uploads");
+    const filePath = join(uploadDir, filename);
+    await writeFile(filePath, buffer);
+
+    const imagePath = `/uploads/${filename}`;
+
+    return NextResponse.json({ imagePath }, { status: 200 });
   } catch (error) {
-    console.log("Error occurred while sending files to the PHP server:", error);
-    return NextResponse.json(
-      { error: "Error occurred while sending files" },
-      { status: 500 }
-    );
+    console.error("Image upload failed:", error);
+    return NextResponse.json({ error: "Image upload failed" }, { status: 500 });
   }
-};
+}
