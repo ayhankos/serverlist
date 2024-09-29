@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Dashboard showcasing popular streamers.",
 };
 
-export default async function StreamersPage() {
+export async function getServerSideProps() {
   let streamers = [];
 
   try {
@@ -19,14 +19,25 @@ export default async function StreamersPage() {
     );
 
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      throw new Error(`Network response was not ok: ${response.statusText}`);
     }
 
     streamers = await response.json();
   } catch (error) {
     console.error("Failed to fetch streamers:", error);
+    streamers = [];
   }
 
+  return {
+    props: { streamers },
+  };
+}
+
+export default function StreamersPage({
+  streamers,
+}: {
+  streamers: Array<any>;
+}) {
   return (
     <div className="hidden md:block container ">
       <div className="h-full px-4 py-6 lg:px-8">
