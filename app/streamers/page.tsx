@@ -1,12 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Menu } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getStreamers } from "@/utils/streamers/get";
-import { FaTwitch, FaYoutube, FaDiscord } from "react-icons/fa";
+import { FaYoutube, FaDiscord } from "react-icons/fa";
 import Image from "next/image";
 
 export const metadata: Metadata = {
@@ -15,9 +11,21 @@ export const metadata: Metadata = {
 };
 
 export default async function StreamersPage() {
-  const streamers = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/adminStreamers`
-  );
+  let streamers = [];
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/adminStreamers`
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    streamers = await response.json();
+  } catch (error) {
+    console.error("Failed to fetch streamers:", error);
+  }
 
   return (
     <div className="hidden md:block container ">
