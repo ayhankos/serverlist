@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/table";
 import { Server } from "@prisma/client";
 import { ServerSil } from "@/app/components/ServerSil";
+import { useEffect, useState } from "react";
 
 export const columns: ColumnDef<Server>[] = [
   {
@@ -86,11 +87,7 @@ export const columns: ColumnDef<Server>[] = [
   },
 ];
 
-interface ServerTableProps {
-  data: Server[];
-}
-
-export function ServerTable({ data }: { data: any }) {
+export function ServerTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -98,6 +95,27 @@ export function ServerTable({ data }: { data: any }) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [data, setData] = useState<Server[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/adminServers");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const servers = await response.json();
+        setData(servers);
+      } catch (e) {
+        console.error("Fetching servers failed:", e);
+        setError(
+          "Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+        );
+      }
+    };
+    fetchData();
+  }, []);
 
   const table = useReactTable({
     data,

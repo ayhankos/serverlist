@@ -18,7 +18,7 @@ export default async function AdminDashboard() {
       <h1 className="text-2xl font-bold mx-auto text-center pt-20">
         Server Silme
       </h1>
-      <AdminServerSilme data={data} />
+      <AdminServerSilme />
       <h1 className="text-2xl font-bold mx-auto text-center pt-20">
         Yayinci Ekleme
       </h1>
