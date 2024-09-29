@@ -7,7 +7,6 @@ import StreamerDelete from "./streamerSil";
 import { getStreamers } from "@/utils/streamers/get";
 
 export default async function AdminDashboard() {
-  let data: Server[] = await getServers();
   let streamers: Streamer[] = await getStreamers();
   return (
     <div className="container text-black h-screen">

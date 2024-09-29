@@ -102,7 +102,7 @@ export const StreamerForm: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Server creation failed");
+        throw new Error("Streamer creation failed");
       }
 
       const result = await response.json();
@@ -110,7 +110,7 @@ export const StreamerForm: React.FC = () => {
       form.reset();
       setImagePath("");
     } catch (error) {
-      console.error("Server creation failed", error);
+      console.error("Streamer creation failed", error);
     } finally {
       setLoading(false);
     }
@@ -254,7 +254,7 @@ export const StreamerForm: React.FC = () => {
           {loading ? (
             <PiSpinnerBall className="animate-spin h-5 w-5" />
           ) : (
-            "Create Server"
+            "Streamer Ekle"
           )}
         </Button>
       </form>
