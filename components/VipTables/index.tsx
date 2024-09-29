@@ -130,9 +130,8 @@ export function VipServerTable() {
 
   const { data, error } = useSWR<Server[]>("/api/VipServers", fetcher);
 
-  // Move the hook call to the top level, after defining states
   const table = useReactTable({
-    data: data || [], // Use an empty array if no data is available
+    data: data || [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

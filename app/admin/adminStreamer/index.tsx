@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { mutate } from "swr";
 
 const formSchema = z.object({
   name: z.string().min(2).max(100),
@@ -103,6 +104,10 @@ export const StreamerForm: React.FC = () => {
 
       if (!response.ok) {
         throw new Error("Streamer creation failed");
+      }
+
+      if (response.ok) {
+        mutate("/api/adminStreamers");
       }
 
       const result = await response.json();

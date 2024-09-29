@@ -95,7 +95,7 @@ export function ServerTable() {
   const { data, error } = useSWR<Server[]>("/api/adminServers", fetcher);
 
   const table = useReactTable({
-    data: data || [], // SWR ile gelen verileri kullan
+    data: data || [],
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

@@ -13,6 +13,7 @@ import { Server } from "@prisma/client";
 import { MoreHorizontal, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { mutate } from "swr";
 
 interface CellActionProps {
   data: Server;
@@ -36,7 +37,8 @@ export const ServerSil: React.FC<CellActionProps> = ({ data }) => {
       });
 
       if (res.ok) {
-        window.location.reload();
+        mutate("/api/adminServers");
+        mutate("/api/VipServers");
       } else {
         console.error("Failed to delete server.");
       }
