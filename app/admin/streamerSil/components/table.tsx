@@ -47,7 +47,7 @@ export default function StreamerTable({ streamers }: { streamers: any }) {
         console.log("Deleting streamer ID:", selectedStreamer.id);
 
         const res = await fetch("/api/streamerSil", {
-          method: "DELETE",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },

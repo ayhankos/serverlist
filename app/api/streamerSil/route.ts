@@ -2,17 +2,18 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function DELETE(request: Request) {
+export async function POST(request: Request) {
   try {
     const { streamerId } = await request.json();
-    console.log(streamerId);
+    console.log("Deleting streamer id:", streamerId);
     await prisma.streamer.delete({
       where: {
         id: streamerId,
       },
     });
-    return new Response("Company deleted successfully", { status: 200 });
+    return new Response("Streamer deleted successfully", { status: 200 });
   } catch (error) {
-    return new Response("Company deletion error: " + error, { status: 500 });
+    console.error("Error deleting streamer:", error);
+    return new Response("Streamer deletion error: " + error, { status: 500 });
   }
 }
