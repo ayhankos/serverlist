@@ -3,9 +3,7 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export const config = {
-  runtime: "edge",
-};
+export const runtime = "edge";
 
 export async function DELETE(request: Request) {
   const headers = new Headers();

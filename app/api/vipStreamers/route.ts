@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/prisma/database";
 
-export const config = {
-  runtime: "edge",
-};
+export const runtime = "edge";
 
 export async function GET(request: Request) {
   const headers = new Headers();

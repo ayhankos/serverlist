@@ -3,9 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const config = {
-  runtime: "edge",
-};
+export const runtime = "edge";
 
 export default async function handler(req: NextRequest) {
   const headers = new Headers();
