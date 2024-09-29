@@ -90,7 +90,7 @@ interface ServerTableProps {
   data: Server[];
 }
 
-export function ServerTable({ data }: ServerTableProps) {
+export function ServerTable({ data }: { data: any }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

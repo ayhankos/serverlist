@@ -30,7 +30,9 @@ interface StreamerDeleteClientProps {
 
 export default function StreamerDeleteClient({
   initialStreamers,
-}: StreamerDeleteClientProps) {
+}: {
+  initialStreamers: any;
+}) {
   const [streamers, setStreamers] = useState<Streamer[]>(initialStreamers);
   const [selectedStreamer, setSelectedStreamer] = useState<Streamer | null>(
     null
