@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Streamer } from "@prisma/client";
+import Image from "next/image";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -101,11 +102,14 @@ export default function StreamerTable() {
               <Card key={streamer.id} className="bg-white">
                 <CardContent className="p-4">
                   <div className="aspect-square relative mb-2">
-                    <img
-                      src={streamer.image}
-                      alt={streamer.name}
-                      className="w-full h-full object-cover rounded-full"
-                    />
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={streamer.image}
+                        alt={streamer.name}
+                        layout="fill"
+                        className="object-cover rounded-full"
+                      />
+                    </div>
                   </div>
                   <h3 className="font-semibold text-center text-black">
                     {streamer.name}

@@ -27,6 +27,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import ServerActionsMenu from "@/app/components/ServerActionsMenu";
 import { Server } from "@prisma/client";
 import { Input } from "../ui/input";
+import Image from "next/image";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -36,10 +37,11 @@ const columns: ColumnDef<Server>[] = [
     header: "",
     cell: ({ row }) => (
       <div className="relative h-14 w-14 flex items-center justify-center">
-        <img
+        <Image
           src={row.getValue("image")}
           alt={row.getValue("name")}
-          className="absolute h-14 w-14 rounded-full object-cover"
+          layout="fill"
+          className="rounded-full object-cover"
         />
       </div>
     ),

@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getStreamers } from "@/utils/streamers/get";
 import { FaTwitch, FaYoutube, FaDiscord } from "react-icons/fa";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Streamers Dashboard",
@@ -14,7 +15,9 @@ export const metadata: Metadata = {
 };
 
 export default async function StreamersPage() {
-  const streamers = await fetch("/api/adminStreamers");
+  const streamers = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/adminStreamers`
+  );
 
   return (
     <div className="hidden md:block container ">
@@ -35,10 +38,11 @@ export default async function StreamersPage() {
               <Card key={streamer.id} className="bg-white">
                 <CardContent className="p-4">
                   <div className="aspect-square relative mb-2">
-                    <img
+                    <Image
                       src={streamer.image}
                       alt={streamer.name}
-                      className="w-full h-full object-cover rounded-full"
+                      layout="fill"
+                      className="object-cover rounded-full"
                     />
                   </div>
                   <h3 className="font-semibold text-center mb-2">

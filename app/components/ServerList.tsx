@@ -63,11 +63,12 @@ const MobileDropdown = () => {
 };
 
 const SideAd = () => (
-  <div className="w-full h-full">
-    <img
+  <div className="w-full h-full relative">
+    <Image
       src="/adds/sagsol.gif"
-      className="w-full h-full object-cover"
       alt="Side Advertisement"
+      layout="fill"
+      className="object-cover"
     />
   </div>
 );

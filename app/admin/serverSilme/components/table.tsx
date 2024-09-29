@@ -25,8 +25,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Image from "next/image";
 
-// Fetcher function for SWR
 const fetcher = (url: string) =>
   fetch(url).then((res) => {
     if (!res.ok) {
@@ -41,10 +41,12 @@ export const columns: ColumnDef<Server>[] = [
     header: "",
     cell: ({ row }) => (
       <div className="relative h-14 w-14 flex items-center justify-center">
-        <img
+        <Image
           src={row.getValue("image")}
           alt={row.getValue("name")}
-          className="absolute h-14 w-14 rounded-full object-cover"
+          layout="fill"
+          className="rounded-full object-cover"
+          objectFit="cover"
         />
       </div>
     ),

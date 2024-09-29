@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -240,9 +241,11 @@ export const StreamerForm: React.FC = () => {
                   >
                     <input {...getInputProps()} />
                     {imagePath ? (
-                      <img
+                      <Image
                         src={imagePath}
                         alt="Selected Image"
+                        layout="fill"
+                        objectFit="cover"
                         className="max-w-full h-auto"
                       />
                     ) : (

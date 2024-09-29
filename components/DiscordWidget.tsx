@@ -17,6 +17,7 @@ const DiscordWidget: React.FC<DiscordWidgetProps> = ({
         <img
           src={`https://discordapp.com/api/guilds/${serverId}/widget.png?style=banner1`}
           alt="Discord Server"
+          className="discord-image"
         />
       </a>
       <style jsx>{`
@@ -31,6 +32,17 @@ const DiscordWidget: React.FC<DiscordWidgetProps> = ({
           bottom: 5px;
           left: 10px;
           z-index: 10;
+        }
+        @media (max-width: 768px) {
+          .discord-widget {
+            width: 100%; /* Full width on smaller screens */
+            left: 0; /* Align to the left */
+            bottom: 10px; /* Adjust bottom spacing */
+          }
+          .discord-image {
+            width: 100%; /* Make image responsive */
+            height: auto; /* Maintain aspect ratio */
+          }
         }
       `}</style>
     </div>

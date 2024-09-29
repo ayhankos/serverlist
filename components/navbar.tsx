@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "react-feather";
+import Image from "next/image";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -65,10 +66,12 @@ const Navbar: React.FC = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <img
+            <Image
               src="/discord-icon.png"
               alt="Discord"
-              className="w-10 h-10 mr-2"
+              width={40}
+              height={40}
+              className="mr-2"
             />
             DISCORD
           </motion.a>
