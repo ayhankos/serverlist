@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { AdminServerForm } from "./adminServer";
 import { StreamerForm } from "./adminStreamer";
 import AdminServerSilme from "./serverSilme";
