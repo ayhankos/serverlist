@@ -103,7 +103,7 @@ export function ServerTable() {
       refreshInterval: 5000,
     }
   );
-
+  console.log(data);
   const table = useReactTable({
     data: data || [],
     columns,

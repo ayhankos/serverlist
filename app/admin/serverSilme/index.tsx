@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import { Server } from "@prisma/client";
 import { ServerTable } from "./components/table";

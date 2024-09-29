@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Metadata } from "next";
 import { getStreamers } from "@/utils/streamers/get";
 import StreamersHeader from "./components/StreamersHeader";
