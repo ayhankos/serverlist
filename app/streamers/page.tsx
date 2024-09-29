@@ -18,7 +18,9 @@ export const metadata: Metadata = {
 };
 
 export default async function StreamersPage() {
-  const response = await fetch("/api/adminStreamers");
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/adminStreamers`
+  );
 
   if (!response.ok) {
     throw new Error("Failed to fetch streamers");
