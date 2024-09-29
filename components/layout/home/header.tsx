@@ -41,13 +41,13 @@ const components: { title: string; href: string; description: string }[] = [
   },
   {
     title: "Tabs",
-    href: "#tabs-section", // Yönlendirme yapılacak section id'si
+    href: "#tabs-section",
     description:
       "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
   },
   {
     title: "Tooltip",
-    href: "#tooltip-section", // Yönlendirme yapılacak section id'si
+    href: "#tooltip-section",
     description:
       "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
   },
@@ -64,7 +64,7 @@ export function HeaderMain() {
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
                   <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/20 to-muted/30 p-6 no-underline outline-none focus:shadow-md"
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none focus:shadow-md"
                     href="/"
                   >
                     <img

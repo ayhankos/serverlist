@@ -108,9 +108,15 @@ export default function Metin2PvpPage() {
                 </h1>
               </div>
               <div className="flex items-center space-x-4">
-                <HeaderMain />
+                {/* HeaderMain sadece büyük ekranlarda gösterilecek */}
+                <div className="hidden lg:block">
+                  <HeaderMain />
+                </div>
                 <DiscordButton />
-                <MobileDropdown />
+                {/* MobileDropdown sadece mobil ekranlarda gösterilecek */}
+                <div className="lg:hidden">
+                  <MobileDropdown />
+                </div>
               </div>
             </div>
           </header>
