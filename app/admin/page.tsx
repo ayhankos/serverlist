@@ -8,7 +8,7 @@ import { getStreamers } from "@/utils/streamers/get";
 
 export default async function AdminDashboard() {
   let data: Server[] = await getServers();
-  const streamers = await getStreamers();
+  let streamers: Streamer[] = await getStreamers();
   return (
     <div className="container text-black h-screen">
       <h1 className="text-2xl font-bold mx-auto text-center pt-20">
@@ -26,7 +26,7 @@ export default async function AdminDashboard() {
       <h1 className="text-2xl font-bold mx-auto text-center pt-20">
         Yayinci Silme
       </h1>
-      <StreamerDelete initialStreamers={streamers} />
+      <StreamerDelete streamers={streamers} />
     </div>
   );
 }
