@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useSWR from "swr";
 import {
   ColumnDef,
@@ -13,28 +13,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  ChevronDown,
-  MoreHorizontal,
-  Search,
-  Server as ServerIcon,
-  Users,
-  Star,
-  Calendar,
-} from "lucide-react";
-
+import { ArrowUpDown, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -43,9 +23,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import ServerActionsMenu from "@/app/components/ServerActionsMenu";
 import { Server } from "@prisma/client";
+import { Input } from "../ui/input";
+
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const columns: ColumnDef<Server>[] = [
@@ -90,7 +72,6 @@ const columns: ColumnDef<Server>[] = [
       );
     },
   },
-
   {
     accessorKey: "serverType",
     header: ({ column }) => (
@@ -135,36 +116,14 @@ export function RegularServerTable() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-  const [data, setData] = useState<Server[]>([]);
 
+  // Fetching data using SWR
   const { data: servers, error } = useSWR<Server[]>(
     "/api/RegularServers",
     fetcher
   );
 
-  if (!servers && !error) {
-    return (
-      <Card className="w-full bg-blue-50">
-        <CardContent className="pt-6">
-          <p className="text-center text-blue-500">Sunucular yükleniyor...</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (error) {
-    return (
-      <Card className="w-full bg-red-50">
-        <CardContent className="pt-6">
-          <p className="text-center text-red-500">
-            Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar
-            deneyin.
-          </p>
-        </CardContent>
-      </Card>
-    );
-  }
-
+  // Create the table even when there's an error or while loading
   const table = useReactTable({
     data: servers || [],
     columns,
@@ -184,11 +143,24 @@ export function RegularServerTable() {
     },
   });
 
+  if (!servers && !error) {
+    return (
+      <Card className="w-full bg-blue-50">
+        <CardContent className="pt-6">
+          <p className="text-center text-blue-500">Sunucular yükleniyor...</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   if (error) {
     return (
       <Card className="w-full bg-red-50">
         <CardContent className="pt-6">
-          <p className="text-center text-red-500">{error}</p>
+          <p className="text-center text-red-500">
+            Sunucular yüklenirken bir hata oluştu. Lütfen daha sonra tekrar
+            deneyin.
+          </p>
         </CardContent>
       </Card>
     );

@@ -128,7 +128,27 @@ export function VipServerTable() {
   });
   const [rowSelection, setRowSelection] = useState({});
 
-  const { data, error, mutate } = useSWR<Server[]>("/api/VipServers", fetcher);
+  const { data, error } = useSWR<Server[]>("/api/VipServers", fetcher);
+
+  // Move the hook call to the top level, after defining states
+  const table = useReactTable({
+    data: data || [], // Use an empty array if no data is available
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  });
 
   if (error) {
     return (
@@ -146,25 +166,6 @@ export function VipServerTable() {
   if (!data) {
     return <p>Yükleniyor...</p>;
   }
-
-  const table = useReactTable({
-    data,
-    columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
-  });
 
   return (
     <Card className="w-full bg-zinc-200 rounded-xl border-none shadow-xl">
