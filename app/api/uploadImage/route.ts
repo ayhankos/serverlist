@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
+import { writeFile, mkdir } from "fs/promises";
 import path, { join } from "path";
 
 export async function POST(request: NextRequest) {
@@ -9,6 +9,13 @@ export async function POST(request: NextRequest) {
 
     if (!file) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+
+    if (!file.type.startsWith("image/")) {
+      return NextResponse.json(
+        { error: "Uploaded file is not an image" },
+        { status: 400 }
+      );
     }
 
     const bytes = await file.arrayBuffer();
@@ -22,6 +29,7 @@ export async function POST(request: NextRequest) {
       path.extname(file.name);
 
     const uploadDir = join(process.cwd(), "public", "uploads");
+    await mkdir(uploadDir, { recursive: true });
     const filePath = join(uploadDir, filename);
     await writeFile(filePath, buffer);
 
