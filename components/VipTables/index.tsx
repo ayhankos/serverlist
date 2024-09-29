@@ -131,7 +131,11 @@ export function VipServerTable() {
   });
   const [rowSelection, setRowSelection] = useState({});
 
-  const { data, error } = useSWR<Server[]>("/api/VipServers", fetcher);
+  const { data, error } = useSWR<Server[]>("/api/VipServers", fetcher, {
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    refreshInterval: 5000,
+  });
 
   const table = useReactTable({
     data: data || [],

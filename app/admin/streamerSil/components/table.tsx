@@ -28,7 +28,11 @@ export default function StreamerTable() {
     data,
     error: fetchError,
     isValidating,
-  } = useSWR("/api/adminStreamers", fetcher);
+  } = useSWR("/api/adminStreamers", fetcher, {
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    refreshInterval: 5000,
+  });
 
   const handleDeleteClick = (streamer: Streamer) => {
     setSelectedStreamer(streamer);

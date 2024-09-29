@@ -13,7 +13,12 @@ const DiscordWidget: React.FC<DiscordWidgetProps> = ({
 }) => {
   return (
     <div className="discord-widget active">
-      <a href={inviteLink} target="blank" title="Join us on Discord">
+      <a
+        href={inviteLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Join us on Discord"
+      >
         <img
           src={`https://discordapp.com/api/guilds/${serverId}/widget.png?style=banner1`}
           alt="Discord Server"
@@ -33,15 +38,16 @@ const DiscordWidget: React.FC<DiscordWidgetProps> = ({
           left: 10px;
           z-index: 10;
         }
+        .discord-image {
+          width: 100%;
+          height: auto;
+        }
         @media (max-width: 768px) {
           .discord-widget {
-            width: 100%; /* Full width on smaller screens */
-            left: 0; /* Align to the left */
-            bottom: 10px; /* Adjust bottom spacing */
-          }
-          .discord-image {
-            width: 100%; /* Make image responsive */
-            height: auto; /* Maintain aspect ratio */
+            width: 90%;
+            left: 5%;
+            bottom: 10px;
+            max-width: 300px;
           }
         }
       `}</style>

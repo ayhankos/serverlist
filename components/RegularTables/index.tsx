@@ -119,13 +119,16 @@ export function RegularServerTable() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
-  // Fetching data using SWR
   const { data: servers, error } = useSWR<Server[]>(
     "/api/RegularServers",
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+      refreshInterval: 5000,
+    }
   );
 
-  // Create the table even when there's an error or while loading
   const table = useReactTable({
     data: servers || [],
     columns,

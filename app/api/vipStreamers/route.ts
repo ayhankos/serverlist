@@ -1,12 +1,44 @@
 import { NextResponse } from "next/server";
 import prisma from "@/prisma/database";
 
-export async function GET() {
-  const servers = await prisma.streamer.findMany({
-    where: {
-      vip: "vip",
-    },
-  });
+export const config = {
+  runtime: "edge",
+};
 
-  return NextResponse.json(servers);
+export async function GET(request: Request) {
+  const headers = new Headers();
+  headers.set("Access-Control-Allow-Origin", "*");
+  headers.set(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  headers.set("Cache-Control", "no-store, max-age=0");
+
+  if (request.method === "OPTIONS") {
+    return new NextResponse(null, { status: 204, headers });
+  }
+
+  try {
+    const servers = await prisma.streamer.findMany({
+      where: {
+        vip: "vip",
+      },
+    });
+
+    return NextResponse.json(servers, {
+      status: 200,
+      headers,
+    });
+  } catch (error) {
+    console.error("Error fetching streamers:", error);
+
+    return NextResponse.json(
+      { error: "Failed to fetch streamers" },
+      {
+        status: 500,
+        headers,
+      }
+    );
+  }
 }

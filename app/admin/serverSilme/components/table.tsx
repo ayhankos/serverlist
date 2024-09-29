@@ -94,7 +94,15 @@ export function ServerTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const { data, error } = useSWR<Server[]>("/api/adminServers", fetcher);
+  const { data, error, mutate } = useSWR<Server[]>(
+    "/api/adminServers",
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+      refreshInterval: 5000,
+    }
+  );
 
   const table = useReactTable({
     data: data || [],

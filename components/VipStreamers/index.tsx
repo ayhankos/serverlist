@@ -26,7 +26,12 @@ interface StreamerData {
 export default function Streamers() {
   const { data: streamers, error } = useSWR<StreamerData[]>(
     "/api/vipStreamers",
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+      refreshInterval: 5000,
+    }
   );
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
