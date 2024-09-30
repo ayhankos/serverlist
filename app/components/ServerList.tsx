@@ -130,7 +130,7 @@ export default function Metin2PvpPage() {
                 <h1 className="text-lg sm:text-2xl font-bold text-gray-100">
                   Metin2 PvP
                 </h1>
-              </div>{" "}
+              </div>
               <div className="hidden lg:block">
                 <DesktopNavbar />
               </div>
@@ -157,9 +157,6 @@ export default function Metin2PvpPage() {
               </h2>
               <VipServerTable />
             </section>
-
-            {/* Middle Ads */}
-            <AdBanner src="/gifs/reklam.gif" alt="Bottom Banner" height={60} />
 
             {/* Regular Section */}
             <section id="regular-section" className="my-10">

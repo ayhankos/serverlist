@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, Globe, Search } from "lucide-react";
+import { ArrowUpDown, Calendar, Globe, Search, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -61,6 +61,27 @@ const columns: ColumnDef<Server>[] = [
     ),
   },
   {
+    accessorKey: "detaylar",
+    header: "Sunucu Detayları",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-1">
+        <span className="font-semibold text-red-700">
+          {row.getValue("detaylar")}
+        </span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "serverType",
+    header: "Sunucu Tipi",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-1">
+        <Star className="h-4 w-4 text-amber-500" />
+        <span className="text-amber-700">{row.getValue("serverType")}</span>
+      </div>
+    ),
+  },
+  {
     accessorKey: "Rank",
     header: "Rank",
     cell: ({ row }) => (
@@ -81,28 +102,26 @@ const columns: ColumnDef<Server>[] = [
       });
       return (
         <div className="flex items-center space-x-1">
+          <Calendar className="h-4 w-4 text-blue-500" />
           <span className="text-blue-700">{formattedDate}</span>
         </div>
       );
     },
   },
   {
-    accessorKey: "serverType",
-    header: "Sunucu Tipi",
+    accessorKey: "cekilis",
+    header: "Çekiliş",
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
-        <span className="text-amber-700">{row.getValue("serverType")}</span>
-      </div>
-    ),
-  },
-  {
-    accessorKey: "detaylar",
-    header: "Sunucu Detayları",
-    cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
-        <span className="font-semibold text-red-700">
-          {row.getValue("detaylar")}
-        </span>
+        <a
+          href="https://discord.com/invite/pvpserverlar"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
+            Çekiliş
+          </button>
+        </a>
       </div>
     ),
   },
