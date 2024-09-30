@@ -93,6 +93,7 @@ export function ServerTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  console.log("data basliyor");
 
   const { data, error, mutate } = useSWR<Server[]>(
     "/api/adminServers",
@@ -103,7 +104,7 @@ export function ServerTable() {
       refreshInterval: 5000,
     }
   );
-  console.log(data);
+  console.log("silme veri gelenler", data);
   const table = useReactTable({
     data: data || [],
     columns,
