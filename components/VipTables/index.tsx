@@ -26,6 +26,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Image from "next/image";
+import { Globe } from "lucide-react";
+import { FaDiscord } from "react-icons/fa";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -94,23 +96,49 @@ const columns: ColumnDef<Server>[] = [
     ),
   },
   {
-    accessorKey: "playercount",
-    header: "Oyuncu Sayısı",
+    accessorKey: "detaylar",
+    header: "Sunucu Detayları",
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
-        <Users className="h-4 w-4 text-red-500" />
         <span className="font-semibold text-red-700">
-          {row.getValue("playercount")}
+          {row.getValue("detaylar")}
         </span>
       </div>
     ),
   },
   {
     id: "actions",
+    header: "Sunucu Url",
     enableHiding: false,
     cell: ({ row }) => {
-      const server = row.original;
-      return <ServerActionsMenu server={server} />;
+      const dcLink = row.original.dcLink;
+      const webLink = row.original.webLink;
+      return (
+        <div className="flex space-x-2">
+          {dcLink && (
+            <a
+              href={dcLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 text-white bg-indigo-600 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              title="Discord Sunucusu"
+            >
+              <FaDiscord className="h-8 w-8" style={{ color: "#7289DA" }} />
+            </a>
+          )}
+          {webLink && (
+            <a
+              href={webLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              title="Web Sitesi"
+            >
+              <Globe className="h-5 w-5" />
+            </a>
+          )}
+        </div>
+      );
     },
   },
 ];
@@ -124,7 +152,7 @@ export function VipServerTable() {
     Rank: false,
     image: true,
     name: true,
-    playercount: true,
+    detaylar: true,
     serverType: true,
     launchDate: true,
     actions: true,

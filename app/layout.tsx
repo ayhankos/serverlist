@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter as FontSans, Montserrat } from "next/font/google";
+import { Inter, Alegreya_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import "./globals.css";
@@ -9,15 +9,10 @@ import dynamic from "next/dynamic";
 import DiscordWidget from "@/components/DiscordWidget";
 import Navbar from "@/components/navbar";
 
-const fontSans = Montserrat({
+const AlegreyaSans = Alegreya_Sans({
   subsets: ["latin"],
-  variable: "--font-sans",
+  weight: ["100", "300", "400", "500", "700", "800", "900"],
 });
-
-export const metadata: Metadata = {
-  title: "PvpServerlar",
-  description: "Her hafta güncellenen pvp serverlar listesine ulaşın.",
-};
 
 export default function RootLayout({
   children,
@@ -26,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("font-sans antialiased", fontSans.variable)}>
+      <body className={cn("font-sans antialiased", AlegreyaSans.className)}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <TawkToChat />
           <DiscordWidget

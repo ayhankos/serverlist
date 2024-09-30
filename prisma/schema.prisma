@@ -23,7 +23,7 @@ model Server {
     name        String
     image       String
     description String
-    playercount String
+    detaylar    String
     launchDate  DateTime @default(now())
     vip         String
     createdAt   DateTime @default(now())
@@ -31,7 +31,8 @@ model Server {
     serverType  String
     Rank        String   @default("0")
     slug        String   @unique @default(cuid())
-    link        String
+    dcLink      String
+    webLink     String
 }
 
 model Streamer {

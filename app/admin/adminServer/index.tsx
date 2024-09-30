@@ -29,13 +29,14 @@ import Image from "next/image";
 const formSchema = z.object({
   name: z.string().min(2).max(100),
   description: z.string(),
-  playerCount: z.string(),
+  detaylar: z.string(),
   vip: z.enum(["vip", "normal"]),
   launchDate: z.date(),
   image: z.string(),
   serverType: z.string(),
   rank: z.string(),
-  link: z.string(),
+  dcLink: z.string(),
+  webLink: z.string(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -49,13 +50,14 @@ export const AdminServerForm: React.FC = () => {
     defaultValues: {
       name: "",
       description: "",
-      playerCount: "",
+      detaylar: "",
       vip: "normal",
       launchDate: new Date(),
       image: "",
       serverType: "1-99",
       rank: "0",
-      link: "www.pvpserverler.tr",
+      dcLink: "https://discord.com/invite/pvpserverlar",
+      webLink: "https://pvpserverlar.tr/",
     },
   });
 
@@ -105,7 +107,7 @@ export const AdminServerForm: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
-          playercount: data.playerCount,
+          detaylar: data.detaylar,
           Rank: data.rank,
         }),
       });
@@ -175,15 +177,15 @@ export const AdminServerForm: React.FC = () => {
           />
           <FormField
             control={form.control}
-            name="playerCount"
+            name="detaylar"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="playerCount">Player Count</FormLabel>
+                <FormLabel htmlFor="detaylar">Player Count</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     disabled={loading}
-                    placeholder="Player Count"
+                    placeholder="Detaylar"
                     className="bg-zinc-100"
                   />
                 </FormControl>
@@ -212,15 +214,33 @@ export const AdminServerForm: React.FC = () => {
           />
           <FormField
             control={form.control}
-            name="link"
+            name="dcLink"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="link">Server Link</FormLabel>
+                <FormLabel htmlFor="dcLink">Discord Link</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     disabled={loading}
-                    placeholder="Server Link"
+                    placeholder="Discord Link"
+                    className="bg-zinc-100"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="webLink"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="webLink">Discord Link</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    disabled={loading}
+                    placeholder="Website Link"
                     className="bg-zinc-100"
                   />
                 </FormControl>

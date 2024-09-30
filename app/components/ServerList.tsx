@@ -62,6 +62,29 @@ const MobileDropdown = () => {
   );
 };
 
+const DesktopNavbar = () => (
+  <nav className="flex justify-center space-x-6">
+    <a
+      href="#vip-section"
+      className="text-gray-100 hover:text-gray-300 transition-colors"
+    >
+      VIP Sunucular
+    </a>
+    <a
+      href="#regular-section"
+      className="text-gray-100 hover:text-gray-300 transition-colors"
+    >
+      Normal Sunucular
+    </a>
+    <a
+      href="#streamers-section"
+      className="text-gray-100 hover:text-gray-300 transition-colors"
+    >
+      VIP Yayıncılar
+    </a>
+  </nav>
+);
+
 const SideAd = () => (
   <div className="w-full h-full relative">
     <Image
@@ -107,12 +130,13 @@ export default function Metin2PvpPage() {
                 <h1 className="text-lg sm:text-2xl font-bold text-gray-100">
                   Metin2 PvP
                 </h1>
+              </div>{" "}
+              <div className="hidden lg:block">
+                <DesktopNavbar />
               </div>
               <div className="flex items-center space-x-4">
                 {/* HeaderMain sadece büyük ekranlarda gösterilecek */}
-                <div className="hidden lg:block">
-                  <HeaderMain />
-                </div>
+
                 <DiscordButton />
                 {/* MobileDropdown sadece mobil ekranlarda gösterilecek */}
                 <div className="lg:hidden">

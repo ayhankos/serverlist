@@ -28,7 +28,7 @@ interface ServerData {
   name: string;
   description: string;
   feature: string;
-  playerCount: number;
+  detaylar: number;
   launchDate: string;
   image: string;
 }
@@ -113,7 +113,7 @@ export default function ServerPage({ params }: { params: { slug: string } }) {
               İstatistikler
             </h2>
             <p className="mb-4 text-gray-300 text-lg">
-              <strong>Oyuncu Sayısı:</strong> {server.playerCount}
+              <strong>Server Detaylari:</strong> {server.detaylar}
             </p>
             <p className="text-gray-300 text-lg">
               <strong>Açılış Tarihi:</strong>{" "}

@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, Search } from "lucide-react";
+import { ArrowUpDown, Globe, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -28,6 +28,7 @@ import ServerActionsMenu from "@/app/components/ServerActionsMenu";
 import { Server } from "@prisma/client";
 import { Input } from "../ui/input";
 import Image from "next/image";
+import { FaDiscord } from "react-icons/fa";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -40,7 +41,8 @@ const columns: ColumnDef<Server>[] = [
         <Image
           src={row.getValue("image")}
           alt={row.getValue("name")}
-          layout="fill"
+          width={56}
+          height={56}
           className="rounded-full object-cover"
         />
       </div>
@@ -51,15 +53,24 @@ const columns: ColumnDef<Server>[] = [
     header: "Sunucu Adı",
     cell: ({ row }) => (
       <div className="flex items-center space-x-2">
-        <span className="font-medium text-indigo-700">
+        <span className="font-medium text-gray-800">
           {row.getValue("name")}
         </span>
       </div>
     ),
   },
   {
+    accessorKey: "Rank",
+    header: "Rank",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-1">
+        <span className="text-red-700">{row.getValue("Rank")}</span>
+      </div>
+    ),
+  },
+  {
     accessorKey: "launchDate",
-    header: "Lansman Tarihi",
+    header: "Açılış Tarihi",
     cell: ({ row }) => {
       const launchDate = new Date(row.getValue("launchDate"));
       const formattedDate = launchDate.toLocaleDateString("tr-TR", {
@@ -76,16 +87,7 @@ const columns: ColumnDef<Server>[] = [
   },
   {
     accessorKey: "serverType",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        className="hover:bg-transparent"
-      >
-        Server Tipi
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
+    header: "Sunucu Tipi",
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
         <span className="text-amber-700">{row.getValue("serverType")}</span>
@@ -93,22 +95,49 @@ const columns: ColumnDef<Server>[] = [
     ),
   },
   {
-    accessorKey: "playercount",
-    header: "Oyuncu Sayısı",
+    accessorKey: "detaylar",
+    header: "Sunucu Detayları",
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
-        <span className="font-semibold text-emerald-700">
-          {row.getValue("playercount")}
+        <span className="font-semibold text-red-700">
+          {row.getValue("detaylar")}
         </span>
       </div>
     ),
   },
   {
     id: "actions",
+    header: "Sunucu Url",
     enableHiding: false,
     cell: ({ row }) => {
-      const server = row.original;
-      return <ServerActionsMenu server={server} />;
+      const dcLink = row.original.dcLink;
+      const webLink = row.original.webLink;
+      return (
+        <div className="flex space-x-2">
+          {dcLink && (
+            <a
+              href={dcLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 text-white bg-indigo-600 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              title="Discord Sunucusu"
+            >
+              <FaDiscord className="h-8 w-8" style={{ color: "#7289DA" }} />
+            </a>
+          )}
+          {webLink && (
+            <a
+              href={webLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              title="Web Sitesi"
+            >
+              <Globe className="h-5 w-5" />
+            </a>
+          )}
+        </div>
+      );
     },
   },
 ];
