@@ -28,6 +28,7 @@ import {
 import Image from "next/image";
 import { Globe } from "lucide-react";
 import { FaDiscord } from "react-icons/fa";
+import { SiWebtrees } from "react-icons/si";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -120,7 +121,7 @@ const columns: ColumnDef<Server>[] = [
               href={dcLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-white bg-indigo-600 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="p-2 text-white  rounded-full hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               title="Discord Sunucusu"
             >
               <FaDiscord className="h-8 w-8" style={{ color: "#7289DA" }} />
@@ -131,10 +132,10 @@ const columns: ColumnDef<Server>[] = [
               href={webLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="p-2 text-white  rounded-full hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               title="Web Sitesi"
             >
-              <Globe className="h-5 w-5" />
+              <SiWebtrees className="h-8 w-8" style={{ color: "#424242" }} />
             </a>
           )}
         </div>
@@ -162,7 +163,7 @@ export function VipServerTable() {
   const { data, error } = useSWR<Server[]>("/api/VipServers", fetcher, {
     revalidateOnFocus: true,
     revalidateOnReconnect: true,
-    refreshInterval: 5000,
+    refreshInterval: 50000,
   });
 
   const table = useReactTable({

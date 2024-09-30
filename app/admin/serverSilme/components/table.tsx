@@ -101,7 +101,7 @@ export function ServerTable() {
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
-      refreshInterval: 5000,
+      refreshInterval: 50000,
     }
   );
   console.log("silme veri gelenler", data);

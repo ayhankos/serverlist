@@ -30,7 +30,7 @@ export default function Streamers() {
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
-      refreshInterval: 5000,
+      refreshInterval: 50000,
     }
   );
   const [emblaRef, emblaApi] = useEmblaCarousel({

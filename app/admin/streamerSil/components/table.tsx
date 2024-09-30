@@ -31,7 +31,7 @@ export default function StreamerTable() {
   } = useSWR("/api/adminStreamers", fetcher, {
     revalidateOnFocus: true,
     revalidateOnReconnect: true,
-    refreshInterval: 5000,
+    refreshInterval: 50000,
   });
 
   const handleDeleteClick = (streamer: Streamer) => {
