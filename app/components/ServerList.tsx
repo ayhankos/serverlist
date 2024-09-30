@@ -82,6 +82,12 @@ const DesktopNavbar = () => (
     >
       VIP Yayıncılar
     </a>
+    <a
+      href="https://pvpserverlar.tr/streamers"
+      className="text-gray-100 hover:text-gray-300 transition-colors"
+    >
+      Tüm Yayıncılar
+    </a>
   </nav>
 );
 
