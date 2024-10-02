@@ -37,23 +37,27 @@ const columns: ColumnDef<Server>[] = [
     accessorKey: "image",
     header: "",
     cell: ({ row }) => (
-      <div className="relative h-14 w-14 flex items-center justify-center">
-        <Image
-          src={row.getValue("image")}
-          alt={row.getValue("name")}
-          width={56}
-          height={56}
-          className="rounded-full object-cover"
-        />
+      <div className="relative w-14 h-14 overflow-hidden rounded-full">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Image
+            src={row.getValue("image")}
+            alt={row.getValue("name")}
+            fill
+            className="object-cover"
+            sizes="56px"
+          />
+        </div>
       </div>
     ),
   },
   {
     accessorKey: "name",
-    header: "Sunucu Adı",
+    header: ({ column }) => {
+      return <div className="flex justify-start font-semibold">Sunucu Adı</div>;
+    },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-2">
-        <span className="font-medium text-gray-800">
+      <div className="flex items-center">
+        <span className="font-medium text-gray-800 whitespace-nowrap">
           {row.getValue("name")}
         </span>
       </div>
@@ -61,10 +65,14 @@ const columns: ColumnDef<Server>[] = [
   },
   {
     accessorKey: "detaylar",
-    header: "Sunucu Detayları",
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-start font-semibold">Sunucu Detayları</div>
+      );
+    },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
-        <span className="font-semibold text-red-700">
+      <div className="flex items-center">
+        <span className="font-medium text-red-700 max-w-[150px] sm:max-w-[200px] md:max-w-[250px] lg:max-w-[350px] whitespace-normal break-words">
           {row.getValue("detaylar")}
         </span>
       </div>
@@ -72,26 +80,40 @@ const columns: ColumnDef<Server>[] = [
   },
   {
     accessorKey: "serverType",
-    header: "Sunucu Tipi",
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-start font-semibold">Sunucu Tipi</div>
+      );
+    },
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
         <Star className="h-4 w-4 text-amber-500" />
-        <span className="text-amber-700">{row.getValue("serverType")}</span>
+        <span className="text-amber-700 whitespace-nowrap">
+          {row.getValue("serverType")}
+        </span>
       </div>
     ),
   },
   {
     accessorKey: "Rank",
-    header: "Rank",
+    header: ({ column }) => {
+      return <div className="flex justify-start font-semibold">Rank</div>;
+    },
     cell: ({ row }) => (
       <div className="flex items-center space-x-1">
-        <span className="text-red-700">{row.getValue("Rank")}</span>
+        <span className="text-red-700 whitespace-nowrap">
+          {row.getValue("Rank")}
+        </span>
       </div>
     ),
   },
   {
     accessorKey: "launchDate",
-    header: "Açılış Tarihi",
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-start font-semibold">Açılış Tarihi</div>
+      );
+    },
     cell: ({ row }) => {
       const launchDate = new Date(row.getValue("launchDate"));
       const formattedDate = launchDate.toLocaleDateString("tr-TR", {
@@ -102,22 +124,26 @@ const columns: ColumnDef<Server>[] = [
       return (
         <div className="flex items-center space-x-1">
           <Calendar className="h-4 w-4 text-blue-500" />
-          <span className="text-blue-700">{formattedDate}</span>
+          <span className="text-blue-700 whitespace-nowrap">
+            {formattedDate}
+          </span>
         </div>
       );
     },
   },
   {
     accessorKey: "cekilis",
-    header: "Çekiliş",
+    header: ({ column }) => {
+      return <div className="flex justify-start font-semibold">Çekiliş</div>;
+    },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
+      <div className="flex items-center">
         <a
           href="https://discord.com/invite/pvpserverlar"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded transition duration-200">
             Çekiliş
           </button>
         </a>
@@ -126,8 +152,9 @@ const columns: ColumnDef<Server>[] = [
   },
   {
     id: "actions",
-    header: "Sunucu Url",
-    enableHiding: false,
+    header: ({ column }) => {
+      return <div className="flex justify-start font-semibold">Sunucu Url</div>;
+    },
     cell: ({ row }) => {
       const dcLink = row.original.dcLink;
       const webLink = row.original.webLink;
@@ -138,7 +165,7 @@ const columns: ColumnDef<Server>[] = [
               href={dcLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-white  rounded-full hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="p-2 text-white rounded-full hover:scale-110 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               title="Discord Sunucusu"
             >
               <FaDiscord className="h-8 w-8" style={{ color: "#7289DA" }} />
@@ -149,7 +176,7 @@ const columns: ColumnDef<Server>[] = [
               href={webLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-white  rounded-full hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="p-2 text-white rounded-full hover:scale-110 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               title="Web Sitesi"
             >
               <SiWebtrees className="h-8 w-8" style={{ color: "#424242" }} />

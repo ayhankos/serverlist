@@ -14,6 +14,14 @@ const AlegreyaSans = Alegreya_Sans({
   weight: ["100", "300", "400", "500", "700", "800", "900"],
 });
 
+export const metadata = {
+  title: "Pvp Serverlar",
+  description: "Her hafta güncellenen metin2 pvp serverler listesi.",
+  icons: {
+    icon: "/images/favicon.png",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

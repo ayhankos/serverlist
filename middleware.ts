@@ -1,34 +1,40 @@
-import { NextRequest, NextResponse } from "next/server";
-import { auth } from "./lib/auth";
+import { NextResponse, type NextRequest } from "next/server";
+import { auth } from "@/lib/auth";
 
-export async function middleware(req: NextRequest) {
-  const session = await auth();
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-  if (
-    req.nextUrl.pathname === "/admin/login" ||
-    req.nextUrl.pathname === "/admin/register"
-  ) {
+  const publicAdminRoutes = ["/admin/login", "/admin/register"];
+
+  if (publicAdminRoutes.includes(pathname)) {
     return NextResponse.next();
   }
 
-  if (!session) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
+  if (pathname.startsWith("/admin")) {
+    try {
+      const session = await auth();
 
-  if (session.user.role === "ADMIN") {
-    if (req.nextUrl.pathname.startsWith("/admin")) {
+      if (!session) {
+        const loginUrl = new URL("/admin/login", request.url);
+        return NextResponse.redirect(loginUrl);
+      }
+
+      if (session.user?.role !== "ADMIN") {
+        const homeUrl = new URL("/", request.url);
+        return NextResponse.redirect(homeUrl);
+      }
+
       return NextResponse.next();
+    } catch (error) {
+      console.error("Middleware error:", error);
+      const loginUrl = new URL("/admin/login", request.url);
+      return NextResponse.redirect(loginUrl);
     }
-
-    return NextResponse.next();
-  } else {
-    if (req.nextUrl.pathname.startsWith("/admin")) {
-      return NextResponse.redirect(new URL("/", req.url));
-    }
-    return NextResponse.next();
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/admin/:path*"],
 };

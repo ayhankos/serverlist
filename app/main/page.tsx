@@ -24,9 +24,9 @@ export default async function Page() {
         <div className="w-full max-w-md px-4">
           <ServerCard
             title="Metin2 Pvp Server Reklam"
-            date="27.09.2024"
-            description="1-99 OLD SCHOOL Ön Kayıta Özel 30.000 EM Hediye!"
-            ctaText="TIKLA"
+            date=""
+            description=""
+            ctaText=""
             href="/metin2serverler"
           />
         </div>
@@ -39,11 +39,11 @@ export default async function Page() {
       >
         <div className="w-full max-w-md px-4">
           <ServerCard
-            title="Knight Online Pvp Server Reklam"
-            date="4 EKİM 22:00'DA"
-            description="BORDERKO 1098 ANELERIN SAVAŞI"
-            ctaText="TIKLA"
-            href="/knightserverler"
+            title="Metin2 Pvp Server Reklam"
+            date=""
+            description=""
+            ctaText=""
+            href="/metin2serverler"
           />
         </div>
       </div>
