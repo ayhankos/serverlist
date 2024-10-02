@@ -154,6 +154,7 @@ export default function Metin2PvpPage({
 
           {/* Main Content */}
           <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
+            {/* burasi buyuyecek */}
             <AdBanner src={adTop} height={60} />
 
             {/* VIP Section */}
