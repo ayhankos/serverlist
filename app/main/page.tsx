@@ -1,5 +1,55 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export default async function Page() {
+  const adLeft = await prisma.advertisement.findUnique({
+    where: { location: "Giris sayfasi sol" },
+  });
+
+  const adRight = await prisma.advertisement.findUnique({
+    where: { location: "Giris sayfasi sag" },
+  });
+
+  return (
+    <div className="flex h-screen">
+      <div
+        className="flex-1 bg-no-repeat bg-cover flex justify-center items-center"
+        style={{
+          backgroundImage: `url(${adLeft?.imagePath || "/gifs/preview.gif"})`,
+        }}
+      >
+        <div className="w-full max-w-md px-4">
+          <ServerCard
+            title="Metin2 Pvp Server Reklam"
+            date="27.09.2024"
+            description="1-99 OLD SCHOOL Ön Kayıta Özel 30.000 EM Hediye!"
+            ctaText="TIKLA"
+            href="/metin2serverler"
+          />
+        </div>
+      </div>
+      <div
+        className="flex-1 bg-no-repeat bg-cover flex justify-center items-center"
+        style={{
+          backgroundImage: `url(${adRight?.imagePath || "/gifs/standard.gif"})`,
+        }}
+      >
+        <div className="w-full max-w-md px-4">
+          <ServerCard
+            title="Knight Online Pvp Server Reklam"
+            date="4 EKİM 22:00'DA"
+            description="BORDERKO 1098 ANELERIN SAVAŞI"
+            ctaText="TIKLA"
+            href="/knightserverler"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 type ServerCardProps = {
   title: string;
@@ -33,32 +83,3 @@ const ServerCard = ({
     )}
   </Card>
 );
-
-export default function Page() {
-  return (
-    <div className="flex h-screen">
-      <div className="flex-1 bg-[url('/gifs/preview.gif')] bg-no-repeat bg-cover flex justify-center items-center">
-        <div className="w-full max-w-md px-4">
-          <ServerCard
-            title="Metin2 Pvp Server Reklam"
-            date="27.09.2024"
-            description="1-99 OLD SCHOOL Ön Kayıta Özel 30.000 EM Hediye!"
-            ctaText="TIKLA"
-            href="/metin2serverler"
-          />
-        </div>
-      </div>
-      <div className="flex-1 bg-[url('/gifs/standard.gif')] bg-no-repeat bg-cover flex justify-center items-center">
-        <div className="w-full max-w-md px-4">
-          <ServerCard
-            title="Knight Online Pvp Server Reklam"
-            date="4 EKİM 22:00'DA"
-            description="BORDERKO 1098 ANELERIN SAVAŞI"
-            ctaText="TIKLA"
-            href="/knightserverler"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}

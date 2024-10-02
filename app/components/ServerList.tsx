@@ -4,25 +4,17 @@ import { RegularServerTable } from "@/components/RegularTables";
 import { VipServerTable } from "@/components/VipTables";
 import VipStreamers from "@/components/VipStreamers";
 import Image from "next/image";
-import { HeaderMain } from "@/components/layout/home/header";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FaDiscord } from "react-icons/fa";
 import Link from "next/link";
 
-const AdBanner = ({
-  src,
-  alt,
-  height,
-}: {
-  src: string;
-  alt: string;
-  height: number;
-}) => (
-  <div className="relative w-full h-auto" style={{ height: `${height}px` }}>
-    <Image src={src} alt={alt} layout="fill" objectFit="cover" />
-  </div>
-);
+interface Metin2PvpPageProps {
+  adLeft: string;
+  adRight: string;
+  adTop: string;
+  adBottom: string;
+}
 
 const MobileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -91,17 +83,6 @@ const DesktopNavbar = () => (
   </nav>
 );
 
-const SideAd = () => (
-  <div className="w-full h-full relative">
-    <Image
-      src="/adds/sagsol.gif"
-      alt="Side Advertisement"
-      layout="fill"
-      className="object-cover"
-    />
-  </div>
-);
-
 const DiscordButton = () => (
   <Link href="https://discord.com/invite/pvpserverlar" target="_blank">
     <Button className="bg-[#5570d0] hover:bg-[#5e73bc] text-white rounded-md flex items-center space-x-2">
@@ -111,13 +92,35 @@ const DiscordButton = () => (
   </Link>
 );
 
-export default function Metin2PvpPage() {
+export default function Metin2PvpPage({
+  adLeft,
+  adRight,
+  adTop,
+  adBottom,
+}: Metin2PvpPageProps) {
+  const SideAd = ({ src }: { src: string }) => (
+    <div className="w-full h-full relative">
+      <Image src={src} alt="Side Advertisement" fill className="object-cover" />
+    </div>
+  );
+
+  const AdBanner = ({ src, height }: { src: string; height: number }) => (
+    <div className="relative w-full" style={{ height: `${height}px` }}>
+      <Image
+        src={src}
+        alt="Advertisement Banner"
+        fill
+        className="object-cover"
+      />
+    </div>
+  );
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Left Adds - Hidden on smaller screens */}
+        {/* Left Ad */}
         <div className="hidden lg:block lg:w-[15rem] lg:h-screen lg:sticky lg:top-0">
-          <SideAd />
+          <SideAd src={adLeft} />
         </div>
 
         {/* Main Content */}
@@ -141,10 +144,7 @@ export default function Metin2PvpPage() {
                 <DesktopNavbar />
               </div>
               <div className="flex items-center space-x-4">
-                {/* HeaderMain sadece büyük ekranlarda gösterilecek */}
-
                 <DiscordButton />
-                {/* MobileDropdown sadece mobil ekranlarda gösterilecek */}
                 <div className="lg:hidden">
                   <MobileDropdown />
                 </div>
@@ -154,7 +154,7 @@ export default function Metin2PvpPage() {
 
           {/* Main Content */}
           <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
-            <AdBanner src="/gifs/reklam.gif" alt="Top Banner" height={60} />
+            <AdBanner src={adTop} height={60} />
 
             {/* VIP Section */}
             <section id="vip-section" className="my-10">
@@ -178,21 +178,21 @@ export default function Metin2PvpPage() {
                 <h2 className="text-3xl font-bold text-gray-800">
                   VIP Yayıncılar
                 </h2>
-                <Link href="/streamers" target="_blank">
+                <Link href="/streamers">
                   <Button>Tüm Yayıncılar</Button>
                 </Link>
               </div>
               <VipStreamers />
             </section>
 
-            {/* Bottom Ads */}
-            <AdBanner src="/gifs/reklam.gif" alt="Bottom Banner" height={60} />
+            {/* Bottom Ad */}
+            <AdBanner src={adBottom} height={60} />
           </main>
         </div>
 
-        {/* Right Adds - Hidden on smaller screens */}
+        {/* Right Ad */}
         <div className="hidden lg:block lg:w-[15rem] lg:h-screen lg:sticky lg:top-0">
-          <SideAd />
+          <SideAd src={adRight} />
         </div>
       </div>
     </div>

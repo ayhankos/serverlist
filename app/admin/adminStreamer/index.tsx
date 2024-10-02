@@ -40,6 +40,8 @@ type FormValues = z.infer<typeof formSchema>;
 
 export const StreamerForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
   const [imagePath, setImagePath] = useState("");
 
   const form = useForm<FormValues>({
@@ -75,11 +77,18 @@ export const StreamerForm: React.FC = () => {
     if (acceptedFiles && acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
       try {
+        setLoading(true);
+        const localPreview = URL.createObjectURL(file);
+        setImagePreview(localPreview);
+
         const uploadedImagePath = await uploadImageToServer(file);
         setImagePath(uploadedImagePath);
         form.setValue("image", uploadedImagePath);
       } catch (error) {
         console.error("File upload failed", error);
+        setImagePreview(null);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -100,6 +109,7 @@ export const StreamerForm: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
+          image: imagePath,
         }),
       });
 
@@ -240,13 +250,12 @@ export const StreamerForm: React.FC = () => {
                     className="border-2 border-dashed border-gray-300 p-4 text-center cursor-pointer"
                   >
                     <input {...getInputProps()} />
-                    {imagePath ? (
-                      <Image
-                        src={imagePath}
+                    {imagePreview ? (
+                      <img
+                        src={imagePreview}
                         alt="Selected Image"
-                        layout="fill"
-                        objectFit="cover"
-                        className="max-w-full h-auto"
+                        className="max-w-full h-auto mx-auto"
+                        style={{ maxHeight: "200px" }}
                       />
                     ) : (
                       <p>Drag and drop an image here, or click to select one</p>

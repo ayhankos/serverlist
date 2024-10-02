@@ -12,7 +12,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if (!session) {
-    return NextResponse.redirect(new URL("/admin/login", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   if (session.user.role === "ADMIN") {

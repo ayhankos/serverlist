@@ -47,6 +47,14 @@ model Streamer {
     vip         String
 }
 
+model Advertisement {
+    id        String   @id @default(cuid())
+    location  String   @unique
+    imagePath String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
 enum Role {
     ADMIN
     USER
