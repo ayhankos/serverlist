@@ -15,13 +15,20 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/admin/login", req.url));
   }
 
-  if (session.user.role !== "ADMIN") {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
+  if (session.user.role === "ADMIN") {
+    if (req.nextUrl.pathname.startsWith("/admin")) {
+      return NextResponse.next();
+    }
 
-  return NextResponse.next();
+    return NextResponse.next();
+  } else {
+    if (req.nextUrl.pathname.startsWith("/admin")) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+    return NextResponse.next();
+  }
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
