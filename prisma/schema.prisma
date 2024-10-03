@@ -55,6 +55,26 @@ model Advertisement {
     updatedAt DateTime @updatedAt
 }
 
+model MainAdvertisementTextSol {
+    id          String   @id @default(cuid())
+    title       String
+    date        String
+    description String
+    ctaText     String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
+model MainAdvertisementTextSag {
+    id          String   @id @default(cuid())
+    title       String
+    date        String
+    description String
+    ctaText     String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
 enum Role {
     ADMIN
     USER

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { PrismaClient } from "@prisma/client";
 
+export const dynamic = "force-dynamic";
+
 const prisma = new PrismaClient();
 
 export default async function Page() {
@@ -11,6 +13,18 @@ export default async function Page() {
 
   const adRight = await prisma.advertisement.findUnique({
     where: { location: "Giris sayfasi sag" },
+  });
+
+  const mainAdLeft = await prisma.mainAdvertisementTextSol.findFirst({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  const mainAdRight = await prisma.mainAdvertisementTextSag.findFirst({
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   return (
@@ -23,11 +37,11 @@ export default async function Page() {
       >
         <div className="w-full max-w-md px-4">
           <ServerCard
-            title="Metin2 Pvp Server Reklam"
-            date=""
-            description=""
-            ctaText=""
-            href="/metin2serverler"
+            title={mainAdLeft?.title || "Metin2 Pvp Server Reklam"}
+            date={mainAdLeft?.date || ""}
+            description={mainAdLeft?.description || ""}
+            ctaText={mainAdLeft?.ctaText || ""}
+            href={mainAdLeft?.ctaText || "/metin2serverler"}
           />
         </div>
       </div>
@@ -39,11 +53,11 @@ export default async function Page() {
       >
         <div className="w-full max-w-md px-4">
           <ServerCard
-            title="Metin2 Pvp Server Reklam"
-            date=""
-            description=""
-            ctaText=""
-            href="/metin2serverler"
+            title={mainAdRight?.title || "Metin2 Pvp Server Reklam"}
+            date={mainAdRight?.date || ""}
+            description={mainAdRight?.description || ""}
+            ctaText={mainAdRight?.ctaText || ""}
+            href={mainAdRight?.ctaText || "/metin2serverler"}
           />
         </div>
       </div>
@@ -51,13 +65,13 @@ export default async function Page() {
   );
 }
 
-type ServerCardProps = {
+interface ServerCardProps {
   title: string;
   date: string;
   description: string;
   ctaText: string;
   href?: string;
-};
+}
 
 const ServerCard = ({
   title,
@@ -73,12 +87,15 @@ const ServerCard = ({
       <p className="mb-4">{description}</p>
     </CardContent>
     {href ? (
-      <Link href={href} className="bg-white text-black py-2 px-4 self-start">
-        {ctaText}
+      <Link
+        href={href}
+        className="bg-white text-black py-2 px-4 self-start hover:bg-gray-100 transition-colors"
+      >
+        {ctaText || "Detaylar"}
       </Link>
     ) : (
-      <button className="bg-white text-black py-2 px-4 self-start">
-        {ctaText}
+      <button className="bg-white text-black py-2 px-4 self-start hover:bg-gray-100 transition-colors">
+        {ctaText || "Detaylar"}
       </button>
     )}
   </Card>
