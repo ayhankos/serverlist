@@ -1,4 +1,3 @@
-// app/metin2serverler/page.tsx
 import { PrismaClient } from "@prisma/client";
 import Metin2PvpPage from "../components/ServerList";
 
