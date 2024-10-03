@@ -21,12 +21,8 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const filename =
-      file.name.replace(/\.[^/.]+$/, "") +
-      "-" +
-      uniqueSuffix +
-      path.extname(file.name);
+    const uniqueSuffix = Date.now().toString();
+    const filename = `${uniqueSuffix}${path.extname(file.name)}`;
 
     const uploadDir = join(process.cwd(), "public", "uploads");
     await mkdir(uploadDir, { recursive: true });
