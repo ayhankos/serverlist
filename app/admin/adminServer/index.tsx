@@ -24,7 +24,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { mutate } from "swr";
-import Image from "next/image";
 
 const formSchema = z.object({
   name: z.string().min(2).max(100),

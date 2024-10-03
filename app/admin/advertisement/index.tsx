@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 
 interface Advertisement {
   id: string;
@@ -78,11 +77,11 @@ export default function AdminAdvertisements() {
           <p className="font-bold">{location}</p>
           {ad && (
             <div className="my-2">
-              <Image
+              <img
                 src={ad.imagePath}
                 alt={location}
-                width={200}
-                height={200}
+                width="200"
+                height="200"
                 className="rounded border"
               />
               <p className="mt-2">

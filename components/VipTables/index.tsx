@@ -25,7 +25,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Image from "next/image";
 import { Globe } from "lucide-react";
 import { FaDiscord } from "react-icons/fa";
 import { SiWebtrees } from "react-icons/si";
@@ -39,17 +38,20 @@ const columns: ColumnDef<Server>[] = [
     cell: ({ row }) => (
       <div className="relative w-14 h-14 overflow-hidden rounded-full">
         <div className="absolute inset-0 flex items-center justify-center">
-          <Image
+          <img
             src={row.getValue("image")}
             alt={row.getValue("name")}
-            fill
             className="object-cover"
-            sizes="56px"
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
           />
         </div>
       </div>
     ),
   },
+
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -94,6 +96,7 @@ const columns: ColumnDef<Server>[] = [
       </div>
     ),
   },
+
   {
     accessorKey: "Rank",
     header: ({ column }) => {
@@ -192,6 +195,7 @@ export function VipServerTable() {
   const [sorting, setSorting] = useState<SortingState>([
     { id: "Rank", desc: false },
   ]);
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     Rank: false,
@@ -228,7 +232,6 @@ export function VipServerTable() {
       rowSelection,
     },
   });
-
   if (error) {
     return (
       <Card className="w-full bg-red-50">

@@ -25,7 +25,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Image from "next/image";
 
 const fetcher = (url: string) =>
   fetch(url).then((res) => {
@@ -41,12 +40,15 @@ export const columns: ColumnDef<Server>[] = [
     header: "",
     cell: ({ row }) => (
       <div className="relative h-14 w-14 flex items-center justify-center">
-        <Image
+        <img
           src={row.getValue("image")}
           alt={row.getValue("name")}
-          layout="fill"
           className="rounded-full object-cover"
-          objectFit="cover"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
         />
       </div>
     ),

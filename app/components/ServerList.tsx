@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { RegularServerTable } from "@/components/RegularTables";
 import { VipServerTable } from "@/components/VipTables";
 import VipStreamers from "@/components/VipStreamers";
-import Image from "next/image";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FaDiscord } from "react-icons/fa";
@@ -100,17 +99,28 @@ export default function Metin2PvpPage({
 }: Metin2PvpPageProps) {
   const SideAd = ({ src }: { src: string }) => (
     <div className="w-full h-full relative">
-      <Image src={src} alt="Side Advertisement" fill className="object-cover" />
+      <img
+        src={src}
+        alt="Side Advertisement"
+        className="object-cover"
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      />
     </div>
   );
 
-  const AdBanner = ({ src, height }: { src: string; height: number }) => (
-    <div className="relative w-full" style={{ height: `${height}px` }}>
-      <Image
+  const AdBanner = ({ src }: { src: string }) => (
+    <div className="relative w-full">
+      <img
         src={src}
         alt="Advertisement Banner"
-        fill
-        className="object-cover"
+        className="object-cover w-full"
+        style={{
+          width: "1000px",
+          height: "auto",
+        }}
       />
     </div>
   );
@@ -129,17 +139,20 @@ export default function Metin2PvpPage({
           <header className="bg-gradient-to-r from-gray-900 to-gray-800 text-gray-100 p-4 shadow-xl z-50">
             <div className="container mx-auto flex items-center justify-between">
               <div className="flex items-center space-x-2 sm:space-x-4">
-                <Image
+                <img
                   src="/gifs/preview.gif"
                   alt="Logo"
-                  width={50}
-                  height={50}
                   className="rounded-full border border-gray-300"
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                  }}
                 />
                 <h1 className="text-lg sm:text-2xl font-bold text-gray-100">
                   Metin2 PvP
                 </h1>
               </div>
+
               <div className="hidden lg:block">
                 <DesktopNavbar />
               </div>
@@ -155,7 +168,7 @@ export default function Metin2PvpPage({
           {/* Main Content */}
           <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
             {/* burasi buyuyecek */}
-            <AdBanner src={adTop} height={60} />
+            <AdBanner src={adTop} />
 
             {/* VIP Section */}
             <section id="vip-section" className="my-10">
@@ -187,7 +200,7 @@ export default function Metin2PvpPage({
             </section>
 
             {/* Bottom Ad */}
-            <AdBanner src={adBottom} height={60} />
+            <AdBanner src={adBottom} />
           </main>
         </div>
 

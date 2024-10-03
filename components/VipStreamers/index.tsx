@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import useEmblaCarousel from "embla-carousel-react";
 import useSWR from "swr";
 import { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
 
 const fetcher = (url: string) =>
   fetch(url).then((res) => {
@@ -92,11 +91,15 @@ export default function Streamers() {
                 <Card className="h-full transition-all duration-300 bg-zinc-100 border-none overflow-hidden shadow-none">
                   <CardContent className="p-0 aspect-square">
                     <div className="relative w-full h-full">
-                      <Image
+                      <img
                         src={item.image}
                         alt={item.name}
-                        layout="fill"
                         className="absolute inset-0 object-cover rounded-full"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          borderRadius: "50%",
+                        }}
                       />
                     </div>
                   </CardContent>

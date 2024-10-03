@@ -27,7 +27,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import ServerActionsMenu from "@/app/components/ServerActionsMenu";
 import { Server } from "@prisma/client";
 import { Input } from "../ui/input";
-import Image from "next/image";
 import { FaDiscord } from "react-icons/fa";
 import { SiWebtrees } from "react-icons/si";
 
@@ -39,12 +38,14 @@ const columns: ColumnDef<Server>[] = [
     header: "",
     cell: ({ row }) => (
       <div className="relative h-14 w-14 flex items-center justify-center">
-        <Image
+        <img
           src={row.getValue("image")}
           alt={row.getValue("name")}
-          width={56}
-          height={56}
           className="rounded-full object-cover"
+          style={{
+            width: "56px",
+            height: "56px",
+          }}
         />
       </div>
     ),

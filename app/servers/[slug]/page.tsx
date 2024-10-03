@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowBigDown } from "lucide-react";
 import { FcApproval } from "react-icons/fc";
-import Image from "next/image";
 
 async function getServerData(slug: string) {
   const res = await fetch(
@@ -69,12 +68,14 @@ export default function ServerPage({ params }: { params: { slug: string } }) {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="flex justify-center mb-8"
         >
-          <Image
+          <img
             src={server.image}
             alt={server.name}
-            width={128}
-            height={128}
             className="rounded-full object-cover"
+            style={{
+              width: "128px",
+              height: "128px",
+            }}
           />
         </motion.div>
 
