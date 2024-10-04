@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { PrismaClient } from "@prisma/client";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
 const prisma = new PrismaClient();
-
 export default async function Page() {
   const adLeft = await prisma.advertisement.findUnique({
     where: { location: "Giris sayfasi sol" },
@@ -14,6 +14,7 @@ export default async function Page() {
   const adRight = await prisma.advertisement.findUnique({
     where: { location: "Giris sayfasi sag" },
   });
+  console.log(adLeft, adRight);
 
   const mainAdLeft = await prisma.mainAdvertisementTextSol.findFirst({
     orderBy: {
@@ -29,36 +30,42 @@ export default async function Page() {
 
   return (
     <div className="flex h-screen">
-      <div
-        className="flex-1 bg-no-repeat bg-cover flex justify-center items-center"
-        style={{
-          backgroundImage: `url(${adLeft?.imagePath || "/gifs/preview.gif"})`,
-        }}
-      >
-        <div className="w-full max-w-md px-4">
-          <ServerCard
-            title={mainAdLeft?.title || "Metin2 Pvp Server Reklam"}
-            date={mainAdLeft?.date || ""}
-            description={mainAdLeft?.description || ""}
-            ctaText={mainAdLeft?.ctaText || ""}
-            href={mainAdLeft?.ctaText || "/metin2"}
-          />
+      <div className="flex-1 relative">
+        <Image
+          src={adLeft?.imagePath ? adLeft.imagePath : "/gifs/preview.gif"}
+          alt="Left background"
+          fill
+          style={{ objectFit: "cover" }}
+        />
+        <div className="relative z-10 w-full h-full flex justify-center items-center">
+          <div className="w-full max-w-md px-4">
+            <ServerCard
+              title={mainAdLeft?.title || "Metin2 Pvp Server Reklam"}
+              date={mainAdLeft?.date || ""}
+              description={mainAdLeft?.description || ""}
+              ctaText={mainAdLeft?.ctaText || ""}
+              href={mainAdLeft?.ctaText || "/metin2"}
+            />
+          </div>
         </div>
       </div>
-      <div
-        className="flex-1 bg-no-repeat bg-cover flex justify-center items-center"
-        style={{
-          backgroundImage: `url(${adRight?.imagePath || "/gifs/standard.gif"})`,
-        }}
-      >
-        <div className="w-full max-w-md px-4">
-          <ServerCard
-            title={mainAdRight?.title || "Metin2 Pvp Server Reklam"}
-            date={mainAdRight?.date || ""}
-            description={mainAdRight?.description || ""}
-            ctaText={mainAdRight?.ctaText || ""}
-            href={mainAdRight?.ctaText || "/metin2"}
-          />
+      <div className="flex-1 relative">
+        <Image
+          src={adRight?.imagePath ? adRight.imagePath : "/gifs/preview.gif"}
+          alt="Left background"
+          fill
+          style={{ objectFit: "cover" }}
+        />
+        <div className="relative z-10 w-full h-full flex justify-center items-center">
+          <div className="w-full max-w-md px-4">
+            <ServerCard
+              title={mainAdRight?.title || "Metin2 Pvp Server Reklam"}
+              date={mainAdRight?.date || ""}
+              description={mainAdRight?.description || ""}
+              ctaText={mainAdRight?.ctaText || ""}
+              href={mainAdRight?.ctaText || "/metin2"}
+            />
+          </div>
         </div>
       </div>
     </div>
