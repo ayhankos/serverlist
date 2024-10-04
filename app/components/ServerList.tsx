@@ -116,9 +116,9 @@ export default function Metin2PvpPage({
       <img
         src={src}
         alt="Advertisement Banner"
-        className="object-cover w-full"
+        className="object-cover w-full py-2"
         style={{
-          width: "1000px",
+          width: "100%",
           height: "auto",
         }}
       />
@@ -137,7 +137,7 @@ export default function Metin2PvpPage({
         <div className="flex-1 flex flex-col">
           {/* Header */}
           <header className="bg-gradient-to-r from-gray-900 to-gray-800 text-gray-100 p-4 shadow-xl z-50">
-            <div className="container mx-auto flex items-center justify-between">
+            <div className="mx-auto flex items-center justify-between">
               <div className="flex items-center space-x-2 sm:space-x-4">
                 <img
                   src="/gifs/preview.gif"
