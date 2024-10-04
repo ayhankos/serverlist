@@ -6,6 +6,8 @@ import useEmblaCarousel from "embla-carousel-react";
 import useSWR from "swr";
 import { useCallback, useEffect, useState } from "react";
 import { FaDiscord, FaYoutube } from "react-icons/fa";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 const fetcher = (url: string) =>
   fetch(url).then((res) => {
@@ -83,7 +85,7 @@ export default function Streamers() {
 
   return (
     <Card className="w-full border-none bg-zinc-100 shadow-none">
-      <CardContent className="p-2 sm:p-4 border-none shadow-none">
+      <CardContent className="p-2 sm:p-4  shadow-none">
         <div className="relative w-full overflow-hidden" ref={emblaRef}>
           <div className="flex">
             {streamers.map((item) => (
@@ -91,7 +93,7 @@ export default function Streamers() {
                 key={item.id}
                 className="flex-none w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 sm:p-2"
               >
-                <Card className="h-full transition-all duration-300 bg-zinc-100 border-none overflow-hidden shadow-none">
+                <Card className="h-full transition-all duration-300 bg-zinc-100 overflow-hidden shadow-none">
                   <CardContent className="p-0">
                     <div className="flex flex-col items-center gap-2">
                       <div className="relative w-full aspect-square">
@@ -108,30 +110,40 @@ export default function Streamers() {
                       </div>
                       <div className="flex justify-center gap-4 mt-2 pb-2">
                         {item.ytLink && (
-                          <a
+                          <Link
                             href={item.ytLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-red-600 hover:text-red-700 transition-colors"
                           >
-                            <FaYoutube
-                              className="h-8 w-8"
-                              style={{ color: "#FF0000" }}
-                            />
-                          </a>
+                            <Button
+                              size="sm"
+                              className="bg-white hover:bg-zinc-200"
+                              variant="outline"
+                            >
+                              <FaYoutube
+                                className="h-8 w-8"
+                                style={{ color: "#FF0000" }}
+                              />
+                            </Button>
+                          </Link>
                         )}
                         {item.dcLink && (
-                          <a
+                          <Link
                             href={item.dcLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-indigo-600 hover:text-indigo-700 transition-colors"
                           >
-                            <FaDiscord
-                              className="h-8 w-8"
-                              style={{ color: "#7289DA" }}
-                            />
-                          </a>
+                            <Button
+                              size="sm"
+                              className="bg-white hover:bg-zinc-200"
+                              variant="outline"
+                            >
+                              <FaDiscord
+                                className="h-8 w-8"
+                                style={{ color: "#7289DA" }}
+                              />
+                            </Button>
+                          </Link>
                         )}
                       </div>
                     </div>

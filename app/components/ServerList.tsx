@@ -116,7 +116,7 @@ export default function Metin2PvpPage({
       <img
         src={src}
         alt="Advertisement Banner"
-        className="object-cover w-full py-2"
+        className="object-cover w-full"
         style={{
           width: "100%",
           height: "auto",
@@ -166,7 +166,7 @@ export default function Metin2PvpPage({
           </header>
 
           {/* Main Content */}
-          <main className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
+          <main className="container mx-auto py-5 px-4 sm:px-6 lg:px-8">
             {/* burasi buyuyecek */}
             <AdBanner src={adTop} />
 
