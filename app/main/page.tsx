@@ -41,7 +41,7 @@ export default async function Page() {
             date={mainAdLeft?.date || ""}
             description={mainAdLeft?.description || ""}
             ctaText={mainAdLeft?.ctaText || ""}
-            href={mainAdLeft?.ctaText || "/metin2serverler"}
+            href={mainAdLeft?.ctaText || "/metin2"}
           />
         </div>
       </div>
@@ -57,7 +57,7 @@ export default async function Page() {
             date={mainAdRight?.date || ""}
             description={mainAdRight?.description || ""}
             ctaText={mainAdRight?.ctaText || ""}
-            href={mainAdRight?.ctaText || "/metin2serverler"}
+            href={mainAdRight?.ctaText || "/metin2"}
           />
         </div>
       </div>
