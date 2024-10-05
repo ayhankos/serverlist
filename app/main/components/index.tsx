@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 interface HomePageProps {
   adLeft: any;
@@ -21,13 +22,13 @@ export default function HomePage({
     <div className="flex h-screen">
       <div className="flex-1 relative">
         <Image
-          src={adLeft?.imagePath || "/gifs/preview.gif"}
+          src={adLeft?.imagePath || "/gifs/son.gif"}
           alt="Left background"
           fill
           style={{ objectFit: "cover" }}
         />
-        <div className="relative z-10 w-full h-full flex justify-center items-center">
-          <div className="w-full max-w-md px-4">
+        <div className="relative z-10 w-full h-full flex justify-center items-center bg-black bg-opacity-40">
+          <div className="w-full max-w-md px-4 text-center">
             <ServerCard
               title={mainAdLeft?.title || "Metin2 Pvp Server Reklam"}
               date={mainAdLeft?.date || ""}
@@ -39,13 +40,13 @@ export default function HomePage({
       </div>
       <div className="flex-1 relative">
         <Image
-          src={adRight?.imagePath || "/gifs/preview.gif"}
+          src={adRight?.imagePath || "/gifs/son.gif"}
           alt="Right background"
           fill
           style={{ objectFit: "cover" }}
         />
-        <div className="relative z-10 w-full h-full flex justify-center items-center">
-          <div className="w-full max-w-md px-4">
+        <div className="relative z-10 w-full h-full flex justify-center items-center bg-black bg-opacity-40">
+          <div className="w-full max-w-md px-4 text-center">
             <ServerCard
               title={mainAdRight?.title || "Metin2 Pvp Server Reklam"}
               date={mainAdRight?.date || ""}
@@ -67,23 +68,22 @@ interface ServerCardProps {
 }
 
 const ServerCard = ({ title, date, description, href }: ServerCardProps) => (
-  <Card className="w-full bg-black bg-opacity-70 text-white p-4 flex flex-col justify-between">
+  <Card className="w-full bg-black bg-opacity-30 text-white p-4 flex flex-col justify-between space-y-20 border-none">
     <CardContent className="p-0">
       <h2 className="text-2xl font-bold mb-2">{title}</h2>
       <p className="text-xl text-yellow-500 mb-2">{date}</p>
       <p className="mb-4">{description}</p>
     </CardContent>
     {href ? (
-      <Link
-        href={href}
-        className="bg-white text-black py-2 px-4 self-start hover:bg-gray-100 transition-colors"
-      >
-        {"Giriş Yap"}
+      <Link href={href}>
+        <Button variant={"outline"} className="text-black">
+          {"Giriş Yap"}
+        </Button>
       </Link>
     ) : (
-      <button className="bg-white text-black py-2 px-4 self-start hover:bg-gray-100 transition-colors">
+      <Button variant={"outline"} className="text-black">
         {"Giriş Yap"}
-      </button>
+      </Button>
     )}
   </Card>
 );

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 const TawkToChat = () => {
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "https://embed.tawk.to/66fdaf3d256fb1049b1c1df7/1i97f92j5";
+    script.src = "https://embed.tawk.to/67016a51256fb1049b1d58af/1i9eoek1f";
     script.async = true;
     script.charset = "UTF-8";
     script.setAttribute("crossorigin", "*");
