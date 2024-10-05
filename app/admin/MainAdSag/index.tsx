@@ -9,14 +9,12 @@ interface MainAdvertisement {
   title: string;
   date: string;
   description: string;
-  ctaText: string;
 }
 
 type FormValues = {
   title: string;
   date: string;
   description: string;
-  ctaText: string;
 };
 
 export default function MainAdSag({
@@ -30,7 +28,6 @@ export default function MainAdSag({
       title: mainAdvertisementsSag?.title ?? "",
       date: mainAdvertisementsSag?.date ?? "",
       description: mainAdvertisementsSag?.description ?? "",
-      ctaText: mainAdvertisementsSag?.ctaText ?? "",
     },
   });
 
@@ -95,15 +92,6 @@ export default function MainAdSag({
                   <label className="block mb-2">Açıklama</label>
                   <textarea
                     {...register("description", { required: true })}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-
-                <div>
-                  <label className="block mb-2">Server Linki</label>
-                  <input
-                    type="text"
-                    {...register("ctaText", { required: true })}
                     className="w-full p-2 border rounded"
                   />
                 </div>

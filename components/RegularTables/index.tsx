@@ -169,23 +169,22 @@ export function RegularServerTable() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
-  const { data: servers, error } = useSWR<Server[]>(
-    "/api/RegularServers",
-    fetcher,
-    {
-      revalidateOnFocus: true,
-      revalidateOnReconnect: true,
-      refreshInterval: 50000,
-    }
-  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+
+  const { data, error, isLoading } = useSWR<{
+    servers: Server[];
+    totalCount: number;
+  }>(`/api/RegularServers?page=${currentPage}&pageSize=${pageSize}`, fetcher, {
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    refreshInterval: 50000,
+  });
 
   const table = useReactTable({
-    data: servers || [],
+    data: data?.servers || [],
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -196,9 +195,24 @@ export function RegularServerTable() {
       columnVisibility,
       rowSelection,
     },
+    manualPagination: true,
   });
 
-  if (!servers && !error) {
+  const totalPages = Math.ceil((data?.totalCount || 0) / pageSize);
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  if (isLoading) {
     return (
       <Card className="w-full bg-blue-50">
         <CardContent className="pt-6">
@@ -304,21 +318,30 @@ export function RegularServerTable() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
               className="bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-50"
             >
               Önceki
             </Button>
+            <span className="mx-2">
+              Sayfa
+              <strong>
+                {currentPage} / {totalPages}
+              </strong>
+            </span>
             <Button
               variant="outline"
               size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
+              onClick={handleNextPage}
+              disabled={currentPage >= totalPages}
               className="bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-50"
             >
               Sonraki
             </Button>
+          </div>
+          <div className="text-sm text-gray-600">
+            Toplam {data?.totalCount || 0} sunucu
           </div>
         </div>
       </CardContent>

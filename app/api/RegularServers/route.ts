@@ -7,11 +7,15 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = Number(searchParams.get("page")) || 1;
   const pageSize = Number(searchParams.get("pageSize")) || 10;
-  const vip = searchParams.get("vip");
-
   const offset = (page - 1) * pageSize;
 
   try {
+    const totalCount = await prisma.server.count({
+      where: {
+        vip: "normal",
+      },
+    });
+
     const servers = await prisma.server.findMany({
       where: {
         vip: "normal",
@@ -20,7 +24,10 @@ export async function GET(request: Request) {
       take: pageSize,
     });
 
-    return NextResponse.json(servers);
+    return NextResponse.json({
+      servers,
+      totalCount,
+    });
   } catch (error) {
     console.error("Error fetching servers:", error);
     return NextResponse.json(

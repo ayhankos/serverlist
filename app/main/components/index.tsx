@@ -78,11 +78,11 @@ const ServerCard = ({ title, date, description, href }: ServerCardProps) => (
         href={href}
         className="bg-white text-black py-2 px-4 self-start hover:bg-gray-100 transition-colors"
       >
-        {"Detaylar"}
+        {"Giriş Yap"}
       </Link>
     ) : (
       <button className="bg-white text-black py-2 px-4 self-start hover:bg-gray-100 transition-colors">
-        {"Detaylar"}
+        {"Giriş Yap"}
       </button>
     )}
   </Card>

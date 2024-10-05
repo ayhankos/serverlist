@@ -25,7 +25,7 @@ export default async function AdminDashboard() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8 text-black">
+    <div className="container mx-auto px-32 py-8 text-black bg-stone-400 ">
       <div className="space-y-16">
         <section>
           <h1 className="text-3xl font-bold text-center mb-8">
@@ -69,7 +69,6 @@ export default async function AdminDashboard() {
                 title: "",
                 date: "",
                 description: "",
-                ctaText: "",
               }
             }
           />
@@ -86,7 +85,6 @@ export default async function AdminDashboard() {
                 title: "",
                 date: "",
                 description: "",
-                ctaText: "",
               }
             }
           />
