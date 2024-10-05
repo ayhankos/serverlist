@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Server } from "@prisma/client";
 import { Button } from "@/components/ui/button";
+import { useDropzone } from "react-dropzone";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +22,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { mutate } from "swr";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { PiSpinnerBall } from "react-icons/pi";
 
 interface ServerEditModalProps {
   isOpen: boolean;
@@ -34,6 +43,8 @@ export const ServerEditModal: React.FC<ServerEditModalProps> = ({
   server,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(server.image);
+  const [imagePath, setImagePath] = useState(server.image);
 
   const form = useForm({
     defaultValues: {
@@ -50,6 +61,49 @@ export const ServerEditModal: React.FC<ServerEditModalProps> = ({
     },
   });
 
+  const uploadImageToServer = async (file: File) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const response = await fetch("/api/uploadImage", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("File upload failed");
+    }
+
+    const result = await response.json();
+    return result.imagePath;
+  };
+
+  const handleImageDrop = async (acceptedFiles: File[]) => {
+    if (acceptedFiles && acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+      try {
+        setLoading(true);
+        const localPreview = URL.createObjectURL(file);
+        setImagePreview(localPreview);
+
+        const uploadedImagePath = await uploadImageToServer(file);
+        setImagePath(uploadedImagePath);
+        form.setValue("image", uploadedImagePath);
+      } catch (error) {
+        console.error("File upload failed", error);
+        setImagePreview(server.image);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: handleImageDrop,
+    accept: { "image/*": [] },
+    maxFiles: 1,
+  });
+
   const onSubmit = async (values: any) => {
     try {
       setLoading(true);
@@ -58,7 +112,10 @@ export const ServerEditModal: React.FC<ServerEditModalProps> = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ...values,
+          image: imagePath,
+        }),
       });
 
       if (response.ok) {
@@ -99,9 +156,24 @@ export const ServerEditModal: React.FC<ServerEditModalProps> = ({
                 name="image"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Resim URL</FormLabel>
+                    <FormLabel>Sunucu Resmi</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <div
+                        {...getRootProps()}
+                        className="border-2 border-dashed border-gray-300 p-4 text-center cursor-pointer"
+                      >
+                        <input {...getInputProps()} />
+                        {imagePreview ? (
+                          <img
+                            src={imagePreview}
+                            alt="Selected Image"
+                            className="max-w-full h-auto mx-auto"
+                            style={{ maxHeight: "200px" }}
+                          />
+                        ) : (
+                          <p>Resim yüklemek için tıklayın veya sürükleyin</p>
+                        )}
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -109,33 +181,35 @@ export const ServerEditModal: React.FC<ServerEditModalProps> = ({
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Açıklama</FormLabel>
-                  <FormControl>
-                    <Textarea {...field} disabled={loading} rows={3} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Açıklama</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} disabled={loading} rows={3} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="detaylar"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Detaylar</FormLabel>
-                  <FormControl>
-                    <Textarea {...field} disabled={loading} rows={3} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="detaylar"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Detaylar</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} disabled={loading} rows={3} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <div className="grid grid-cols-2 gap-4">
               <FormField
@@ -157,9 +231,20 @@ export const ServerEditModal: React.FC<ServerEditModalProps> = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>VIP Durumu</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={loading} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="VIP tipini seçin" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="vip">VIP</SelectItem>
+                        <SelectItem value="normal">Normal</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -173,9 +258,22 @@ export const ServerEditModal: React.FC<ServerEditModalProps> = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Sunucu Tipi</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={loading} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Sunucu tipini seçin" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="1-99">1-99</SelectItem>
+                        <SelectItem value="1-105">1-105</SelectItem>
+                        <SelectItem value="1-120">1-120</SelectItem>
+                        <SelectItem value="55-120">55-120</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -234,7 +332,11 @@ export const ServerEditModal: React.FC<ServerEditModalProps> = ({
                 İptal
               </Button>
               <Button type="submit" disabled={loading}>
-                Değişiklikleri Kaydet
+                {loading ? (
+                  <PiSpinnerBall className="animate-spin h-5 w-5" />
+                ) : (
+                  "Değişiklikleri Kaydet"
+                )}
               </Button>
             </div>
           </form>

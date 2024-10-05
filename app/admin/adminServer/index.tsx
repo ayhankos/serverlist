@@ -243,7 +243,7 @@ export const AdminServerForm: React.FC = () => {
             name="webLink"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="webLink">Discord Link</FormLabel>
+                <FormLabel htmlFor="webLink">Web Link</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
