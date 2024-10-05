@@ -44,10 +44,7 @@ const DiscordWidget: React.FC<DiscordWidgetProps> = ({
         }
         @media (max-width: 768px) {
           .discord-widget {
-            width: 90%;
-            left: 5%;
-            bottom: 10px;
-            max-width: 300px;
+            display: none;
           }
         }
       `}</style>
