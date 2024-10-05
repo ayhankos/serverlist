@@ -65,13 +65,13 @@ interface ServerCardProps {
 }
 
 const ServerCard = ({ title, date, description }: ServerCardProps) => (
-  <Card className="w-full bg-black bg-opacity-30 text-white p-4 flex flex-col justify-between space-y-20 border-none">
+  <Card className="w-full bg-black bg-opacity-30 text-white p-4 flex flex-col justify-between items-center space-y-20 border-none">
     <CardContent className="p-0">
       <h2 className="text-2xl font-bold mb-2">{title}</h2>
       <p className="text-xl text-yellow-500 mb-2">{date}</p>
       <p className="mb-4">{description}</p>
     </CardContent>
-    <Button variant={"outline"} className="text-black">
+    <Button variant={"outline"} className="text-black w-1/2">
       {"Giriş Yap"}
     </Button>
   </Card>
