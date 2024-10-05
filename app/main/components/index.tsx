@@ -32,8 +32,7 @@ export default function HomePage({
               title={mainAdLeft?.title || "Metin2 Pvp Server Reklam"}
               date={mainAdLeft?.date || ""}
               description={mainAdLeft?.description || ""}
-              ctaText={mainAdLeft?.ctaText || ""}
-              href={mainAdLeft?.ctaText || "/metin2"}
+              href={"/metin2"}
             />
           </div>
         </div>
@@ -51,8 +50,7 @@ export default function HomePage({
               title={mainAdRight?.title || "Metin2 Pvp Server Reklam"}
               date={mainAdRight?.date || ""}
               description={mainAdRight?.description || ""}
-              ctaText={mainAdRight?.ctaText || ""}
-              href={mainAdRight?.ctaText || "/metin2"}
+              href={"/metin2"}
             />
           </div>
         </div>
@@ -65,17 +63,10 @@ interface ServerCardProps {
   title: string;
   date: string;
   description: string;
-  ctaText: string;
   href?: string;
 }
 
-const ServerCard = ({
-  title,
-  date,
-  description,
-  ctaText,
-  href,
-}: ServerCardProps) => (
+const ServerCard = ({ title, date, description, href }: ServerCardProps) => (
   <Card className="w-full bg-black bg-opacity-70 text-white p-4 flex flex-col justify-between">
     <CardContent className="p-0">
       <h2 className="text-2xl font-bold mb-2">{title}</h2>
@@ -87,11 +78,11 @@ const ServerCard = ({
         href={href}
         className="bg-white text-black py-2 px-4 self-start hover:bg-gray-100 transition-colors"
       >
-        {ctaText || "Detaylar"}
+        {"Detaylar"}
       </Link>
     ) : (
       <button className="bg-white text-black py-2 px-4 self-start hover:bg-gray-100 transition-colors">
-        {ctaText || "Detaylar"}
+        {"Detaylar"}
       </button>
     )}
   </Card>
