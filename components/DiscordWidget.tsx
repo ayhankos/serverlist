@@ -30,7 +30,7 @@ const DiscordWidget: React.FC<DiscordWidgetProps> = ({
           left: 8px;
         }
         .discord-widget {
-          width: 265px;
+          width: 225px;
           transition-property: left;
           transition-duration: 2s;
           position: fixed;

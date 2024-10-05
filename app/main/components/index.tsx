@@ -19,7 +19,7 @@ export default function HomePage({
   mainAdRight,
 }: HomePageProps) {
   return (
-    <div className="flex h-screen">
+    <Link href="/metin2" className="flex h-screen">
       <div className="flex-1 relative">
         <Image
           src={adLeft?.imagePath || "/gifs/son.gif"}
@@ -33,7 +33,6 @@ export default function HomePage({
               title={mainAdLeft?.title || "Metin2 Pvp Server Reklam"}
               date={mainAdLeft?.date || ""}
               description={mainAdLeft?.description || ""}
-              href={"/metin2"}
             />
           </div>
         </div>
@@ -51,12 +50,11 @@ export default function HomePage({
               title={mainAdRight?.title || "Metin2 Pvp Server Reklam"}
               date={mainAdRight?.date || ""}
               description={mainAdRight?.description || ""}
-              href={"/metin2"}
             />
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -64,26 +62,17 @@ interface ServerCardProps {
   title: string;
   date: string;
   description: string;
-  href?: string;
 }
 
-const ServerCard = ({ title, date, description, href }: ServerCardProps) => (
+const ServerCard = ({ title, date, description }: ServerCardProps) => (
   <Card className="w-full bg-black bg-opacity-30 text-white p-4 flex flex-col justify-between space-y-20 border-none">
     <CardContent className="p-0">
       <h2 className="text-2xl font-bold mb-2">{title}</h2>
       <p className="text-xl text-yellow-500 mb-2">{date}</p>
       <p className="mb-4">{description}</p>
     </CardContent>
-    {href ? (
-      <Link href={href}>
-        <Button variant={"outline"} className="text-black">
-          {"Giriş Yap"}
-        </Button>
-      </Link>
-    ) : (
-      <Button variant={"outline"} className="text-black">
-        {"Giriş Yap"}
-      </Button>
-    )}
+    <Button variant={"outline"} className="text-black">
+      {"Giriş Yap"}
+    </Button>
   </Card>
 );
