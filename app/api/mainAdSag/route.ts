@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
         title: data.title,
         date: data.date,
         description: data.description,
-        ctaText: data.ctaText,
       },
     });
     return NextResponse.json({
