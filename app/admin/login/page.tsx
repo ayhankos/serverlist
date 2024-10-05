@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getCsrfToken, signIn } from "next-auth/react";
+import { getCsrfToken, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -74,8 +74,17 @@ export default function UserAuthForm() {
     }
   };
 
+  const handleSignOut = async () => {
+    await signOut(); // Çıkış işlemi
+    router.push("/"); // Çıkış yaptıktan sonra anasayfaya yönlendirme
+  };
+
   return (
     <>
+      <Button onClick={handleSignOut} className="mb-4" variant="outline">
+        Sign out
+      </Button>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
