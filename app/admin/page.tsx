@@ -8,6 +8,8 @@ import MainAdSol from "./MainAdSol";
 import AdminServerSilme from "./serverSilme";
 import StreamerDelete from "./streamerSil";
 import { PrismaClient } from "@prisma/client";
+import { signOut } from "next-auth/react";
+import React from "react";
 
 const prisma = new PrismaClient();
 
@@ -25,7 +27,14 @@ export default async function AdminDashboard() {
   });
 
   return (
-    <div className="container mx-auto px-32 py-8 text-black bg-stone-400 ">
+    <div className="container mx-auto px-32 py-8 text-black bg-stone-400 relative">
+      <button
+        onClick={() => signOut()}
+        className="absolute top-4 right-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
+      >
+        Sign out
+      </button>
+
       <div className="space-y-16">
         <section>
           <h1 className="text-3xl font-bold text-center mb-8">
