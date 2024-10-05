@@ -10,18 +10,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Server } from "@prisma/client";
-import { MoreHorizontal, Trash } from "lucide-react";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { mutate } from "swr";
+import { ServerEditModal } from "./ServerEditModal";
 
-interface CellActionProps {
+interface ServerActionsProps {
   data: Server;
 }
 
-export const ServerSil: React.FC<CellActionProps> = ({ data }) => {
+export const ServerActions: React.FC<ServerActionsProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const router = useRouter();
 
   const onConfirm = async () => {
@@ -58,6 +60,13 @@ export const ServerSil: React.FC<CellActionProps> = ({ data }) => {
         onConfirm={onConfirm}
         loading={loading}
       />
+      {showEditModal && (
+        <ServerEditModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          server={data}
+        />
+      )}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -67,6 +76,9 @@ export const ServerSil: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => setShowEditModal(true)}>
+            <Edit className="mr-2 h-4 w-4" /> Edit
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
             <Trash className="mr-2 h-4 w-4" /> Delete
           </DropdownMenuItem>

@@ -14,7 +14,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Server } from "@prisma/client";
-import { ServerSil } from "@/app/components/ServerSil";
+import { ServerActions } from "@/app/components/ServerSil";
 import useSWR from "swr";
 import { Button } from "@/components/ui/button";
 import {
@@ -83,7 +83,7 @@ export const columns: ColumnDef<Server>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <ServerSil data={row.original} />,
+    cell: ({ row }) => <ServerActions data={row.original} />,
   },
 ];
 
@@ -135,7 +135,7 @@ export function ServerTable() {
   }
 
   if (!data) {
-    return <div className="text-black">Yükleniyor...</div>; // Yüklenme durumu
+    return <div className="text-black">Yükleniyor...</div>;
   }
 
   return (
