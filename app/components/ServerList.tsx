@@ -136,7 +136,7 @@ export default function Metin2PvpPage({
         {/* Main Content */}
         <div className="flex-1 flex flex-col">
           {/* Header */}
-          <header className="bg-gradient-to-r from-gray-900 to-gray-800 text-gray-100 p-4 shadow-xl z-50">
+          <header className="bg-gradient-to-r from-gray-900 to-gray-800 text-gray-100 p-4 shadow-xl z-50 font-bold">
             <div className="mx-auto flex items-center justify-between">
               <div className="flex items-center space-x-2 sm:space-x-4">
                 <img
@@ -164,12 +164,9 @@ export default function Metin2PvpPage({
               </div>
             </div>
           </header>
-
+          <AdBanner src={adTop} />
           {/* Main Content */}
           <main className="container mx-auto py-5 px-4 sm:px-6 lg:px-8">
-            {/* burasi buyuyecek */}
-            <AdBanner src={adTop} />
-
             {/* VIP Section */}
             <section id="vip-section" className="my-10">
               <h2 className="text-3xl font-bold mb-4 text-gray-800">
