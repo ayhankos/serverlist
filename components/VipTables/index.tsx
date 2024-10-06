@@ -55,11 +55,11 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
-      return <div className="flex justify-start font-semibold">Sunucu Adı</div>;
+      return <div className="flex ">Sunucu Adı</div>;
     },
     cell: ({ row }) => (
       <div className="flex items-center">
-        <span className="font-medium text-gray-800 whitespace-nowrap">
+        <span className=" text-gray-800 whitespace-nowrap">
           {row.getValue("name")}
         </span>
       </div>
@@ -68,13 +68,11 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "detaylar",
     header: ({ column }) => {
-      return (
-        <div className="flex justify-start font-semibold">Sunucu Detayları</div>
-      );
+      return <div className="items-center text-center ">Sunucu Detayları</div>;
     },
     cell: ({ row }) => (
-      <div className="flex items-center">
-        <span className="font-medium text-red-700 max-w-[150px] sm:max-w-[200px] md:max-w-[250px] lg:max-w-[350px] whitespace-normal break-words">
+      <div className="items-center min-w-60 px-3">
+        <span className=" text-red-700 max-w-[300px] sm:max-w-[400px] md:max-w-[550px] lg:max-w-[600px] whitespace-normal break-words">
           {row.getValue("detaylar")}
         </span>
       </div>
@@ -83,13 +81,10 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "serverType",
     header: ({ column }) => {
-      return (
-        <div className="flex justify-start font-semibold">Sunucu Tipi</div>
-      );
+      return <div className="text-center ">Sunucu Tipi</div>;
     },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
-        <Star className="h-4 w-4 text-amber-500" />
+      <div className="text-center  items-center space-x-1">
         <span className="text-amber-700 whitespace-nowrap">
           {row.getValue("serverType")}
         </span>
@@ -100,10 +95,10 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "Rank",
     header: ({ column }) => {
-      return <div className="flex justify-start font-semibold">Rank</div>;
+      return <div className="flex">Rank</div>;
     },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
+      <div className="flex items-center">
         <span className="text-red-700 whitespace-nowrap">
           {row.getValue("Rank")}
         </span>
@@ -113,9 +108,7 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "launchDate",
     header: ({ column }) => {
-      return (
-        <div className="flex justify-start font-semibold">Açılış Tarihi</div>
-      );
+      return <div className="text-center  ">Açılış Tarihi</div>;
     },
     cell: ({ row }) => {
       const launchDate = new Date(row.getValue("launchDate"));
@@ -125,8 +118,7 @@ const columns: ColumnDef<Server>[] = [
         day: "numeric",
       });
       return (
-        <div className="flex items-center space-x-1">
-          <Calendar className="h-4 w-4 text-blue-500" />
+        <div className="text-center  items-center ">
           <span className="text-blue-700 whitespace-nowrap">
             {formattedDate}
           </span>
@@ -137,16 +129,16 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "cekilis",
     header: ({ column }) => {
-      return <div className="flex justify-start font-semibold">Çekiliş</div>;
+      return <div className="text-center justify-start">Çekiliş</div>;
     },
     cell: ({ row }) => (
-      <div className="flex items-center">
+      <div className=" items-center">
         <a
           href="https://discord.com/invite/pvpserverlar"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded transition duration-200">
+          <button className="bg-green-700 hover:bg-green-900 text-white  py-2 px-4 rounded transition duration-200">
             Çekiliş
           </button>
         </a>
@@ -156,7 +148,7 @@ const columns: ColumnDef<Server>[] = [
   {
     id: "actions",
     header: ({ column }) => {
-      return <div className="flex justify-start font-semibold">Sunucu Url</div>;
+      return <div className="flex justify-start ">Sunucu Url</div>;
     },
     cell: ({ row }) => {
       const dcLink = row.original.dcLink;
@@ -253,7 +245,7 @@ export function VipServerTable() {
     <Card className="w-full bg-zinc-200 rounded-xl border-none shadow-xl">
       <div className="rounded-lg overflow-hidden shadow-lg">
         <Table>
-          <TableHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
+          <TableHeader className="bg-gradient-to-r from-gray-900 to-gray-800 ">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
@@ -263,7 +255,7 @@ export function VipServerTable() {
                   return (
                     <TableHead
                       key={header.id}
-                      className="text-white font-semibold"
+                      className="text-white font-bold"
                     >
                       {header.isPlaceholder
                         ? null
@@ -277,7 +269,7 @@ export function VipServerTable() {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="text-lg font-medium">
+          <TableBody className="text-lg font-bold">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row, index) => (
                 <TableRow

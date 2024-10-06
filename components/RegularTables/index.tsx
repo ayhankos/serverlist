@@ -37,25 +37,30 @@ const columns: ColumnDef<Server>[] = [
     accessorKey: "image",
     header: "",
     cell: ({ row }) => (
-      <div className="relative h-14 w-14 flex items-center justify-center">
-        <img
-          src={row.getValue("image")}
-          alt={row.getValue("name")}
-          className="rounded-full object-cover"
-          style={{
-            width: "56px",
-            height: "56px",
-          }}
-        />
+      <div className="relative w-14 h-14 overflow-hidden rounded-full">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img
+            src={row.getValue("image")}
+            alt={row.getValue("name")}
+            className="object-cover"
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        </div>
       </div>
     ),
   },
+
   {
     accessorKey: "name",
-    header: "Sunucu Adı",
+    header: ({ column }) => {
+      return <div className="flex ">Sunucu Adı</div>;
+    },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-2">
-        <span className="font-medium text-gray-800">
+      <div className="flex items-center">
+        <span className=" text-gray-800 whitespace-nowrap">
           {row.getValue("name")}
         </span>
       </div>
@@ -63,10 +68,12 @@ const columns: ColumnDef<Server>[] = [
   },
   {
     accessorKey: "detaylar",
-    header: "Sunucu Detayları",
+    header: ({ column }) => {
+      return <div className="items-center text-center">Sunucu Detayları</div>;
+    },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
-        <span className="font-semibold text-red-700">
+      <div className="items-center min-w-60 px-3">
+        <span className=" text-red-700 max-w-[300px] sm:max-w-[400px] md:max-w-[550px] lg:max-w-[600px] whitespace-normal break-words">
           {row.getValue("detaylar")}
         </span>
       </div>
@@ -74,26 +81,45 @@ const columns: ColumnDef<Server>[] = [
   },
   {
     accessorKey: "serverType",
-    header: "Sunucu Tipi",
+    header: ({ column }) => {
+      return (
+        <Button
+          className="font-bold"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Sunucu Tipi
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
-        <Star className="h-4 w-4 text-amber-500" />
-        <span className="text-amber-700">{row.getValue("serverType")}</span>
+      <div className="text-center  items-center space-x-1">
+        <span className="text-amber-700 whitespace-nowrap">
+          {row.getValue("serverType")}
+        </span>
       </div>
     ),
   },
+
   {
     accessorKey: "Rank",
-    header: "Rank",
+    header: ({ column }) => {
+      return <div className="flex ">Rank</div>;
+    },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
-        <span className="text-red-700">{row.getValue("Rank")}</span>
+      <div className="flex items-center">
+        <span className="text-red-700 whitespace-nowrap">
+          {row.getValue("Rank")}
+        </span>
       </div>
     ),
   },
   {
     accessorKey: "launchDate",
-    header: "Açılış Tarihi",
+    header: ({ column }) => {
+      return <div className="text-center">Açılış Tarihi</div>;
+    },
     cell: ({ row }) => {
       const launchDate = new Date(row.getValue("launchDate"));
       const formattedDate = launchDate.toLocaleDateString("tr-TR", {
@@ -102,24 +128,27 @@ const columns: ColumnDef<Server>[] = [
         day: "numeric",
       });
       return (
-        <div className="flex items-center space-x-1">
-          <Calendar className="h-4 w-4 text-blue-500" />
-          <span className="text-blue-700">{formattedDate}</span>
+        <div className="text-center  items-center ">
+          <span className="text-blue-700 whitespace-nowrap">
+            {formattedDate}
+          </span>
         </div>
       );
     },
   },
   {
     accessorKey: "cekilis",
-    header: "Çekiliş",
+    header: ({ column }) => {
+      return <div className="text-center justify-start ">Çekiliş</div>;
+    },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-1">
+      <div className=" items-center">
         <a
           href="https://discord.com/invite/pvpserverlar"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-green-700 hover:bg-green-900 text-white  py-2 px-4 rounded transition duration-200">
             Çekiliş
           </button>
         </a>
@@ -128,8 +157,9 @@ const columns: ColumnDef<Server>[] = [
   },
   {
     id: "actions",
-    header: "Sunucu Url",
-    enableHiding: false,
+    header: ({ column }) => {
+      return <div className="flex justify-start ">Sunucu Url</div>;
+    },
     cell: ({ row }) => {
       const dcLink = row.original.dcLink;
       const webLink = row.original.webLink;
@@ -140,7 +170,7 @@ const columns: ColumnDef<Server>[] = [
               href={dcLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-white  rounded-full hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="p-2 text-white rounded-full hover:scale-110 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               title="Discord Sunucusu"
             >
               <FaDiscord className="h-8 w-8" style={{ color: "#7289DA" }} />
@@ -151,7 +181,7 @@ const columns: ColumnDef<Server>[] = [
               href={webLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-white  rounded-full hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="p-2 text-white rounded-full hover:scale-110 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               title="Web Sitesi"
             >
               <SiWebtrees className="h-8 w-8" style={{ color: "#424242" }} />
@@ -166,7 +196,10 @@ const columns: ColumnDef<Server>[] = [
 export function RegularServerTable() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    Rank: false,
+    image: false,
+  });
   const [rowSelection, setRowSelection] = useState({});
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -189,6 +222,7 @@ export function RegularServerTable() {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onSortingChange: setSorting,
     state: {
       sorting,
       columnFilters,
@@ -237,114 +271,91 @@ export function RegularServerTable() {
 
   return (
     <Card className="w-full rounded-xl border-none bg-zinc-100 shadow-none">
-      <CardContent>
-        <div className="m-5 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <div className="relative mb-4 sm:mb-0 w-1/3 mt-6">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-600" />
-            <Input
-              placeholder="Sunucu adına göre filtrele..."
-              value={
-                (table.getColumn("name")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table.getColumn("name")?.setFilterValue(event.target.value)
-              }
-              className="pl-8 bg-white text-black"
-            />
-          </div>
-        </div>
-        <div className="rounded-lg overflow-hidden shadow-lg">
-          <Table>
-            <TableHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
-              {table.getHeaderGroups().map((headerGroup) => (
+      <div className="rounded-lg overflow-hidden shadow-lg">
+        <Table>
+          <TableHeader className="bg-gradient-to-r from-gray-900 to-gray-800">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow
+                key={headerGroup.id}
+                className="border-none hover-none uppercase"
+              >
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id} className="text-white font-bold">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody className="text-lg font-bold">
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row, index) => (
                 <TableRow
-                  key={headerGroup.id}
-                  className="border-none hover-none uppercase"
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
                 >
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead
-                        key={header.id}
-                        className="text-white font-semibold"
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="text-center ml-2 p-1">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody className="text-lg font-medium">
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row, index) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                    className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        key={cell.id}
-                        className="p-0 text-center ml-2 pl-2"
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    Sonuç bulunamadı.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  Sonuç bulunamadı.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="mt-4 flex items-center justify-between">
+        <div className="space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className="bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-50"
+          >
+            Önceki
+          </Button>
+          <span className="mx-2">
+            Sayfa
+            <strong>
+              {currentPage} / {totalPages}
+            </strong>
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleNextPage}
+            disabled={currentPage >= totalPages}
+            className="bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-50"
+          >
+            Sonraki
+          </Button>
         </div>
-        <div className="mt-4 flex items-center justify-between">
-          <div className="space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handlePreviousPage}
-              disabled={currentPage === 1}
-              className="bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-50"
-            >
-              Önceki
-            </Button>
-            <span className="mx-2">
-              Sayfa
-              <strong>
-                {currentPage} / {totalPages}
-              </strong>
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleNextPage}
-              disabled={currentPage >= totalPages}
-              className="bg-white text-indigo-600 border-indigo-300 hover:bg-indigo-50"
-            >
-              Sonraki
-            </Button>
-          </div>
-          <div className="text-sm text-gray-600">
-            Toplam {data?.totalCount || 0} sunucu
-          </div>
+        <div className="text-sm text-gray-600">
+          Toplam {data?.totalCount || 0} sunucu
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 }
