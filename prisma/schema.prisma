@@ -19,20 +19,23 @@ model User {
 }
 
 model Server {
-    id          String   @id @default(cuid())
-    name        String
-    image       String
-    description String
-    detaylar    String
-    launchDate  DateTime @default(now())
-    vip         String
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    serverType  String
-    Rank        String   @default("0")
-    slug        String   @unique @default(cuid())
-    dcLink      String
-    webLink     String
+    id            String   @id @default(cuid())
+    name          String
+    image         String
+    description   String
+    detaylar      String
+    launchDate    DateTime @default(now())
+    vip           String
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    serverType    String
+    Rank          String   @default("0")
+    slug          String   @unique @default(cuid())
+    dcLink        String
+    webLink       String
+    dcLinkClicks  Int      @default(0)
+    webLinkClicks Int      @default(0)
+    totalClicks   Int      @default(0)
 }
 
 model Streamer {
