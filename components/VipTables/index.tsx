@@ -148,11 +148,34 @@ const columns: ColumnDef<Server>[] = [
   {
     id: "actions",
     header: ({ column }) => {
-      return <div className="flex justify-start ">Sunucu Url</div>;
+      return <div className="flex justify-start">Sunucu Url</div>;
     },
     cell: ({ row }) => {
       const dcLink = row.original.dcLink;
       const webLink = row.original.webLink;
+      const serverId = row.original.id;
+
+      const trackClick = async (clickType: "dc" | "web") => {
+        try {
+          const response = await fetch("/api/trackClick", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              serverId,
+              clickType,
+            }),
+          });
+
+          if (!response.ok) {
+            console.error("Error tracking click");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      };
+
       return (
         <div className="flex space-x-2">
           {dcLink && (
@@ -162,6 +185,7 @@ const columns: ColumnDef<Server>[] = [
               rel="noopener noreferrer"
               className="p-2 text-white rounded-full hover:scale-110 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               title="Discord Sunucusu"
+              onClick={() => trackClick("dc")}
             >
               <FaDiscord className="h-8 w-8" style={{ color: "#7289DA" }} />
             </a>
@@ -173,6 +197,7 @@ const columns: ColumnDef<Server>[] = [
               rel="noopener noreferrer"
               className="p-2 text-white rounded-full hover:scale-110 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               title="Web Sitesi"
+              onClick={() => trackClick("web")}
             >
               <SiWebtrees className="h-8 w-8" style={{ color: "#424242" }} />
             </a>
@@ -180,6 +205,19 @@ const columns: ColumnDef<Server>[] = [
         </div>
       );
     },
+  },
+  {
+    accessorKey: "totalClicks",
+    header: ({ column }) => {
+      return <div className="text-center">Görüntülenme</div>;
+    },
+    cell: ({ row }) => (
+      <div className="text-center">
+        <span className="text-purple-700 font-semibold">
+          {row.getValue("totalClicks")}
+        </span>
+      </div>
+    ),
   },
 ];
 
@@ -253,10 +291,7 @@ export function VipServerTable() {
               >
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead
-                      key={header.id}
-                      className="text-white font-bold"
-                    >
+                    <TableHead key={header.id} className="text-white font-bold">
                       {header.isPlaceholder
                         ? null
                         : flexRender(

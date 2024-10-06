@@ -219,7 +219,7 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "totalClicks",
     header: ({ column }) => {
-      return <div className="text-center">Görüntülenme Sayısı</div>;
+      return <div className="text-center">Görüntülenme</div>;
     },
     cell: ({ row }) => (
       <div className="text-center">
