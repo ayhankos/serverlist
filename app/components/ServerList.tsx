@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { RegularServerTable } from "@/components/RegularTables";
 import { VipServerTable } from "@/components/VipTables";
 import VipStreamers from "@/components/VipStreamers";
-import { Menu } from "lucide-react";
+import { ArrowUp, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FaDiscord } from "react-icons/fa";
 import Link from "next/link";
@@ -86,10 +86,51 @@ const DiscordButton = () => (
   <Link href="https://discord.com/invite/pvpserverlar" target="_blank">
     <Button className="bg-[#5570d0] hover:bg-[#5e73bc] text-white rounded-md flex items-center space-x-2">
       <FaDiscord size={20} />
-      <span className="hidden sm:inline">Join Discord</span>
+      <span className="hidden sm:inline">Sunucuya Katıl</span>
     </Button>
   </Link>
 );
+
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="text-black py-6 mt-auto">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-center">
+          <div className="flex items-center justify-center sm:justify-start space-x-2">
+            <Link href="/" className="flex items-center space-x-2 sm:space-x-4">
+              <img src="/images/logo.png" alt="Logo" className="w-28 h-18" />
+            </Link>
+          </div>
+
+          <div className="text-center text-sm ">
+            <p>© {currentYear} Pvp Serverlar</p>
+            <p className="text-xs mt-1 ">Tüm hakları saklıdır</p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-end space-y-3 sm:space-y-0 sm:space-x-4">
+            <Link
+              href="https://discord.com/invite/pvpserverlar"
+              target="_blank"
+              className="bg-[#5570d0] hover:bg-[#5e73bc] text-white px-4 py-2 rounded-md flex items-center space-x-2 transition-colors duration-200"
+            >
+              <FaDiscord size={18} />
+              <span className="text-sm">Discord</span>
+            </Link>
+            <a
+              href="#header"
+              className="text-sm  hover:text-gray-700 transition-colors flex items-center space-x-1"
+            >
+              <ArrowUp size={16} />
+              <span>Yukarı Çık</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
 export default function Metin2PvpPage({
   adLeft,
@@ -136,22 +177,28 @@ export default function Metin2PvpPage({
         {/* Main Content */}
         <div className="flex-1 flex flex-col">
           {/* Header */}
-          <header className="bg-gradient-to-r from-gray-900 to-gray-800 text-gray-100 p-4 shadow-xl z-50 font-bold">
+          <header
+            id="header"
+            className="bg-gradient-to-r from-gray-900 to-gray-800 text-gray-100 p-4 shadow-xl z-50 font-bold"
+          >
             <div className="mx-auto flex items-center justify-between">
-              <div className="flex items-center space-x-2 sm:space-x-4">
+              <Link
+                href="/"
+                className="flex items-center space-x-2 sm:space-x-4"
+              >
                 <img
-                  src="/gifs/preview.gif"
+                  src="/images/logo.png"
                   alt="Logo"
-                  className="rounded-full border border-gray-300"
+                  className="rounded-full "
                   style={{
-                    width: "50px",
-                    height: "50px",
+                    width: "150px",
+                    height: "80px",
                   }}
                 />
-                <h1 className="text-lg sm:text-2xl font-bold text-gray-100">
-                  Metin2 PvP
-                </h1>
-              </div>
+                {/*   <h1 className="text-lg sm:text-2xl font-bold text-gray-100 uppercase">
+                  Pvp serverlar
+                </h1> */}
+              </Link>
 
               <div className="hidden lg:block">
                 <DesktopNavbar />
@@ -164,6 +211,7 @@ export default function Metin2PvpPage({
               </div>
             </div>
           </header>
+
           <AdBanner src={adTop} />
           {/* Main Content */}
           <main className="container mx-auto py-5 px-4 sm:px-6 lg:px-8">
@@ -199,6 +247,7 @@ export default function Metin2PvpPage({
             {/* Bottom Ad */}
             <AdBanner src={adBottom} />
           </main>
+          <Footer />
         </div>
 
         {/* Right Ad */}

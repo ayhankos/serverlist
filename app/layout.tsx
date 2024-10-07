@@ -11,8 +11,9 @@ import { Montserrat } from "next/font/google";
 
 const MontserratFont = Montserrat({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-sans",
 });
+
 const AlegreyaSans = Alegreya_Sans({
   subsets: ["latin"],
   weight: ["100", "300", "400", "500", "700", "800", "900"],
@@ -46,7 +47,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("font-sans antialiased", MontserratFont.className)}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className={cn("font-sans antialiased", MontserratFont.variable)}>
         <ThemeProvider attribute="class" defaultTheme="light">
           {process.env.NEXT_PUBLIC_GA_ID && (
             <>

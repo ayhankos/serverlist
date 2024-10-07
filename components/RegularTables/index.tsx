@@ -27,7 +27,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import ServerActionsMenu from "@/app/components/ServerActionsMenu";
 import { Server } from "@prisma/client";
 import { Input } from "../ui/input";
-import { FaDiscord } from "react-icons/fa";
+import { FaDiscord, FaEye } from "react-icons/fa";
 import { SiWebtrees } from "react-icons/si";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -95,7 +95,7 @@ const columns: ColumnDef<Server>[] = [
     },
     cell: ({ row }) => (
       <div className="text-center  items-center space-x-1">
-        <span className="text-amber-700 whitespace-nowrap">
+        <span className="text-gray-800 whitespace-nowrap">
           {row.getValue("serverType")}
         </span>
       </div>
@@ -118,7 +118,7 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "launchDate",
     header: ({ column }) => {
-      return <div className="text-center">Açılış Tarihi</div>;
+      return <div className="text-center mr-2">Açılış Tarihi</div>;
     },
     cell: ({ row }) => {
       const launchDate = new Date(row.getValue("launchDate"));
@@ -209,7 +209,7 @@ const columns: ColumnDef<Server>[] = [
               title="Web Sitesi"
               onClick={() => trackClick("web")}
             >
-              <SiWebtrees className="h-8 w-8" style={{ color: "#424242" }} />
+              <Globe className="h-8 w-8" style={{ color: "#424242" }} />
             </a>
           )}
         </div>
@@ -219,13 +219,14 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "totalClicks",
     header: ({ column }) => {
-      return <div className="text-center">Görüntülenme</div>;
+      return <div className="items-center w-14 text-center"></div>;
     },
     cell: ({ row }) => (
-      <div className="text-center">
-        <span className="text-purple-700 font-semibold">
+      <div className="flex items-center justify-center space-x-2">
+        <span className="text-red-700 font-semibold">
           {row.getValue("totalClicks")}
         </span>
+        <FaEye className="h-8 w-8 mr-2" />
       </div>
     ),
   },

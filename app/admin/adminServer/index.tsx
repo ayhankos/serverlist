@@ -322,6 +322,18 @@ export const AdminServerForm: React.FC = () => {
                     >
                       55-120
                     </SelectItem>
+                    <SelectItem
+                      value="65-250"
+                      className="bg-zinc-100 cursor-pointer hover:bg-hero-pattern"
+                    >
+                      65-250
+                    </SelectItem>
+                    <SelectItem
+                      value="98-99"
+                      className="bg-zinc-100 cursor-pointer hover:bg-hero-pattern"
+                    >
+                      98-99
+                    </SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

@@ -272,6 +272,8 @@ export const ServerEditModal: React.FC<ServerEditModalProps> = ({
                         <SelectItem value="1-105">1-105</SelectItem>
                         <SelectItem value="1-120">1-120</SelectItem>
                         <SelectItem value="55-120">55-120</SelectItem>
+                        <SelectItem value="65-250">65-250</SelectItem>
+                        <SelectItem value="98-99">98-99</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
