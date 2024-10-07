@@ -148,7 +148,7 @@ const columns: ColumnDef<Server>[] = [
           target="_blank"
           rel="noopener noreferrer"
         >
-          <button className="bg-green-700 hover:bg-green-900 text-white  py-2 px-4 rounded transition duration-200">
+          <button className="bg-gray-900 hover:bg-gray-900 text-yellow-400 py-1 px-2 font-medium rounded-xl transition duration-200">
             Çekiliş
           </button>
         </a>
@@ -209,7 +209,7 @@ const columns: ColumnDef<Server>[] = [
               title="Web Sitesi"
               onClick={() => trackClick("web")}
             >
-              <Globe className="h-8 w-8" style={{ color: "#424242" }} />
+              <Globe className="h-8 w-8" style={{ color: "#000000" }} />
             </a>
           )}
         </div>
