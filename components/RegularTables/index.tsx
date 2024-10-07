@@ -56,10 +56,10 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
-      return <div className="flex ">Sunucu Adı</div>;
+      return <div className="flex ml-4">Sunucu Adı</div>;
     },
     cell: ({ row }) => (
-      <div className="flex items-center">
+      <div className="flex items-center ml-4">
         <span className=" text-gray-800 whitespace-nowrap">
           {row.getValue("name")}
         </span>
@@ -69,14 +69,10 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "detaylar",
     header: ({ column }) => {
-      return (
-        <div className="items-center lg:min-w-[120vh] text-center ">
-          Sunucu Detayları
-        </div>
-      );
+      return <div className="items-center  text-center ">Sunucu Detayları</div>;
     },
     cell: ({ row }) => (
-      <div className="items-center min-w-40 px-3">
+      <div className="items-center px-28">
         <span className="text-gray-950 whitespace-pre-wrap">
           {row.getValue("detaylar")}
         </span>

@@ -36,7 +36,7 @@ const columns: ColumnDef<Server>[] = [
     accessorKey: "image",
     header: "",
     cell: ({ row }) => (
-      <div className="relative w-12 h-12 overflow-hidden rounded-full">
+      <div className="relative w-12 h-12 overflow-hidden rounded-full mr-4">
         <div className="absolute inset-0 flex items-center justify-center">
           <img
             src={row.getValue("image")}
@@ -68,14 +68,10 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "detaylar",
     header: ({ column }) => {
-      return (
-        <div className="items-center lg:min-w-[120vh] text-center ">
-          Sunucu Detayları
-        </div>
-      );
+      return <div className="items-center text-center ">Sunucu Detayları</div>;
     },
     cell: ({ row }) => (
-      <div className="items-center min-w-40 px-3">
+      <div className="items-center  px-28">
         <span className="text-gray-900  whitespace-pre-wrap">
           {row.getValue("detaylar")}
         </span>

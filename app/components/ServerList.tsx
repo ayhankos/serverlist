@@ -169,7 +169,7 @@ export default function Metin2PvpPage({
     <div className="min-h-screen flex flex-col">
       <div className="flex-1 flex flex-col lg:flex-row">
         {/* Left Ad */}
-        <div className="hidden lg:block lg:w-[20rem] lg:h-screen lg:sticky lg:top-0">
+        <div className="hidden lg:block lg:w-[14rem] lg:h-screen lg:sticky lg:top-0">
           <SideAd src={adLeft} />
         </div>
 
@@ -194,9 +194,6 @@ export default function Metin2PvpPage({
                     height: "80px",
                   }}
                 />
-                {/*   <h1 className="text-lg sm:text-2xl font-bold text-gray-100 uppercase">
-                  Pvp serverlar
-                </h1> */}
               </Link>
 
               <div className="hidden lg:block">
@@ -216,12 +213,11 @@ export default function Metin2PvpPage({
             {/* VIP Section */}
             <AdBanner src={adTop} />
             <div className="my-5">
-              {" "}
               <Link
                 href="https://discord.com/invite/pvpserverlar"
                 target="_blank"
               >
-                <div className=" sm:px-0 lg:px-40">
+                <div className="sm:px-0 lg:mx-40">
                   <Marque />
                 </div>
               </Link>
@@ -259,7 +255,7 @@ export default function Metin2PvpPage({
         </div>
 
         {/* Right Ad */}
-        <div className="hidden lg:block lg:w-[20rem] lg:h-screen lg:sticky lg:top-0">
+        <div className="hidden lg:block lg:w-[14rem] lg:h-screen lg:sticky lg:top-0">
           <SideAd src={adRight} />
         </div>
       </div>
