@@ -37,7 +37,7 @@ const columns: ColumnDef<Server>[] = [
     accessorKey: "image",
     header: "",
     cell: ({ row }) => (
-      <div className="relative w-14 h-14 overflow-hidden rounded-full">
+      <div className="relative w-12 h-12 overflow-hidden rounded-full">
         <div className="absolute inset-0 flex items-center justify-center">
           <img
             src={row.getValue("image")}
