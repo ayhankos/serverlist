@@ -55,6 +55,9 @@ const MobileDropdown = () => {
 
 const DesktopNavbar = () => (
   <nav className="flex justify-center space-x-6">
+    <a href="/" className="text-gray-100 hover:text-gray-300 transition-colors">
+      Ana Sayfa
+    </a>
     <a
       href="#vip-section"
       className="text-gray-100 hover:text-gray-300 transition-colors"
@@ -91,6 +94,14 @@ const DiscordButton = () => (
   </Link>
 );
 
+const Marque = () => (
+  <div className="py-1 marquee items-center px-5">
+    <p className="font-extrabold text-xl md:text-2xl text-center">
+      Daha fazla bilgi için discord sunucumuza katılarak bize ulaşabilirsiniz.
+    </p>
+  </div>
+);
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -98,11 +109,7 @@ const Footer = () => {
     <footer className="text-black py-6 mt-auto">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-center">
-          <div className="flex items-center justify-center sm:justify-start space-x-2">
-            <Link href="/" className="flex items-center space-x-2 sm:space-x-4">
-              <img src="/images/logo.png" alt="Logo" className="w-28 h-18" />
-            </Link>
-          </div>
+          <div className="flex items-center justify-center sm:justify-start space-x-2"></div>
 
           <div className="text-center text-sm ">
             <p>© {currentYear} Pvp Serverlar</p>
@@ -110,20 +117,12 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-end space-y-3 sm:space-y-0 sm:space-x-4">
-            <Link
-              href="https://discord.com/invite/pvpserverlar"
-              target="_blank"
-              className="bg-[#5570d0] hover:bg-[#5e73bc] text-white px-4 py-2 rounded-md flex items-center space-x-2 transition-colors duration-200"
-            >
-              <FaDiscord size={18} />
-              <span className="text-sm">Discord</span>
-            </Link>
             <a
               href="#header"
               className="text-sm  hover:text-gray-700 transition-colors flex items-center space-x-1"
             >
-              <ArrowUp size={16} />
-              <span>Yukarı Çık</span>
+              <ArrowUp size={20} />
+              <span>Başa dön</span>
             </a>
           </div>
         </div>
@@ -170,7 +169,7 @@ export default function Metin2PvpPage({
     <div className="min-h-screen flex flex-col">
       <div className="flex-1 flex flex-col lg:flex-row">
         {/* Left Ad */}
-        <div className="hidden lg:block lg:w-[12rem] lg:h-screen lg:sticky lg:top-0">
+        <div className="hidden lg:block lg:w-[20rem] lg:h-screen lg:sticky lg:top-0">
           <SideAd src={adLeft} />
         </div>
 
@@ -212,29 +211,39 @@ export default function Metin2PvpPage({
             </div>
           </header>
 
-          <AdBanner src={adTop} />
           {/* Main Content */}
-          <main className="container mx-auto py-5 px-2 sm:px-4 ">
+          <main className="container mx-auto py-2 px-2 sm:px-4">
             {/* VIP Section */}
-            <section id="vip-section" className="my-10">
-              <h2 className="text-3xl font-bold mb-4 text-gray-800">
+            <AdBanner src={adTop} />
+            <div className="my-5">
+              {" "}
+              <Link
+                href="https://discord.com/invite/pvpserverlar"
+                target="_blank"
+              >
+                <div className=" sm:px-0 lg:px-40">
+                  <Marque />
+                </div>
+              </Link>
+            </div>
+
+            <section id="vip-section" className="my-5">
+              <h2 className="text-3xl font-extrabold mb-4 text-gray-800">
                 VIP Sunucular
               </h2>
               <VipServerTable />
             </section>
-
             {/* Regular Section */}
             <section id="regular-section" className="my-10">
-              <h2 className="text-3xl font-bold mb-4 text-gray-800">
+              <h2 className="text-3xl font-extrabold mb-4 text-gray-800">
                 Normal Sunucular
               </h2>
               <RegularServerTable />
             </section>
-
             {/* Streamers Section */}
             <section id="streamers-section" className="my-10">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-3xl font-bold text-gray-800">
+                <h2 className="text-3xl font-extrabold text-gray-800">
                   VIP Yayıncılar
                 </h2>
                 <Link href="/streamers">
@@ -243,7 +252,6 @@ export default function Metin2PvpPage({
               </div>
               <VipStreamers />
             </section>
-
             {/* Bottom Ad */}
             <AdBanner src={adBottom} />
           </main>
@@ -251,7 +259,7 @@ export default function Metin2PvpPage({
         </div>
 
         {/* Right Ad */}
-        <div className="hidden lg:block lg:w-[12rem] lg:h-screen lg:sticky lg:top-0">
+        <div className="hidden lg:block lg:w-[20rem] lg:h-screen lg:sticky lg:top-0">
           <SideAd src={adRight} />
         </div>
       </div>

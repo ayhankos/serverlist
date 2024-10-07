@@ -69,11 +69,15 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "detaylar",
     header: ({ column }) => {
-      return <div className="items-center text-center">Sunucu Detayları</div>;
+      return (
+        <div className="items-center lg:min-w-[120vh] text-center ">
+          Sunucu Detayları
+        </div>
+      );
     },
     cell: ({ row }) => (
-      <div className="items-center min-w-60 px-3">
-        <span className=" text-red-700 max-w-[300px] sm:max-w-[400px] md:max-w-[550px] lg:max-w-[600px] whitespace-normal break-words">
+      <div className="items-center min-w-40 px-3">
+        <span className="text-gray-950 whitespace-pre-wrap">
           {row.getValue("detaylar")}
         </span>
       </div>
@@ -118,7 +122,7 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "launchDate",
     header: ({ column }) => {
-      return <div className="text-center mr-2">Açılış Tarihi</div>;
+      return <div className="text-center mr-2 ">Açılış Tarihi</div>;
     },
     cell: ({ row }) => {
       const launchDate = new Date(row.getValue("launchDate"));
@@ -129,7 +133,7 @@ const columns: ColumnDef<Server>[] = [
       });
       return (
         <div className="text-center  items-center ">
-          <span className="text-blue-700 whitespace-nowrap">
+          <span className="text-sky-700 whitespace-nowrap">
             {formattedDate}
           </span>
         </div>
@@ -139,7 +143,7 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "cekilis",
     header: ({ column }) => {
-      return <div className="text-center justify-start ">Çekiliş</div>;
+      return <div className="text-center justify-start">Çekiliş</div>;
     },
     cell: ({ row }) => (
       <div className=" items-center">
@@ -149,7 +153,7 @@ const columns: ColumnDef<Server>[] = [
           rel="noopener noreferrer"
         >
           <button className="bg-gray-900 hover:bg-gray-900 text-yellow-400 py-1 px-2 font-medium rounded-xl transition duration-200">
-            Çekiliş
+            Katıl
           </button>
         </a>
       </div>
@@ -223,7 +227,7 @@ const columns: ColumnDef<Server>[] = [
     },
     cell: ({ row }) => (
       <div className="flex items-center justify-center space-x-2">
-        <span className="text-red-700 font-semibold">
+        <span className="text-sky-700 font-semibold">
           {row.getValue("totalClicks")}
         </span>
         <FaEye className="h-8 w-8 mr-2" />
@@ -342,7 +346,7 @@ export function RegularServerTable() {
                   className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="text-center ml-2 p-1">
+                    <TableCell key={cell.id} className="p-0 text-center">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

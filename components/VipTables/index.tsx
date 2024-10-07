@@ -59,7 +59,7 @@ const columns: ColumnDef<Server>[] = [
     },
     cell: ({ row }) => (
       <div className="flex items-center">
-        <span className=" text-gray-800 whitespace-nowrap">
+        <span className=" text-sky-700 whitespace-nowrap">
           {row.getValue("name")}
         </span>
       </div>
@@ -68,11 +68,15 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "detaylar",
     header: ({ column }) => {
-      return <div className="items-center text-center ">Sunucu Detayları</div>;
+      return (
+        <div className="items-center lg:min-w-[120vh] text-center ">
+          Sunucu Detayları
+        </div>
+      );
     },
     cell: ({ row }) => (
       <div className="items-center min-w-40 px-3">
-        <span className=" text-red-700 max-w-[300px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[550px] whitespace-normal break-words">
+        <span className="text-gray-900  whitespace-pre-wrap">
           {row.getValue("detaylar")}
         </span>
       </div>
@@ -119,7 +123,7 @@ const columns: ColumnDef<Server>[] = [
       });
       return (
         <div className="text-center  items-center ">
-          <span className="text-blue-700 whitespace-nowrap">
+          <span className="text-sky-700 whitespace-nowrap">
             {formattedDate}
           </span>
         </div>
@@ -213,7 +217,7 @@ const columns: ColumnDef<Server>[] = [
     },
     cell: ({ row }) => (
       <div className="flex items-center justify-center space-x-2">
-        <span className="text-red-700 font-semibold">
+        <span className="text-sky-700 font-semibold">
           {row.getValue("totalClicks")}
         </span>
         <FaEye className="h-8 w-8 mr-2" />
@@ -281,61 +285,66 @@ export function VipServerTable() {
   }
 
   return (
-    <Card className="w-full bg-zinc-200 rounded-xl border-none shadow-xl">
-      <div className="rounded-lg overflow-hidden shadow-lg">
-        <Table>
-          <TableHeader className="bg-gradient-to-r from-gray-900 to-gray-800 ">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow
-                key={headerGroup.id}
-                className="border-none hover-none uppercase"
-              >
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id} className="text-white font-bold">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody className="text-lg font-bold">
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row, index) => (
+    <div className="relative group card">
+      <Card className="w-full bg-zinc-200 rounded-xl border-none shadow-xl">
+        <div className="rounded-lg overflow-hidden shadow-lg">
+          <Table>
+            <TableHeader className="bg-gradient-to-r from-gray-900 to-gray-800 ">
+              {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
+                  key={headerGroup.id}
+                  className="border-none hover-none uppercase"
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="text-center ml-2 p-1">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead
+                        key={header.id}
+                        className="text-white font-bold"
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  Sonuç bulunamadı.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-    </Card>
+              ))}
+            </TableHeader>
+            <TableBody className="text-lg font-bold">
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row, index) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className={index % 2 === 0 ? "bg-white" : "bg-blue-50"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="p-0 text-center">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    Sonuç bulunamadı.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      </Card>
+    </div>
   );
 }
