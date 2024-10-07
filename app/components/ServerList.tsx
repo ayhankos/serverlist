@@ -209,7 +209,7 @@ export default function Metin2PvpPage({
           </header>
 
           {/* Main Content */}
-          <main className="container mx-auto py-2 px-2 sm:px-4">
+          <main className="container mx-auto py-2 px-2 sm:px-2">
             {/* VIP Section */}
             <AdBanner src={adTop} />
             <div className="my-5">
@@ -222,32 +222,35 @@ export default function Metin2PvpPage({
                 </div>
               </Link>
             </div>
-
-            <section id="vip-section" className="my-5">
-              <h2 className="text-3xl font-extrabold mb-4 text-gray-800">
-                VIP Sunucular
-              </h2>
-              <VipServerTable />
-            </section>
-            {/* Regular Section */}
-            <section id="regular-section" className="my-10">
-              <h2 className="text-3xl font-extrabold mb-4 text-gray-800">
-                Normal Sunucular
-              </h2>
-              <RegularServerTable />
-            </section>
-            {/* Streamers Section */}
-            <section id="streamers-section" className="my-10">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-3xl font-extrabold text-gray-800">
-                  VIP Yayıncılar
+            <div className="px-4">
+              {" "}
+              <section id="vip-section" className="my-5">
+                <h2 className="text-3xl font-extrabold mb-4 text-gray-800">
+                  VIP Sunucular
                 </h2>
-                <Link href="/streamers">
-                  <Button>Tüm Yayıncılar</Button>
-                </Link>
-              </div>
-              <VipStreamers />
-            </section>
+                <VipServerTable />
+              </section>
+              {/* Regular Section */}
+              <section id="regular-section" className="my-10">
+                <h2 className="text-3xl font-extrabold mb-4 text-gray-800">
+                  Normal Sunucular
+                </h2>
+                <RegularServerTable />
+              </section>
+              {/* Streamers Section */}
+              <section id="streamers-section" className="my-10">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-3xl font-extrabold text-gray-800">
+                    VIP Yayıncılar
+                  </h2>
+                  <Link href="/streamers">
+                    <Button>Tüm Yayıncılar</Button>
+                  </Link>
+                </div>
+                <VipStreamers />
+              </section>
+            </div>
+
             {/* Bottom Ad */}
             <AdBanner src={adBottom} />
           </main>
