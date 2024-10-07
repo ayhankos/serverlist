@@ -170,7 +170,7 @@ export default function Metin2PvpPage({
     <div className="min-h-screen flex flex-col">
       <div className="flex-1 flex flex-col lg:flex-row">
         {/* Left Ad */}
-        <div className="hidden lg:block lg:w-[15rem] lg:h-screen lg:sticky lg:top-0">
+        <div className="hidden lg:block lg:w-[12rem] lg:h-screen lg:sticky lg:top-0">
           <SideAd src={adLeft} />
         </div>
 
@@ -214,7 +214,7 @@ export default function Metin2PvpPage({
 
           <AdBanner src={adTop} />
           {/* Main Content */}
-          <main className="container mx-auto py-5 px-4 sm:px-6 lg:px-8">
+          <main className="container mx-auto py-5 px-2 sm:px-4 ">
             {/* VIP Section */}
             <section id="vip-section" className="my-10">
               <h2 className="text-3xl font-bold mb-4 text-gray-800">
@@ -251,7 +251,7 @@ export default function Metin2PvpPage({
         </div>
 
         {/* Right Ad */}
-        <div className="hidden lg:block lg:w-[15rem] lg:h-screen lg:sticky lg:top-0">
+        <div className="hidden lg:block lg:w-[12rem] lg:h-screen lg:sticky lg:top-0">
           <SideAd src={adRight} />
         </div>
       </div>
