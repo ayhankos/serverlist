@@ -37,7 +37,7 @@ const columns: ColumnDef<Server>[] = [
     accessorKey: "image",
     header: "",
     cell: ({ row }) => (
-      <div className="relative w-10 h-10 overflow-hidden rounded-full">
+      <div className="relative w-10 h-10 overflow-hidden rounded-full  ml-2">
         <div className="absolute inset-0 flex items-center justify-center">
           <img
             src={row.getValue("image")}
@@ -69,10 +69,10 @@ const columns: ColumnDef<Server>[] = [
   {
     accessorKey: "detaylar",
     header: ({ column }) => {
-      return <div className="items-center  text-center ">Sunucu Detayları</div>;
+      return <div className="items-center text-center">Sunucu Detayları</div>;
     },
     cell: ({ row }) => (
-      <div className="items-center px-28">
+      <div className="items-center px-4 sm:px-8 md:px-14 lg:px-28 min-w-[200px]">
         <span className="text-gray-950 whitespace-pre-wrap">
           {row.getValue("detaylar")}
         </span>
@@ -333,7 +333,7 @@ export function RegularServerTable() {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="text-lg font-bold">
+          <TableBody className="text-lg font-semibold">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row, index) => (
                 <TableRow

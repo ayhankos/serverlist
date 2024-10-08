@@ -95,8 +95,8 @@ const DiscordButton = () => (
 );
 
 const Marque = () => (
-  <div className="py-1 marquee items-center px-5">
-    <p className="font-extrabold text-xl md:text-2xl text-center">
+  <div className="py-1 marquee items-center px-5 ">
+    <p className="font-extrabold text-xl md:text-xl text-center">
       Daha fazla bilgi için discord sunucumuza katılarak bize ulaşabilirsiniz.
     </p>
   </div>
@@ -178,7 +178,7 @@ export default function Metin2PvpPage({
           {/* Header */}
           <header
             id="header"
-            className="bg-gradient-to-r from-gray-900 to-gray-800 text-gray-100 p-4 shadow-xl z-50 font-bold"
+            className="bg-gradient-to-r from-gray-900 to-gray-800 text-gray-100 py-0 px-2 shadow-xl z-50 font-bold"
           >
             <div className="mx-auto flex items-center justify-between">
               <Link
@@ -212,19 +212,18 @@ export default function Metin2PvpPage({
           <main className="container mx-auto py-2 px-2 sm:px-2">
             {/* VIP Section */}
             <AdBanner src={adTop} />
-            <div className="my-5">
+            <div className="my-3">
               <Link
                 href="https://discord.com/invite/pvpserverlar"
                 target="_blank"
               >
-                <div className="sm:px-0 lg:mx-40">
+                <div className="sm:px-0 md:mx-[20rem] lg:mx-[20rem]">
                   <Marque />
                 </div>
               </Link>
             </div>
             <div className="px-4">
-              {" "}
-              <section id="vip-section" className="my-5">
+              <section id="vip-section" className="my-3">
                 <h2 className="text-3xl font-extrabold mb-4 text-gray-800">
                   VIP Sunucular
                 </h2>

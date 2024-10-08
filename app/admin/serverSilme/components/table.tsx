@@ -65,6 +65,15 @@ export const columns: ColumnDef<Server>[] = [
     ),
   },
   {
+    accessorKey: "vip",
+    header: "VIP",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-2">
+        <span className="text-black">{row.getValue("vip")}</span>
+      </div>
+    ),
+  },
+  {
     accessorKey: "launchDate",
     header: "Açılış Tarihi",
     cell: ({ row }) => {
