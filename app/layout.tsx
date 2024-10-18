@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "Metin2 PVP Serverlar - En Güncel Metin2 PVP Server Listesi",
     description:
       "Türkiye'nin en güncel Metin2 PVP server listesi. Yeni ve aktif Metin2 PVP sunucularına hemen katılın. Her hafta güncellenen serverlar ile en iyi oyun deneyimini yaşayın.",
-    images: "/images/bg.png",
+    images: ["https://pvpserverlar.tr/images/bg.png"],
     url: "https://pvpserverlar.tr/",
   },
 };
@@ -69,7 +69,10 @@ export default function RootLayout({
 
         <meta property="og:title" content={metadata.title?.toString() ?? ""} />
         <meta property="og:description" content={metadata.description ?? ""} />
-        <meta property="og:image" content="/images/bg.png" />
+        <meta
+          property="og:image"
+          content="https://pvpserverlar.tr/images/bg.png"
+        />
         <meta property="og:url" content="https://www.ornek.com/pvp-serverlar" />
         <meta property="og:type" content="website" />
         <meta
