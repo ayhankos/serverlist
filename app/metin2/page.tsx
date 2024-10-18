@@ -1,9 +1,25 @@
 import { PrismaClient } from "@prisma/client";
 import Metin2PvpPage from "../components/ServerList";
+import type { Metadata } from "next";
 
 const prisma = new PrismaClient();
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Metin2 PVP Serverlar - Ana Sayfa",
+    description: "Metin2 PVP serverlarının en güncel listesi.",
+    keywords: ["Metin2", "PVP", "Serverlar", "Güncel Listeler", "Oyun"],
+    robots: "index, follow",
+    openGraph: {
+      title: "Metin2 PVP Serverlar - Ana Sayfa",
+      description: "Metin2 PVP serverlarının en güncel listesi.",
+      images: "/images/bg.png",
+      url: "https://pvpserverlar.tr/",
+    },
+  };
+}
 
 export default async function Page() {
   const adLeft = await prisma.advertisement.findUnique({

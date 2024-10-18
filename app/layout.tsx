@@ -33,10 +33,18 @@ export const metadata: Metadata = {
     "Metin2 PVP indir",
     "Yeni Metin2 PVP",
     "Metin2 PVP server listesi",
-    "Metin2 private server",
+    "Pvp serverlar",
   ],
+  robots: "index, follow",
   icons: {
     icon: "/images/favicon.png",
+  },
+  openGraph: {
+    title: "Metin2 PVP Serverlar - En Güncel Metin2 PVP Server Listesi",
+    description:
+      "Türkiye'nin en güncel Metin2 PVP server listesi. Yeni ve aktif Metin2 PVP sunucularına hemen katılın. Her hafta güncellenen serverlar ile en iyi oyun deneyimini yaşayın.",
+    images: "/images/bg.png",
+    url: "https://pvpserverlar.tr/",
   },
 };
 
@@ -57,6 +65,16 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet"
+        />
+
+        <meta property="og:title" content={metadata.title?.toString() ?? ""} />
+        <meta property="og:description" content={metadata.description ?? ""} />
+        <meta property="og:image" content="/images/bg.png" />
+        <meta property="og:url" content="https://www.ornek.com/pvp-serverlar" />
+        <meta property="og:type" content="website" />
+        <meta
+          name="robots"
+          content={metadata.robots?.toString() ?? undefined}
         />
       </head>
       <body className={cn("font-sans antialiased", MontserratFont.variable)}>
