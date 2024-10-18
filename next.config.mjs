@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+import { withSitemap } from "next-sitemap";
+
 const nextConfig = {
   images: {
     domains: ["pvpserverlar.tr"],
@@ -6,4 +8,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSitemap(nextConfig);
