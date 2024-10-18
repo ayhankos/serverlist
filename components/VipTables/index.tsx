@@ -71,7 +71,7 @@ const columns: ColumnDef<Server>[] = [
       return <div className="items-center text-center">Sunucu Detayları</div>;
     },
     cell: ({ row }) => (
-      <div className="items-center px-4 sm:px-8 md:px-14 lg:px-28 min-w-[200px]">
+      <div className="items-center px-2 sm:px-2 md:px-4 lg:px-8 min-w-[200px]">
         <span className="text-gray-950 whitespace-pre-wrap">
           {row.getValue("detaylar")}
         </span>
