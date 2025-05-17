@@ -1,92 +1,83 @@
-import Credentials from "@auth/core/providers/credentials";
-import { signInSchema } from "./zod";
 import NextAuth from "next-auth";
-import jwt, { Secret } from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
+import { z } from "zod";
 
 const prisma = new PrismaClient();
 
+export const signInSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  secret: process.env.AUTH_SECRET,
   adapter: PrismaAdapter(prisma),
-  trustHost: true,
+  session: { strategy: "jwt" },
+  pages: {
+    signIn: "/admin/login",
+    error: "/admin/login",
+  },
   providers: [
-    Credentials({
+    CredentialsProvider({
+      name: "Credentials",
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "example@gmail.com",
-        },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials) => {
-        if (!credentials.email || !credentials.password) {
-          throw new Error("Missing credentials");
+      async authorize(credentials) {
+        try {
+          // Validate credentials with zod
+          const result = signInSchema.safeParse(credentials);
+          if (!result.success) {
+            throw new Error("Invalid credentials format");
+          }
+
+          const { email, password } = result.data;
+
+          // Find user
+          const user = await prisma.user.findUnique({
+            where: { email },
+          });
+
+          if (!user || !user.password) {
+            throw new Error("User not found");
+          }
+
+          // Validate password
+          const passwordValid = await bcrypt.compare(password, user.password);
+          if (!passwordValid) {
+            throw new Error("Invalid password");
+          }
+
+          // Return user data
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error("Auth error:", error);
+          return null;
         }
-
-        const { email, password } = await signInSchema.parseAsync(credentials);
-
-        const user = await prisma.user.findUnique({
-          where: { email: email },
-        });
-        if (!user) {
-          throw new Error("User not found.");
-        }
-
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-          throw new Error("Invalid password.");
-        }
-
-        const token = {
-          id: user.id.toString(),
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        };
-
-        const accessToken = jwt.sign(token, process.env.JWT_SECRET as Secret, {
-          expiresIn: "1h",
-        });
-        console.log(
-          process.env.JWT_SECRET,
-          process.env.AUTH_SECRET,
-          accessToken
-        );
-        return {
-          id: user.id.toString(),
-          email: user.email,
-          name: user.name,
-          role: user.role,
-          accessToken,
-        };
       },
     }),
   ],
-  session: {
-    strategy: "jwt",
-  },
-  pages: {
-    signIn: "/login",
-    signOut: "/auth/signout",
-    newUser: "/register",
-    error: "/anasayfa",
-  },
-
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        token.id = user.id as string;
+        token.id = user.id;
         token.role = user.role;
       }
       return token;
     },
     session({ session, token }) {
-      session.user.id = token.id as string;
-      session.user.role = token.role as string;
+      if (token && session.user) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
+      }
       return session;
     },
   },

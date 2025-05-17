@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getCsrfToken, signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,48 +42,48 @@ export default function UserAuthForm() {
   const onSubmit = async (data: SignInFormValues) => {
     setLoading(true);
     try {
-      const csrfToken = await getCsrfToken();
-      console.log("CSRF Token:", csrfToken);
-
+      // Don't get CSRF token manually - NextAuth v5 handles this automatically
       const result = await signIn("credentials", {
         email: data.email,
         password: data.password,
         redirect: false,
-        csrfToken: csrfToken,
       });
 
-      console.log("result", result);
-
       if (result?.error) {
-        console.error(result.error, "Login failed");
+        console.error("Login failed:", result.error);
         toast({
           title: "Error",
-          description: result.error,
+          description: result.error || "Login failed",
+          variant: "destructive",
         });
       } else {
-        router.push("/admin");
         toast({
           title: "Success",
           description: "Logged in successfully",
         });
+        router.push("/admin");
+        router.refresh(); // Ensure the UI reflects the authentication state
       }
     } catch (error) {
-      console.error(error, "Login failed");
+      console.error("Login error:", error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSignOut = async () => {
-    await signOut(); // Çıkış işlemi
-    router.push("/"); // Çıkış yaptıktan sonra anasayfaya yönlendirme
-  };
-
   return (
-    <>
-      <Button onClick={handleSignOut} className="mb-4" variant="outline">
-        Sign out
-      </Button>
+    <div className="space-y-6">
+      <div className="space-y-2 text-center">
+        <h1 className="text-2xl font-bold">Admin Login</h1>
+        <p className="text-gray-500 dark:text-gray-400">
+          Enter your credentials to access the admin panel
+        </p>
+      </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -113,16 +113,20 @@ export default function UserAuthForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Logging in..." : "Log in"}
           </Button>
         </form>
-        <div className="mt-4">
-          <Link href="/admin/register">
-            <Button variant="outline">Register</Button>
-          </Link>
-        </div>
       </Form>
-    </>
+
+      <div className="text-center">
+        <Link
+          href="/admin/register"
+          className="text-sm underline text-primary hover:text-primary/80"
+        >
+          Don't have an account? Register
+        </Link>
+      </div>
+    </div>
   );
 }
